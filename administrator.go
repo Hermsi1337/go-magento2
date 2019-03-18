@@ -8,17 +8,17 @@ type AdministratorApiClient struct {
 	httpClient *resty.Client
 }
 
-func (client *AnonymousApiClient) AuthenticateAsAdministrator(payload AuthenticationRequestPayload) (*AdministratorApiClient, error) {
+func NewAdministratorApiClient(scheme string, hostName string, payload AuthenticationRequestPayload) (*AdministratorApiClient, error) {
+	client := buildBasicApiClient(scheme, hostName)
 	endpoint := integrationAdminTokenService
-
-	resp, err := client.httpClient.R().SetBody(payload).Post(endpoint)
+	resp, err := client.R().SetBody(payload).Post(endpoint)
 	if err != nil {
 		return nil, err
 	}
 
-	client.httpClient.SetAuthToken(resp.String())
+	client.SetAuthToken(resp.String())
 
 	return &AdministratorApiClient{
-		httpClient: client.httpClient,
+		httpClient: client,
 	}, nil
 }

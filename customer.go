@@ -1,22 +1,24 @@
 package magento2
 
-import "gopkg.in/resty.v1"
+import (
+	"gopkg.in/resty.v1"
+)
 
 type CustomerApiClient struct {
 	httpClient *resty.Client
 }
 
-func (client *AnonymousApiClient) AuthenticateAsCustomer(payload AuthenticationRequestPayload) (*CustomerApiClient, error) {
+func NewCustomerApiClient(scheme string, hostName string, payload AuthenticationRequestPayload) (*CustomerApiClient, error) {
+	client := buildBasicApiClient(scheme, hostName)
 	endpoint := integrationCustomerTokenService
-
-	resp, err := client.httpClient.R().SetBody(payload).Post(endpoint)
+	resp, err := client.R().SetBody(payload).Post(endpoint)
 	if err != nil {
 		return nil, err
 	}
 
-	client.httpClient.SetAuthToken(resp.String())
+	client.SetAuthToken(resp.String())
 
 	return &CustomerApiClient{
-		httpClient: client.httpClient,
+		httpClient: client,
 	}, nil
 }
