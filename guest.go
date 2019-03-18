@@ -15,3 +15,11 @@ func NewGuestApiClient(scheme string, hostName string) *GuestApiClient {
 		httpClient: client,
 	}
 }
+
+func (client *GuestApiClient) CreateEmptyCartID() (string, error) {
+	resp, err := client.httpClient.R().Post(emptyGuestCarts)
+	if err != nil {
+		return "", err
+	}
+	return resp.String(), err
+}
