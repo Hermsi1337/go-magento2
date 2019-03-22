@@ -34,6 +34,20 @@ type FileInfo struct {
 	Name              string `json:"name"`
 }
 
+type ExtensionAttributes struct {
+	FileInfo                FileInfo                  `json:"file_info,omitempty"`
+	ShippingAssignments     []ShippingAssignments     `json:"shipping_assignments,omitempty"`
+	CustomOptions           []CustomOptions           `json:"custom_options,omitempty"`
+	BundleOptions           []BundleOptions           `json:"bundle_options,omitempty"`
+	DownloadableOption      DownloadableOption        `json:"downloadable_option,omitempty"`
+	GiftcardItemOption      GiftcardItemOption        `json:"giftcard_item_option,omitempty"`
+	ConfigurableItemOptions []ConfigurableItemOptions `json:"configurable_item_options,omitempty"`
+	NegotiableQuoteItem     NegotiableQuoteItem       `json:"negotiable_quote_item,omitempty"`
+	CompanyAttributes       CompanyAttributes         `json:"company_attributes,omitempty"`
+	IsSubscribed            bool                      `json:"is_subscribed,omitempty"`
+	GiftRegistryID          int                       `json:"gift_registry_id,omitempty"`
+}
+
 type CustomOptions struct {
 	OptionID            string                 `json:"option_id"`
 	OptionValue         string                 `json:"option_value"`
@@ -52,14 +66,14 @@ type DownloadableOption struct {
 }
 
 type GiftcardItemOption struct {
-	GiftcardAmount         string              `json:"giftcard_amount"`
-	CustomGiftcardAmount   int                 `json:"custom_giftcard_amount"`
-	GiftcardSenderName     string              `json:"giftcard_sender_name"`
-	GiftcardRecipientName  string              `json:"giftcard_recipient_name"`
-	GiftcardSenderEmail    string              `json:"giftcard_sender_email"`
-	GiftcardRecipientEmail string              `json:"giftcard_recipient_email"`
-	GiftcardMessage        string              `json:"giftcard_message"`
-	ExtensionAttributes    ExtensionAttributes `json:"extension_attributes"`
+	GiftcardAmount         string                 `json:"giftcard_amount"`
+	CustomGiftcardAmount   int                    `json:"custom_giftcard_amount"`
+	GiftcardSenderName     string                 `json:"giftcard_sender_name"`
+	GiftcardRecipientName  string                 `json:"giftcard_recipient_name"`
+	GiftcardSenderEmail    string                 `json:"giftcard_sender_email"`
+	GiftcardRecipientEmail string                 `json:"giftcard_recipient_email"`
+	GiftcardMessage        string                 `json:"giftcard_message"`
+	ExtensionAttributes    map[string]interface{} `json:"extension_attributes"`
 }
 
 type ConfigurableItemOptions struct {
@@ -73,11 +87,11 @@ type ProductOption struct {
 }
 
 type NegotiableQuoteItem struct {
-	ItemID                 int                 `json:"item_id"`
-	OriginalPrice          int                 `json:"original_price"`
-	OriginalTaxAmount      int                 `json:"original_tax_amount"`
-	OriginalDiscountAmount int                 `json:"original_discount_amount"`
-	ExtensionAttributes    ExtensionAttributes `json:"extension_attributes"`
+	ItemID                 int                    `json:"item_id"`
+	OriginalPrice          int                    `json:"original_price"`
+	OriginalTaxAmount      int                    `json:"original_tax_amount"`
+	OriginalDiscountAmount int                    `json:"original_discount_amount"`
+	ExtensionAttributes    map[string]interface{} `json:"extension_attributes"`
 }
 
 type Items struct {
@@ -138,29 +152,29 @@ type CompanyAttributes struct {
 }
 
 type Customer struct {
-	ID                     int                 `json:"id"`
-	GroupID                int                 `json:"group_id"`
-	DefaultBilling         string              `json:"default_billing"`
-	DefaultShipping        string              `json:"default_shipping"`
-	Confirmation           string              `json:"confirmation"`
-	CreatedAt              string              `json:"created_at"`
-	UpdatedAt              string              `json:"updated_at"`
-	CreatedIn              string              `json:"created_in"`
-	Dob                    string              `json:"dob"`
-	Email                  string              `json:"email"`
-	Firstname              string              `json:"firstname"`
-	Lastname               string              `json:"lastname"`
-	Middlename             string              `json:"middlename"`
-	Prefix                 string              `json:"prefix"`
-	Suffix                 string              `json:"suffix"`
-	Gender                 int                 `json:"gender"`
-	StoreID                int                 `json:"store_id"`
-	Taxvat                 string              `json:"taxvat"`
-	WebsiteID              int                 `json:"website_id"`
-	Addresses              []Addresses         `json:"addresses"`
-	DisableAutoGroupChange int                 `json:"disable_auto_group_change"`
-	ExtensionAttributes    ExtensionAttributes `json:"extension_attributes"`
-	CustomAttributes       []CustomAttributes  `json:"custom_attributes"`
+	ID                     int                    `json:"id"`
+	GroupID                int                    `json:"group_id"`
+	DefaultBilling         string                 `json:"default_billing"`
+	DefaultShipping        string                 `json:"default_shipping"`
+	Confirmation           string                 `json:"confirmation"`
+	CreatedAt              string                 `json:"created_at"`
+	UpdatedAt              string                 `json:"updated_at"`
+	CreatedIn              string                 `json:"created_in"`
+	Dob                    string                 `json:"dob"`
+	Email                  string                 `json:"email"`
+	Firstname              string                 `json:"firstname"`
+	Lastname               string                 `json:"lastname"`
+	Middlename             string                 `json:"middlename"`
+	Prefix                 string                 `json:"prefix"`
+	Suffix                 string                 `json:"suffix"`
+	Gender                 int                    `json:"gender"`
+	StoreID                int                    `json:"store_id"`
+	Taxvat                 string                 `json:"taxvat"`
+	WebsiteID              int                    `json:"website_id"`
+	Addresses              []Addresses            `json:"addresses"`
+	DisableAutoGroupChange int                    `json:"disable_auto_group_change"`
+	ExtensionAttributes    map[string]interface{} `json:"extension_attributes"`
+	CustomAttributes       []CustomAttributes     `json:"custom_attributes"`
 }
 
 type BillingAddress struct {
@@ -242,27 +256,27 @@ type ShippingAssignments struct {
 }
 
 type NegotiableQuote struct {
-	QuoteID                  int                 `json:"quote_id"`
-	IsRegularQuote           bool                `json:"is_regular_quote"`
-	Status                   string              `json:"status"`
-	NegotiatedPriceType      int                 `json:"negotiated_price_type"`
-	NegotiatedPriceValue     int                 `json:"negotiated_price_value"`
-	ShippingPrice            int                 `json:"shipping_price"`
-	QuoteName                string              `json:"quote_name"`
-	ExpirationPeriod         string              `json:"expiration_period"`
-	EmailNotificationStatus  int                 `json:"email_notification_status"`
-	HasUnconfirmedChanges    bool                `json:"has_unconfirmed_changes"`
-	IsShippingTaxChanged     bool                `json:"is_shipping_tax_changed"`
-	IsCustomerPriceChanged   bool                `json:"is_customer_price_changed"`
-	Notifications            int                 `json:"notifications"`
-	AppliedRuleIds           string              `json:"applied_rule_ids"`
-	IsAddressDraft           bool                `json:"is_address_draft"`
-	DeletedSku               string              `json:"deleted_sku"`
-	CreatorID                int                 `json:"creator_id"`
-	CreatorType              int                 `json:"creator_type"`
-	OriginalTotalPrice       int                 `json:"original_total_price"`
-	BaseOriginalTotalPrice   int                 `json:"base_original_total_price"`
-	NegotiatedTotalPrice     int                 `json:"negotiated_total_price"`
-	BaseNegotiatedTotalPrice int                 `json:"base_negotiated_total_price"`
-	ExtensionAttributes      ExtensionAttributes `json:"extension_attributes"`
+	QuoteID                  int                    `json:"quote_id"`
+	IsRegularQuote           bool                   `json:"is_regular_quote"`
+	Status                   string                 `json:"status"`
+	NegotiatedPriceType      int                    `json:"negotiated_price_type"`
+	NegotiatedPriceValue     int                    `json:"negotiated_price_value"`
+	ShippingPrice            int                    `json:"shipping_price"`
+	QuoteName                string                 `json:"quote_name"`
+	ExpirationPeriod         string                 `json:"expiration_period"`
+	EmailNotificationStatus  int                    `json:"email_notification_status"`
+	HasUnconfirmedChanges    bool                   `json:"has_unconfirmed_changes"`
+	IsShippingTaxChanged     bool                   `json:"is_shipping_tax_changed"`
+	IsCustomerPriceChanged   bool                   `json:"is_customer_price_changed"`
+	Notifications            int                    `json:"notifications"`
+	AppliedRuleIds           string                 `json:"applied_rule_ids"`
+	IsAddressDraft           bool                   `json:"is_address_draft"`
+	DeletedSku               string                 `json:"deleted_sku"`
+	CreatorID                int                    `json:"creator_id"`
+	CreatorType              int                    `json:"creator_type"`
+	OriginalTotalPrice       int                    `json:"original_total_price"`
+	BaseOriginalTotalPrice   int                    `json:"base_original_total_price"`
+	NegotiatedTotalPrice     int                    `json:"negotiated_total_price"`
+	BaseNegotiatedTotalPrice int                    `json:"base_negotiated_total_price"`
+	ExtensionAttributes      map[string]interface{} `json:"extension_attributes"`
 }
