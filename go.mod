@@ -1,4 +1,4 @@
-module github.com/Hermsi1337/go-magento2
+module github.com/hermsi1337/go-magento2
 
 require (
 	golang.org/x/crypto v0.0.0-20190313024323-a1f597ede03a // indirect
