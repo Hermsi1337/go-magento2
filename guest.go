@@ -8,6 +8,8 @@ type GuestApiClient struct {
 	httpClient *resty.Client
 }
 
+type CartID string
+
 func NewGuestApiClient(scheme string, hostName string) *GuestApiClient {
 	client := buildBasicApiClient(scheme, hostName)
 
@@ -16,10 +18,21 @@ func NewGuestApiClient(scheme string, hostName string) *GuestApiClient {
 	}
 }
 
-func (client *GuestApiClient) CreateEmptyCartID() (string, error) {
-	resp, err := client.httpClient.R().Post(emptyGuestCarts)
+func (client *GuestApiClient) CreateEmptyCartID() (CartID, error) {
+	resp, err := client.httpClient.R().Post(guestCarts)
 	if err != nil {
 		return "", err
 	}
-	return resp.String(), err
+	return CartID(resp.String()), err
+}
+
+func (client *GuestApiClient) GetCartByID(id CartID) (DetailedCart, error) {
+	var detailedCart *DetailedCart
+	resp, err := client.httpClient.R().SetResult(&DetailedCart{}).Get(guestCarts + "/" + string(id))
+	if err != nil {
+		return *detailedCart, err
+	}
+	detailedCart = resp.Result().(*DetailedCart)
+
+	return *detailedCart, err
 }

@@ -1,7 +1,7 @@
 package magento2
 
 const (
-	integrationAdminTokenService = "/integration/admin/token"
+	integrationAdminTokenService    = "/integration/admin/token"
 	integrationCustomerTokenService = "/integration/customer/token"
-	emptyGuestCarts = "/guest-carts"
+	guestCarts                      = "/guest-carts"
 )
