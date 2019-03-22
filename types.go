@@ -37,7 +37,6 @@ type FileInfo struct {
 type ExtensionAttributes struct {
 	FileInfo                FileInfo                  `json:"file_info,omitempty"`
 	ShippingAssignments     []ShippingAssignments     `json:"shipping_assignments,omitempty"`
-	NegotiableQuote         NegotiableQuote           `json:"negotiable_quote,omitempty"`
 	CustomOptions           []CustomOptions           `json:"custom_options,omitempty"`
 	BundleOptions           []BundleOptions           `json:"bundle_options,omitempty"`
 	DownloadableOption      DownloadableOption        `json:"downloadable_option,omitempty"`
