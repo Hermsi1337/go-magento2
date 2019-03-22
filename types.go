@@ -46,6 +46,7 @@ type ExtensionAttributes struct {
 	CompanyAttributes       CompanyAttributes         `json:"company_attributes,omitempty"`
 	IsSubscribed            bool                      `json:"is_subscribed,omitempty"`
 	GiftRegistryID          int                       `json:"gift_registry_id,omitempty"`
+	NegotiableQuote         NegotiableQuote           `json:"negotiable_quote,omitempty"`
 }
 
 type CustomOptions struct {
