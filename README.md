@@ -19,7 +19,7 @@ Let's make this package great together!  🚀
 * [ ] Administrator
 
 ## Usage
-Example-code for creating placing an order as a guest:
+Example-code for placing an order as a guest:
 ```go
 package main
 
