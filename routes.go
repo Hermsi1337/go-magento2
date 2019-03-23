@@ -5,5 +5,8 @@ const (
 	integrationCustomerTokenService = "/integration/customer/token"
 	guestCarts                      = "/guest-carts"
 	guestCartsItems                 = "/items"
-	guestCartShippingInformation    = "/shipping-information"
+	guestCartsShippingCosts         = "/estimate-shipping-methods"
+	guestCartsShippingInformation   = "/shipping-information"
+	guestCartsPaymentMethods        = "/payment-methods"
+	guestCartsOrder                 = "/order"
 )

@@ -2,6 +2,7 @@ package magento2
 
 import (
 	"fmt"
+	"github.com/hermsi1337/go-magento2/types"
 	"gopkg.in/resty.v1"
 )
 
@@ -17,7 +18,22 @@ func NewGuestApiClient(scheme string, hostName string) *ApiClient {
 	}
 }
 
-func NewCustomerApiClient(scheme string, hostName string, payload AuthenticationRequestPayload) (*ApiClient, error) {
+func NewCustomerApiClient(scheme string, hostName string, payload types.AuthenticationRequestPayload) (*ApiClient, error) {
+	client := buildBasicHttpClient(scheme, hostName)
+	endpoint := integrationCustomerTokenService
+	resp, err := client.R().SetBody(payload).Post(endpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	client.SetAuthToken(resp.String())
+
+	return &ApiClient{
+		httpClient: client,
+	}, nil
+}
+
+func NewAdministratorApiClient(scheme string, hostName string, payload types.AuthenticationRequestPayload) (*ApiClient, error) {
 	client := buildBasicHttpClient(scheme, hostName)
 	endpoint := integrationAdminTokenService
 	resp, err := client.R().SetBody(payload).Post(endpoint)
@@ -32,23 +48,8 @@ func NewCustomerApiClient(scheme string, hostName string, payload Authentication
 	}, nil
 }
 
-func NewAdministratorApiClient(scheme string, hostName string, payload AuthenticationRequestPayload) (*ApiClient, error) {
-	client := buildBasicHttpClient(scheme, hostName)
-	endpoint := integrationAdminTokenService
-	resp, err := client.R().SetBody(payload).Post(endpoint)
-	if err != nil {
-		return nil, err
-	}
-
-	client.SetAuthToken(resp.String())
-
-	return &ApiClient{
-		httpClient: client,
-	}, nil
-}
-
-func (apiClient *ApiClient) CreateCard() (Cart, error) {
-	var cart Cart
+func (apiClient *ApiClient) CreateGuestCard() (GuestCart, error) {
+	var cart GuestCart
 
 	httpClient := apiClient.httpClient
 	resp, err := httpClient.R().Post(guestCarts)

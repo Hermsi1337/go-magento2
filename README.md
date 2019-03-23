@@ -2,13 +2,19 @@
 A Golang package for communicating with the magento2 api. (tested with >=2.3.0)
    
 I initially built this package because I need it for a project I'm currently working on.   
-Therefore it is in a very early state and under steady development. Pull requests are very welcome!
+Therefore I will add further features upon my need until I finished the other project.
 
-## Next up
+If you need a feature which is not implemented yet, feel free to open a pull request.   
+Let's make this package great together!  🚀
+
+## Features
 * Guest api
-  * checkout
-    - [ ] Add desired payment method
-    - [ ] Place order
+  * guest-carts
+    - [x] add items
+    - [x] estimate shipping costs
+    - [x] add shipping information (billing- and shipping-address)
+    - [x] add payment method
+    - [x] create order
 * Registered customer api
 * Administrator
 
@@ -21,6 +27,7 @@ package main
 
 import (
 	"github.com/hermsi1337/go-magento2"
+	magento2Types "github.com/hermsi1337/go-magento2/types"
 )
 
 func main() {
@@ -28,16 +35,16 @@ func main() {
 	apiClient := magento2.NewGuestApiClient("http", "localhost:8080")
 
 	// create empty card
-	cart, err := apiClient.CreateCard()
+	cart, err := apiClient.CreateGuestCard()
 	if err != nil {
 		panic(err)
 	}
 
 	// initialize items array
-	var products []magento2.Item
-	
+	var products []magento2Types.Item
+
 	// add items to your items array
-	products = append(products, magento2.Item{
+	products = append(products, magento2Types.Item{
 		Sku: "fooduct",
 		Qty: 1,
 	})
@@ -49,7 +56,7 @@ func main() {
 	}
 
 	// define shipping address
-	sAddr := &magento2.Address{
+	sAddr := &magento2Types.Address{
 		City: "FooCity",
 		Company: "FooCompany",
 		Email: "foo@bar.de",
@@ -57,15 +64,15 @@ func main() {
 		Lastname: "Bar",
 		Postcode: "1337",
 		Region: "New York",
-		RegionID: 0,
+		RegionID: 1,
 		RegionCode: "NY",
 		CountryID: "US",
 		Telephone: "1337 1337 1337",
 		Street: []string{"foo", "street"},
 	}
-	
+
 	// define billing address
-	bAddr := &magento2.Address{
+	bAddr := &magento2Types.Address{
 		City: "FooCity",
 		Company: "FooCompany",
 		Email: "foo@bar.de",
@@ -73,19 +80,28 @@ func main() {
 		Lastname: "Bar",
 		Postcode: "1337",
 		Region: "New York",
-		RegionID: 0,
+		RegionID: 1,
 		RegionCode: "NY",
 		CountryID: "US",
 		Telephone: "1337 1337 1337",
 		Street: []string{"foo", "street"},
 	}
-	
+
+	// estimate shipping carrier for our cart
+	shippingCosts, err := cart.EstimateShippingCarrier(apiClient, *sAddr)
+	if err != nil {
+		panic(err)
+	}
+
+	// choose your desired carrier
+	desiredCarrier := shippingCosts[0]
+
 	// define addressinformation-payload for your cart
-	payLoad := &magento2.AddressInformation{
+	payLoad := &magento2Types.AddressInformation{
 		ShippingAddress: *sAddr,
 		BillingAddress: *bAddr,
-		ShippingMethodCode: "flatrate",
-		ShippingCarrierCodes: "flatrate",
+		ShippingMethodCode: desiredCarrier.MethodCode,
+		ShippingCarrierCodes: desiredCarrier.CarrierCode,
 	}
 
 	// add shipping info to cart
@@ -93,11 +109,29 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	// update your cart object in order to get the current state from magento2 api
 	err = cart.UpdateSelf(apiClient)
 	if err != nil {
 		panic(err)
 	}
+
+	// lets check what payment methods are available
+	paymentMethods, err := cart.EstimatePaymentMethods(apiClient)
+	if err != nil {
+		panic(err)
+	}
+
+	// choose your desired payment method
+	desiredPaymentMethod := paymentMethods[0]
+
+	// create the order
+	orderID, err := cart.CreateOrder(apiClient, desiredPaymentMethod)
+	if err != nil {
+		panic(err)
+	}
+
+	// Congrats, your order has been submitted
+	fmt.Println(orderID)
 }
 ```
