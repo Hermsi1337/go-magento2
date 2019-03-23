@@ -11,8 +11,9 @@ Let's make this package great together!  🚀
 * [x] Guest api
   * [x] guest-carts
     - [x] add items
-    - [x] estimate shipping costs
+    - [x] get available shipping carrier
     - [x] add shipping information (billing- and shipping-address)
+    - [x] get available payment methods
     - [x] add payment method
     - [x] create order
 * [ ] Registered customer api
