@@ -12,11 +12,11 @@ type DetailedCart struct {
 	ConvertedAt         string                 `json:"converted_at"`
 	IsActive            bool                   `json:"is_active"`
 	IsVirtual           bool                   `json:"is_virtual"`
-	Items               []Items                `json:"items"`
+	Items               []Item                 `json:"items"`
 	ItemsCount          int                    `json:"items_count"`
 	ItemsQty            int                    `json:"items_qty"`
 	Customer            Customer               `json:"customer"`
-	BillingAddress      BillingAddress         `json:"billing_address"`
+	BillingAddress      Address                `json:"billing_address"`
 	ReservedOrderID     int                    `json:"reserved_order_id"`
 	OrigOrderID         int                    `json:"orig_order_id"`
 	Currency            Currency               `json:"currency"`
@@ -29,9 +29,9 @@ type DetailedCart struct {
 }
 
 type FileInfo struct {
-	Base64EncodedData string `json:"base64_encoded_data"`
-	Type              string `json:"type"`
-	Name              string `json:"name"`
+	Base64EncodedData string `json:"base64_encoded_data,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Name              string `json:"name,omitempty"`
 }
 
 type ExtensionAttributes struct {
@@ -50,234 +50,192 @@ type ExtensionAttributes struct {
 }
 
 type CustomOptions struct {
-	OptionID            string                 `json:"option_id"`
-	OptionValue         string                 `json:"option_value"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	OptionID            string                 `json:"option_id,omitempty"`
+	OptionValue         string                 `json:"option_value,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type BundleOptions struct {
-	OptionID            int                    `json:"option_id"`
-	OptionQty           int                    `json:"option_qty"`
-	OptionSelections    []int                  `json:"option_selections"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	OptionID            int                    `json:"option_id,omitempty"`
+	OptionQty           int                    `json:"option_qty,omitempty"`
+	OptionSelections    []int                  `json:"option_selections,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type DownloadableOption struct {
-	DownloadableLinks []int `json:"downloadable_links"`
+	DownloadableLinks []int `json:"downloadable_links,omitempty"`
 }
 
 type GiftcardItemOption struct {
-	GiftcardAmount         string                 `json:"giftcard_amount"`
-	CustomGiftcardAmount   int                    `json:"custom_giftcard_amount"`
-	GiftcardSenderName     string                 `json:"giftcard_sender_name"`
-	GiftcardRecipientName  string                 `json:"giftcard_recipient_name"`
-	GiftcardSenderEmail    string                 `json:"giftcard_sender_email"`
-	GiftcardRecipientEmail string                 `json:"giftcard_recipient_email"`
-	GiftcardMessage        string                 `json:"giftcard_message"`
-	ExtensionAttributes    map[string]interface{} `json:"extension_attributes"`
+	GiftcardAmount         string                 `json:"giftcard_amount,omitempty"`
+	CustomGiftcardAmount   int                    `json:"custom_giftcard_amount,omitempty"`
+	GiftcardSenderName     string                 `json:"giftcard_sender_name,omitempty"`
+	GiftcardRecipientName  string                 `json:"giftcard_recipient_name,omitempty"`
+	GiftcardSenderEmail    string                 `json:"giftcard_sender_email,omitempty"`
+	GiftcardRecipientEmail string                 `json:"giftcard_recipient_email,omitempty"`
+	GiftcardMessage        string                 `json:"giftcard_message,omitempty"`
+	ExtensionAttributes    map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type ConfigurableItemOptions struct {
-	OptionID            string                 `json:"option_id"`
-	OptionValue         int                    `json:"option_value"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	OptionID            string                 `json:"option_id,omitempty"`
+	OptionValue         int                    `json:"option_value,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type ProductOption struct {
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type NegotiableQuoteItem struct {
-	ItemID                 int                    `json:"item_id"`
-	OriginalPrice          int                    `json:"original_price"`
-	OriginalTaxAmount      int                    `json:"original_tax_amount"`
-	OriginalDiscountAmount int                    `json:"original_discount_amount"`
-	ExtensionAttributes    map[string]interface{} `json:"extension_attributes"`
+	ItemID                 int                    `json:"item_id,omitempty"`
+	OriginalPrice          int                    `json:"original_price,omitempty"`
+	OriginalTaxAmount      int                    `json:"original_tax_amount,omitempty"`
+	OriginalDiscountAmount int                    `json:"original_discount_amount,omitempty"`
+	ExtensionAttributes    map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
-type Items struct {
-	ItemID              int                    `json:"item_id"`
+type Item struct {
+	ItemID              int                    `json:"item_id,omitempty"`
 	Sku                 string                 `json:"sku"`
 	Qty                 int                    `json:"qty"`
-	Name                string                 `json:"name"`
-	Price               int                    `json:"price"`
-	ProductType         string                 `json:"product_type"`
+	Name                string                 `json:"name,omitempty"`
+	Price               int                    `json:"price,omitempty"`
+	ProductType         string                 `json:"product_type,omitempty"`
 	QuoteID             string                 `json:"quote_id"`
-	ProductOption       ProductOption          `json:"product_option"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	ProductOption       ProductOption          `json:"product_option,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type Region struct {
-	RegionCode          string                 `json:"region_code"`
-	Region              string                 `json:"region"`
-	RegionID            int                    `json:"region_id"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	RegionCode          string                 `json:"region_code,omitempty"`
+	Region              string                 `json:"region,omitempty"`
+	RegionID            int                    `json:"region_id,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type CustomAttributes struct {
-	AttributeCode string `json:"attribute_code"`
-	Value         string `json:"value"`
-}
-
-type Addresses struct {
-	ID                  int                    `json:"id"`
-	CustomerID          int                    `json:"customer_id"`
-	Region              Region                 `json:"region"`
-	RegionID            int                    `json:"region_id"`
-	CountryID           string                 `json:"country_id"`
-	Street              []string               `json:"street"`
-	Company             string                 `json:"company"`
-	Telephone           string                 `json:"telephone"`
-	Fax                 string                 `json:"fax"`
-	Postcode            string                 `json:"postcode"`
-	City                string                 `json:"city"`
-	Firstname           string                 `json:"firstname"`
-	Lastname            string                 `json:"lastname"`
-	Middlename          string                 `json:"middlename"`
-	Prefix              string                 `json:"prefix"`
-	Suffix              string                 `json:"suffix"`
-	VatID               string                 `json:"vat_id"`
-	DefaultShipping     bool                   `json:"default_shipping"`
-	DefaultBilling      bool                   `json:"default_billing"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
-	CustomAttributes    []CustomAttributes     `json:"custom_attributes"`
+	AttributeCode string `json:"attribute_code,omitempty"`
+	Value         string `json:"value,omitempty"`
 }
 
 type CompanyAttributes struct {
-	CustomerID          int                    `json:"customer_id"`
-	CompanyID           int                    `json:"company_id"`
-	JobTitle            string                 `json:"job_title"`
-	Status              int                    `json:"status"`
-	Telephone           string                 `json:"telephone"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	CustomerID          int                    `json:"customer_id,omitempty"`
+	CompanyID           int                    `json:"company_id,omitempty"`
+	JobTitle            string                 `json:"job_title,omitempty"`
+	Status              int                    `json:"status,omitempty"`
+	Telephone           string                 `json:"telephone,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type Customer struct {
-	ID                     int                    `json:"id"`
-	GroupID                int                    `json:"group_id"`
-	DefaultBilling         string                 `json:"default_billing"`
-	DefaultShipping        string                 `json:"default_shipping"`
-	Confirmation           string                 `json:"confirmation"`
-	CreatedAt              string                 `json:"created_at"`
-	UpdatedAt              string                 `json:"updated_at"`
-	CreatedIn              string                 `json:"created_in"`
-	Dob                    string                 `json:"dob"`
-	Email                  string                 `json:"email"`
-	Firstname              string                 `json:"firstname"`
-	Lastname               string                 `json:"lastname"`
-	Middlename             string                 `json:"middlename"`
-	Prefix                 string                 `json:"prefix"`
-	Suffix                 string                 `json:"suffix"`
-	Gender                 int                    `json:"gender"`
-	StoreID                int                    `json:"store_id"`
-	Taxvat                 string                 `json:"taxvat"`
-	WebsiteID              int                    `json:"website_id"`
-	Addresses              []Addresses            `json:"addresses"`
-	DisableAutoGroupChange int                    `json:"disable_auto_group_change"`
-	ExtensionAttributes    map[string]interface{} `json:"extension_attributes"`
-	CustomAttributes       []CustomAttributes     `json:"custom_attributes"`
-}
-
-type BillingAddress struct {
-	ID                  int                    `json:"id"`
-	Region              string                 `json:"region"`
-	RegionID            int                    `json:"region_id"`
-	RegionCode          string                 `json:"region_code"`
-	CountryID           string                 `json:"country_id"`
-	Street              []string               `json:"street"`
-	Company             string                 `json:"company"`
-	Telephone           string                 `json:"telephone"`
-	Fax                 string                 `json:"fax"`
-	Postcode            string                 `json:"postcode"`
-	City                string                 `json:"city"`
-	Firstname           string                 `json:"firstname"`
-	Lastname            string                 `json:"lastname"`
-	Middlename          string                 `json:"middlename"`
-	Prefix              string                 `json:"prefix"`
-	Suffix              string                 `json:"suffix"`
-	VatID               string                 `json:"vat_id"`
-	CustomerID          int                    `json:"customer_id"`
-	Email               string                 `json:"email"`
-	SameAsBilling       int                    `json:"same_as_billing"`
-	CustomerAddressID   int                    `json:"customer_address_id"`
-	SaveInAddressBook   int                    `json:"save_in_address_book"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
-	CustomAttributes    []CustomAttributes     `json:"custom_attributes"`
-}
-
-type Currency struct {
-	GlobalCurrencyCode  string                 `json:"global_currency_code"`
-	BaseCurrencyCode    string                 `json:"base_currency_code"`
-	StoreCurrencyCode   string                 `json:"store_currency_code"`
-	QuoteCurrencyCode   string                 `json:"quote_currency_code"`
-	StoreToBaseRate     int                    `json:"store_to_base_rate"`
-	StoreToQuoteRate    int                    `json:"store_to_quote_rate"`
-	BaseToGlobalRate    int                    `json:"base_to_global_rate"`
-	BaseToQuoteRate     int                    `json:"base_to_quote_rate"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	ID                     int                    `json:"id,omitempty"`
+	GroupID                int                    `json:"group_id,omitempty"`
+	DefaultBilling         string                 `json:"default_billing,omitempty"`
+	DefaultShipping        string                 `json:"default_shipping,omitempty"`
+	Confirmation           string                 `json:"confirmation,omitempty"`
+	CreatedAt              string                 `json:"created_at,omitempty"`
+	UpdatedAt              string                 `json:"updated_at,omitempty"`
+	CreatedIn              string                 `json:"created_in,omitempty"`
+	Dob                    string                 `json:"dob,omitempty"`
+	Email                  string                 `json:"email,omitempty"`
+	Firstname              string                 `json:"firstname,omitempty"`
+	Lastname               string                 `json:"lastname,omitempty"`
+	Middlename             string                 `json:"middlename,omitempty"`
+	Prefix                 string                 `json:"prefix,omitempty"`
+	Suffix                 string                 `json:"suffix,omitempty"`
+	Gender                 int                    `json:"gender,omitempty"`
+	StoreID                int                    `json:"store_id,omitempty"`
+	Taxvat                 string                 `json:"taxvat,omitempty"`
+	WebsiteID              int                    `json:"website_id,omitempty"`
+	Addresses              []Address              `json:"addresses,omitempty"`
+	DisableAutoGroupChange int                    `json:"disable_auto_group_change,omitempty"`
+	ExtensionAttributes    map[string]interface{} `json:"extension_attributes,omitempty"`
+	CustomAttributes       []CustomAttributes     `json:"custom_attributes,omitempty"`
 }
 
 type Address struct {
-	ID                  int                    `json:"id"`
+	ID                  int                    `json:"id,omitempty"`
 	Region              string                 `json:"region"`
 	RegionID            int                    `json:"region_id"`
 	RegionCode          string                 `json:"region_code"`
 	CountryID           string                 `json:"country_id"`
 	Street              []string               `json:"street"`
-	Company             string                 `json:"company"`
+	Company             string                 `json:"company,omitempty"`
 	Telephone           string                 `json:"telephone"`
-	Fax                 string                 `json:"fax"`
+	Fax                 string                 `json:"fax,omitempty"`
 	Postcode            string                 `json:"postcode"`
 	City                string                 `json:"city"`
 	Firstname           string                 `json:"firstname"`
 	Lastname            string                 `json:"lastname"`
-	Middlename          string                 `json:"middlename"`
-	Prefix              string                 `json:"prefix"`
-	Suffix              string                 `json:"suffix"`
-	VatID               string                 `json:"vat_id"`
-	CustomerID          int                    `json:"customer_id"`
+	Middlename          string                 `json:"middlename,omitempty"`
+	Prefix              string                 `json:"prefix,omitempty"`
+	Suffix              string                 `json:"suffix,omitempty"`
+	VatID               string                 `json:"vat_id,omitempty"`
+	CustomerID          int                    `json:"customer_id,omitempty"`
 	Email               string                 `json:"email"`
-	SameAsBilling       int                    `json:"same_as_billing"`
-	CustomerAddressID   int                    `json:"customer_address_id"`
-	SaveInAddressBook   int                    `json:"save_in_address_book"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
-	CustomAttributes    []CustomAttributes     `json:"custom_attributes"`
+	SameAsBilling       int                    `json:"same_as_billing,omitempty"`
+	CustomerAddressID   int                    `json:"customer_address_id,omitempty"`
+	SaveInAddressBook   int                    `json:"save_in_address_book,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
+	CustomAttributes    []CustomAttributes     `json:"custom_attributes,omitempty"`
+}
+
+type Currency struct {
+	GlobalCurrencyCode  string                 `json:"global_currency_code,omitempty"`
+	BaseCurrencyCode    string                 `json:"base_currency_code,omitempty"`
+	StoreCurrencyCode   string                 `json:"store_currency_code,omitempty"`
+	QuoteCurrencyCode   string                 `json:"quote_currency_code,omitempty"`
+	StoreToBaseRate     int                    `json:"store_to_base_rate,omitempty"`
+	StoreToQuoteRate    int                    `json:"store_to_quote_rate,omitempty"`
+	BaseToGlobalRate    int                    `json:"base_to_global_rate,omitempty"`
+	BaseToQuoteRate     int                    `json:"base_to_quote_rate,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type Shipping struct {
-	Address             Address                `json:"address"`
-	Method              string                 `json:"method"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	Address             Address                `json:"address,omitempty"`
+	Method              string                 `json:"method,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
 type ShippingAssignments struct {
-	Shipping            Shipping               `json:"shipping"`
-	Items               []Items                `json:"items"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	Shipping            Shipping               `json:"shipping,omitempty"`
+	Items               []Item                 `json:"items,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
+}
+
+type AddressInformation struct {
+	ShippingAddress      Address                `json:"shipping_address"`
+	BillingAddress       Address                `json:"billing_address"`
+	ShippingMethodCode   string                 `json:"shipping_method_code"`
+	ShippingCarrierCodes string                 `json:"shipping_carrier_code"`
+	ExtensionAttributes  map[string]interface{} `json:"extension_attributes,omitempty"`
+	CustomAttributes     []CustomAttributes     `json:"custom_attributes,omitempty"`
 }
 
 type NegotiableQuote struct {
-	QuoteID                  int                    `json:"quote_id"`
-	IsRegularQuote           bool                   `json:"is_regular_quote"`
-	Status                   string                 `json:"status"`
-	NegotiatedPriceType      int                    `json:"negotiated_price_type"`
-	NegotiatedPriceValue     int                    `json:"negotiated_price_value"`
-	ShippingPrice            int                    `json:"shipping_price"`
-	QuoteName                string                 `json:"quote_name"`
-	ExpirationPeriod         string                 `json:"expiration_period"`
-	EmailNotificationStatus  int                    `json:"email_notification_status"`
-	HasUnconfirmedChanges    bool                   `json:"has_unconfirmed_changes"`
-	IsShippingTaxChanged     bool                   `json:"is_shipping_tax_changed"`
-	IsCustomerPriceChanged   bool                   `json:"is_customer_price_changed"`
-	Notifications            int                    `json:"notifications"`
-	AppliedRuleIds           string                 `json:"applied_rule_ids"`
-	IsAddressDraft           bool                   `json:"is_address_draft"`
-	DeletedSku               string                 `json:"deleted_sku"`
-	CreatorID                int                    `json:"creator_id"`
-	CreatorType              int                    `json:"creator_type"`
-	OriginalTotalPrice       int                    `json:"original_total_price"`
-	BaseOriginalTotalPrice   int                    `json:"base_original_total_price"`
-	NegotiatedTotalPrice     int                    `json:"negotiated_total_price"`
-	BaseNegotiatedTotalPrice int                    `json:"base_negotiated_total_price"`
-	ExtensionAttributes      map[string]interface{} `json:"extension_attributes"`
+	QuoteID                  int                    `json:"quote_id,omitempty"`
+	IsRegularQuote           bool                   `json:"is_regular_quote,omitempty"`
+	Status                   string                 `json:"status,omitempty"`
+	NegotiatedPriceType      int                    `json:"negotiated_price_type,omitempty"`
+	NegotiatedPriceValue     int                    `json:"negotiated_price_value,omitempty"`
+	ShippingPrice            int                    `json:"shipping_price,omitempty"`
+	QuoteName                string                 `json:"quote_name,omitempty"`
+	ExpirationPeriod         string                 `json:"expiration_period,omitempty"`
+	EmailNotificationStatus  int                    `json:"email_notification_status,omitempty"`
+	HasUnconfirmedChanges    bool                   `json:"has_unconfirmed_changes,omitempty"`
+	IsShippingTaxChanged     bool                   `json:"is_shipping_tax_changed,omitempty"`
+	IsCustomerPriceChanged   bool                   `json:"is_customer_price_changed,omitempty"`
+	Notifications            int                    `json:"notifications,omitempty"`
+	AppliedRuleIds           string                 `json:"applied_rule_ids,omitempty"`
+	IsAddressDraft           bool                   `json:"is_address_draft,omitempty"`
+	DeletedSku               string                 `json:"deleted_sku,omitempty"`
+	CreatorID                int                    `json:"creator_id,omitempty"`
+	CreatorType              int                    `json:"creator_type,omitempty"`
+	OriginalTotalPrice       int                    `json:"original_total_price,omitempty"`
+	BaseOriginalTotalPrice   int                    `json:"base_original_total_price,omitempty"`
+	NegotiatedTotalPrice     int                    `json:"negotiated_total_price,omitempty"`
+	BaseNegotiatedTotalPrice int                    `json:"base_negotiated_total_price,omitempty"`
+	ExtensionAttributes      map[string]interface{} `json:"extension_attributes,omitempty"`
 }
