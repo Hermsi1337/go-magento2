@@ -19,9 +19,7 @@ Let's make this package great together!  🚀
 * [ ] Administrator
 
 ## Usage
-Up until today (23. March 2019) the package only supports several features of the [Magento2-guest-api](https://devdocs.magento.com/redoc/2.3/guest-rest-api.html).   
-
-Example-code for creating a guest-cart and adding items as well as shipping-information to it:
+Example-code for creating placing an order as a guest:
 ```go
 package main
 
