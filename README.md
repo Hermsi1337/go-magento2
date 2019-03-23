@@ -86,13 +86,13 @@ func main() {
 	}
 
 	// estimate shipping carrier for our cart
-	shippingCosts, err := cart.EstimateShippingCarrier(apiClient, *sAddr)
+	availableCarrier, err := cart.EstimateShippingCarrier(apiClient, *sAddr)
 	if err != nil {
 		panic(err)
 	}
 
 	// choose your desired carrier
-	desiredCarrier := shippingCosts[0]
+	desiredCarrier := availableCarrier[0]
 
 	// define addressinformation-payload for your cart
 	payLoad := &magento2Types.AddressInformation{
