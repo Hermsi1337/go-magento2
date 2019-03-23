@@ -8,15 +8,15 @@ If you need a feature which is not implemented yet, feel free to open a pull req
 Let's make this package great together!  🚀
 
 ## Features
-* Guest api
-  * guest-carts
+* [x] Guest api
+  * [x] guest-carts
     - [x] add items
     - [x] estimate shipping costs
     - [x] add shipping information (billing- and shipping-address)
     - [x] add payment method
     - [x] create order
-* Registered customer api
-* Administrator
+* [ ] Registered customer api
+* [ ] Administrator
 
 ## Usage
 Up until today (23. March 2019) the package only supports several features of the [Magento2-guest-api](https://devdocs.magento.com/redoc/2.3/guest-rest-api.html).   
