@@ -50,34 +50,34 @@ func main() {
 
 	// define shipping address
 	sAddr := &magento2.Address{
-		City: "noida",
-		Company: "ipgrad",
-		Email: "fasf@fasdf.de",
-		Firstname: "troll",
-		Lastname: "trroll",
-		Postcode: "32345",
+		City: "FooCity",
+		Company: "FooCompany",
+		Email: "foo@bar.de",
+		Firstname: "Foo",
+		Lastname: "Bar",
+		Postcode: "1337",
 		Region: "New York",
 		RegionID: 0,
 		RegionCode: "NY",
 		CountryID: "US",
-		Telephone: "3414124312413",
-		Street: []string{"fsafas", "fasfasfd"},
+		Telephone: "1337 1337 1337",
+		Street: []string{"foo", "street"},
 	}
 	
 	// define billing address
 	bAddr := &magento2.Address{
-		City: "noida",
-		Company: "ipgrad",
-		Email: "fasf@fasdf.de",
-		Firstname: "troll",
-		Lastname: "trroll",
-		Postcode: "32345",
+		City: "FooCity",
+		Company: "FooCompany",
+		Email: "foo@bar.de",
+		Firstname: "Foo",
+		Lastname: "Bar",
+		Postcode: "1337",
 		Region: "New York",
 		RegionID: 0,
 		RegionCode: "NY",
 		CountryID: "US",
-		Telephone: "3414124312413",
-		Street: []string{"fsafas", "fasfasfd"},
+		Telephone: "1337 1337 1337",
+		Street: []string{"foo", "street"},
 	}
 	
 	// define addressinformation-payload for your cart
