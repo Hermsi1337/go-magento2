@@ -59,9 +59,10 @@ func (apiClient *ApiClient) CreateGuestCard() (GuestCart, error) {
 		return cart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
 
+	cart.ApiClient = apiClient
 	quoteID := mayTrimSurroundingQuotes(resp.String())
 	cart.QuoteID = quoteID
-	cart.Detailed, err = cart.GetDetails(apiClient)
+	cart.Detailed, err = cart.GetDetails()
 	if err != nil {
 		return cart, err
 	}

@@ -49,7 +49,7 @@ func main() {
 	})
 
 	// update your cart with the desired items
-	err = cart.AddItems(apiClient, products)
+	err = cart.AddItems(products)
 	if err != nil {
 		panic(err)
 	}
@@ -87,7 +87,7 @@ func main() {
 	}
 
 	// estimate shipping carrier for our cart
-	availableCarrier, err := cart.EstimateShippingCarrier(apiClient, *sAddr)
+	availableCarrier, err := cart.EstimateShippingCarrier(*sAddr)
 	if err != nil {
 		panic(err)
 	}
@@ -104,7 +104,7 @@ func main() {
 	}
 
 	// add shipping info to cart
-	err = cart.AddShippingInformation(apiClient, *payLoad)
+	err = cart.AddShippingInformation(*payLoad)
 	if err != nil {
 		panic(err)
 	}
@@ -125,7 +125,7 @@ func main() {
 	desiredPaymentMethod := paymentMethods[0]
 
 	// create the order
-	orderID, err := cart.CreateOrder(apiClient, desiredPaymentMethod)
+	orderID, err := cart.CreateOrder(desiredPaymentMethod)
 	if err != nil {
 		panic(err)
 	}
