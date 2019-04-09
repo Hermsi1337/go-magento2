@@ -2,7 +2,6 @@ package types
 
 type Address struct {
 	ID                  int                    `json:"id,omitempty"`
-	Region              string                 `json:"region,omitempty"`
 	RegionID            int                    `json:"region_id,omitempty"`
 	RegionCode          string                 `json:"region_code,omitempty"`
 	CountryID           string                 `json:"country_id"`

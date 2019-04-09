@@ -6,16 +6,17 @@ import (
 	"strconv"
 )
 
-type GuestCart struct {
+type Cart struct {
+	Route     string
 	QuoteID   string
 	Detailed  types.DetailedCart
 	ApiClient *ApiClient
 }
 
-func (cart *GuestCart) GetDetails() (types.DetailedCart, error) {
+func (cart *Cart) GetDetails() (types.DetailedCart, error) {
 	var detailedCart = &types.DetailedCart{}
-	httpClient := cart.ApiClient.httpClient
-	resp, err := httpClient.R().SetResult(detailedCart).Get(guestCarts + "/" + cart.QuoteID)
+	httpClient := cart.ApiClient.HttpClient
+	resp, err := httpClient.R().SetResult(detailedCart).Get(cart.Route)
 	if err != nil {
 		return *detailedCart, fmt.Errorf("error while getting detailed cart object from magento2-api: '%v'", err)
 	} else if resp.StatusCode() >= 400 {
@@ -26,7 +27,7 @@ func (cart *GuestCart) GetDetails() (types.DetailedCart, error) {
 	return *detailedCart, err
 }
 
-func (cart *GuestCart) UpdateSelf() error {
+func (cart *Cart) UpdateSelf() error {
 	newDetails, err := cart.GetDetails()
 	if err != nil {
 		return fmt.Errorf("error while updating the cart object from magento2-api: '%v'", err)
@@ -36,9 +37,9 @@ func (cart *GuestCart) UpdateSelf() error {
 	return nil
 }
 
-func (cart *GuestCart) AddItems(items []types.Item) error {
-	endpoint := guestCarts + "/" + cart.QuoteID + guestCartsItems
-	httpClient := cart.ApiClient.httpClient
+func (cart *Cart) AddItems(items []types.Item) error {
+	endpoint := cart.Route + cartItems
+	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
 		CartItem types.Item `json:"cartItem"`
@@ -65,9 +66,9 @@ func (cart *GuestCart) AddItems(items []types.Item) error {
 	return nil
 }
 
-func (cart *GuestCart) EstimateShippingCarrier(addrInfo types.Address) ([]types.Carrier, error) {
-	endpoint := guestCarts + "/" + cart.QuoteID + guestCartsShippingCosts
-	httpClient := cart.ApiClient.httpClient
+func (cart *Cart) EstimateShippingCarrier(addrInfo types.Address) ([]types.Carrier, error) {
+	endpoint := cart.Route + cartShippingCosts
+	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
 		Address types.Address `json:"address"`
@@ -95,9 +96,9 @@ func (cart *GuestCart) EstimateShippingCarrier(addrInfo types.Address) ([]types.
 	return *shippingCosts, nil
 }
 
-func (cart *GuestCart) AddShippingInformation(addrInfo types.AddressInformation) error {
-	endpoint := guestCarts + "/" + cart.QuoteID + guestCartsShippingInformation
-	httpClient := cart.ApiClient.httpClient
+func (cart *Cart) AddShippingInformation(addrInfo types.AddressInformation) error {
+	endpoint := cart.Route + cartShippingInformation
+	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
 		AddressInformation types.AddressInformation `json:"addressInformation"`
@@ -122,9 +123,9 @@ func (cart *GuestCart) AddShippingInformation(addrInfo types.AddressInformation)
 	return nil
 }
 
-func (cart *GuestCart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
-	endpoint := guestCarts + "/" + cart.QuoteID + guestCartsPaymentMethods
-	httpClient := cart.ApiClient.httpClient
+func (cart *Cart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
+	endpoint := cart.Route + cartPaymentMethods
+	httpClient := cart.ApiClient.HttpClient
 
 	paymentMethods := &[]types.PaymentMethod{}
 
@@ -144,9 +145,9 @@ func (cart *GuestCart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
 	return *paymentMethods, nil
 }
 
-func (cart *GuestCart) CreateOrder(paymentMethod types.PaymentMethod) (types.OrderID, error) {
-	endpoint := guestCarts + "/" + cart.QuoteID + guestCartsOrder
-	httpClient := cart.ApiClient.httpClient
+func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (types.OrderID, error) {
+	endpoint := cart.Route + cartPlaceOrder
+	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
 		PaymentMethod types.PaymentMethodCode `json:"paymentMethod"`
