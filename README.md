@@ -2,7 +2,7 @@
 A Golang package for communicating with the magento2 api. (tested with >=2.3.0)
    
 I initially built this package because I need it for a project I'm currently working on.   
-Therefore I will add further features upon my need until I finished the other project.
+For the start, I will add further features upon my need.
 
 If you need a feature which is not implemented yet, feel free to open a pull request.   
 Let's make this package great together!  🚀
