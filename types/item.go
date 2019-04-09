@@ -5,7 +5,7 @@ type Item struct {
 	Sku                 string                 `json:"sku"`
 	Qty                 int                    `json:"qty"`
 	Name                string                 `json:"name,omitempty"`
-	Price               int                    `json:"price,omitempty"`
+	Price               float64                `json:"price,omitempty"`
 	ProductType         string                 `json:"product_type,omitempty"`
 	QuoteID             string                 `json:"quote_id"`
 	ProductOption       ProductOption          `json:"product_option,omitempty"`
