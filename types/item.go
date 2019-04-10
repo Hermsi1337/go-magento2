@@ -3,7 +3,7 @@ package types
 type Item struct {
 	ItemID              int                    `json:"item_id,omitempty"`
 	Sku                 string                 `json:"sku"`
-	Qty                 int                    `json:"qty"`
+	Qty                 float64                `json:"qty"`
 	Name                string                 `json:"name,omitempty"`
 	Price               float64                `json:"price,omitempty"`
 	ProductType         string                 `json:"product_type,omitempty"`
