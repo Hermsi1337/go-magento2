@@ -269,13 +269,13 @@ func main() {
 	log.Printf("Chosen payment method: '%v'", desiredPaymentMethod)
 
 	// create the order
-	orderID, err := cart.CreateOrder(desiredPaymentMethod)
+	order, err := cart.CreateOrder(desiredPaymentMethod)
 	if err != nil {
 		panic(err)
 	}
 
 	// Congrats, your order has been submitted
-	log.Printf("Your oder has been submitted. OrderID: '%v'", orderID)
+	log.Printf("Your oder has been submitted. OrderID: '%v'", order.ID)
 }
 
 ```

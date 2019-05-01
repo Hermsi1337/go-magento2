@@ -145,7 +145,7 @@ func (cart *Cart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
 	return *paymentMethods, nil
 }
 
-func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (types.OrderID, error) {
+func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (*Order, error) {
 	endpoint := cart.Route + cartPlaceOrder
 	httpClient := cart.ApiClient.HttpClient
 
@@ -161,17 +161,18 @@ func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (types.OrderID,
 
 	resp, err := httpClient.R().SetBody(payLoad).Put(endpoint)
 	if err != nil {
-		return 0, fmt.Errorf("received error while creating order: '%v'", err)
+		return nil, fmt.Errorf("received error while creating order: '%v'", err)
 	} else if resp.StatusCode() >= 400 {
-		return 0, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
+		return nil, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
 
 	orderIDString := mayTrimSurroundingQuotes(resp.String())
 	orderIDInt, err := strconv.Atoi(orderIDString)
 	if err != nil {
-		return 0, fmt.Errorf("unexpected error while extracting orderID: '%v'", err)
+		return nil, fmt.Errorf("unexpected error while extracting orderID: '%v'", err)
 	}
-	orderID := types.OrderID(orderIDInt)
 
-	return orderID, nil
+	return &Order{
+		ID: orderIDInt,
+	}, nil
 }
