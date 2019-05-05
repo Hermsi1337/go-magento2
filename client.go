@@ -13,11 +13,16 @@ type ApiClient struct {
 }
 
 type GuestClient interface {
-	CreateCart() (Cart, error)
+	NewGuestCart() (Cart, error)
 }
 
 type CustomerClient interface {
-	CreateCart() (Cart, error)
+	NewCustomerCart() (Cart, error)
+}
+
+type AdministratorClient interface {
+	NewGuestCart() (Cart, error)
+	NewCustomerCart() (Cart, error)
 }
 
 type StoreConfig struct {
@@ -57,8 +62,7 @@ func NewCustomerApiClient(storeConfig *StoreConfig, payload *types.Authenticatio
 	}, nil
 }
 
-/*
-func NewAdministratorApiClient(storeConfig *StoreConfig, payload types.AuthenticationRequestPayload) (*ApiClient, error) {
+func NewAdministratorApiClientFromAuthentication(storeConfig *StoreConfig, payload types.AuthenticationRequestPayload) (AdministratorClient, error) {
 	client := buildBasicHttpClient(storeConfig)
 	endpoint := integrationAdminTokenService
 	resp, err := client.R().SetBody(payload).Post(endpoint)
@@ -70,20 +74,30 @@ func NewAdministratorApiClient(storeConfig *StoreConfig, payload types.Authentic
 
 	return &ApiClient{
 		HttpClient: client,
-		Kind: administratorClientType,
+		Kind:       administratorClientType,
 	}, nil
 }
-*/
 
-func (apiClient *ApiClient) CreateCart() (Cart, error) {
+func NewAdministratorApiClientFromIntegration(storeConfig *StoreConfig, bearer string) (AdministratorClient, error) {
+	client := buildBasicHttpClient(storeConfig)
+
+	client.SetAuthToken(bearer)
+
+	return &ApiClient{
+		HttpClient: client,
+		Kind:       administratorClientType,
+	}, nil
+}
+
+func (apiClient *ApiClient) NewGuestCart() (Cart, error) {
 	var cart Cart
 	var endpoint string
 
 	switch apiClient.Kind {
-	case anonymousClientType:
+	case administratorClientType:
+		endpoint = adminCart
+	default:
 		endpoint = guestCart
-	case customerClientType:
-		endpoint = customerCart
 	}
 
 	httpClient := apiClient.HttpClient
@@ -95,12 +109,32 @@ func (apiClient *ApiClient) CreateCart() (Cart, error) {
 	}
 	quoteID := mayTrimSurroundingQuotes(resp.String())
 
-	switch apiClient.Kind {
-	case anonymousClientType:
-		cart.Route = guestCart + "/" + quoteID
-	case customerClientType:
-		cart.Route = customerCart
+	cart.Route = guestCart + "/" + quoteID
+
+	cart.ApiClient = apiClient
+	cart.QuoteID = quoteID
+	cart.Detailed, err = cart.GetDetails()
+	if err != nil {
+		return cart, err
 	}
+
+	return cart, err
+}
+
+func (apiClient *ApiClient) NewCustomerCart() (Cart, error) {
+	var cart Cart
+	endpoint := customerCart
+
+	httpClient := apiClient.HttpClient
+	resp, err := httpClient.R().Post(endpoint)
+	if err != nil {
+		return cart, err
+	} else if resp.StatusCode() >= 400 {
+		return cart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
+	}
+	quoteID := mayTrimSurroundingQuotes(resp.String())
+
+	cart.Route = customerCart
 
 	cart.ApiClient = apiClient
 	cart.QuoteID = quoteID

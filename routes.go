@@ -1,11 +1,13 @@
 package magento2
 
 const (
-	// get token for role
 	integrationAdminTokenService    = "/integration/admin/token"
 	integrationCustomerTokenService = "/integration/customer/token"
+	order                           = "/orders"
+	orderComments                   = "/comments"
 	guestCart                       = "/guest-carts"
 	customerCart                    = "/carts/mine"
+	adminCart                       = "/carts"
 	cartShippingCosts               = "/estimate-shipping-methods"
 	cartShippingInformation         = "/shipping-information"
 	cartPaymentMethods              = "/payment-methods"

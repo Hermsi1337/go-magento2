@@ -179,7 +179,7 @@ func main() {
 	log.Printf("Obtained client: '%v'", apiClient)
 
 	// create empty card
-	cart, err := apiClient.CreateCart()
+	cart, err := apiClient.NewGuestCart()
 	if err != nil {
 		panic(err)
 	}

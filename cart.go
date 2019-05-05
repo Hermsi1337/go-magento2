@@ -173,6 +173,38 @@ func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (*Order, error)
 	}
 
 	return &Order{
-		ID: orderIDInt,
+		ID:        orderIDInt,
+		ApiClient: cart.ApiClient,
+		Route:     order + "/" + orderIDString,
 	}, nil
+}
+
+func (cart *Cart) DeleteItem(itemID int) error {
+	endpoint := cart.Route + cartItems + "/" + strconv.Itoa(itemID)
+	httpClient := cart.ApiClient.HttpClient
+
+	resp, err := httpClient.R().Delete(endpoint)
+	if err != nil {
+		return fmt.Errorf("received error while creating order: '%v'", err)
+	} else if resp.StatusCode() >= 400 {
+		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
+	}
+
+	return nil
+}
+
+func (cart *Cart) DeleteAllItems() error {
+	err := cart.UpdateSelf()
+	if err != nil {
+		return err
+	}
+
+	for i := range cart.Detailed.Items {
+		err = cart.DeleteItem(cart.Detailed.Items[i].ItemID)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
