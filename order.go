@@ -22,7 +22,7 @@ func (order *Order) AddComment(comment string) error {
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
 	if err != nil {
-		return fmt.Errorf("received error while creating order: '%v'", err)
+		return fmt.Errorf("received error while adding comment to order: '%v'", err)
 	} else if resp.StatusCode() >= 400 {
 		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
