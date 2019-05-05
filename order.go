@@ -11,14 +11,11 @@ type Order struct {
 	ApiClient *ApiClient
 }
 
-func (order *Order) AddComment(comment string) error {
+func (order *Order) AddComment(statusHistory types.StatusHistory) error {
 	endpoint := order.Route + orderComments
 	httpClient := order.ApiClient.HttpClient
 
-	payLoad := types.StatusHistory{
-		Comment:  comment,
-		ParentID: order.ID,
-	}
+	payLoad := statusHistory
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
 	if err != nil {
