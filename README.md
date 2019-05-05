@@ -24,7 +24,11 @@ Let's make this package great together!  🚀
     - [x] get available payment methods
     - [x] add payment method
     - [x] place order
-* [ ] Administrator
+* [x] Administrator / Integration
+  * [x] cart
+    - [x] all features from guest- and customer-api
+  * [x] order
+    - [x] add comment to order
 
 ## Usage
 #### Place an order as a registered customer
@@ -57,7 +61,7 @@ func main() {
 	log.Printf("Obtained client: '%v'", apiClient)
 
 	// create empty card
-	cart, err := apiClient.CreateCart()
+	cart, err := apiClient.NewCustomerCart()
 	if err != nil {
 		panic(err)
 	}
@@ -147,13 +151,13 @@ func main() {
 	log.Printf("Chosen payment method: '%v'", desiredPaymentMethod)
 
 	// create the order
-	orderID, err := cart.CreateOrder(desiredPaymentMethod)
+	order, err := cart.CreateOrder(desiredPaymentMethod)
 	if err != nil {
 		panic(err)
 	}
 
 	// Congrats, your order has been submitted
-	log.Printf("Your oder has been submitted. OrderID: '%v'", orderID)
+	log.Printf("Your oder has been submitted. OrderID: '%v'", order.ID)
 }
 ```
 #### Place an order as a guest
