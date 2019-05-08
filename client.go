@@ -91,14 +91,7 @@ func NewAdministratorApiClientFromIntegration(storeConfig *StoreConfig, bearer s
 
 func (apiClient *ApiClient) NewGuestCart() (Cart, error) {
 	var cart Cart
-	var endpoint string
-
-	switch apiClient.Kind {
-	case administratorClientType:
-		endpoint = adminCart
-	default:
-		endpoint = guestCart
-	}
+	endpoint := guestCart
 
 	httpClient := apiClient.HttpClient
 	resp, err := httpClient.R().Post(endpoint)
