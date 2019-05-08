@@ -27,7 +27,7 @@ func (order *Order) AddComment(statusHistory types.StatusHistory) error {
 	if err != nil {
 		return fmt.Errorf("received error while adding comment to order: '%v'", err)
 	} else if resp.StatusCode() >= 400 {
-		return fmt.Errorf("unexpected statuscode '%v' - response: '%v' - payload: '%+v'", resp.StatusCode(), resp, resp.Request)
+		return fmt.Errorf("unexpected statuscode '%v' - response: '%v' - body: '%+v'", resp.StatusCode(), resp, resp.Request.Body)
 	}
 
 	return nil

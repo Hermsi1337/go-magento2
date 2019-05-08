@@ -54,7 +54,7 @@ func (cart *Cart) AddItems(items []types.Item) error {
 		if err != nil {
 			return fmt.Errorf("received error while adding item '%v' to cart: '%v'", item, err)
 		} else if resp.StatusCode() >= 400 {
-			return fmt.Errorf("unexpected statuscode '%v' - response: '%v' - payload: '%+v'", resp.StatusCode(), resp, resp.Request)
+			return fmt.Errorf("unexpected statuscode '%v' - response: '%v' - body: '%+v'", resp.StatusCode(), resp, resp.Request.Body)
 		}
 	}
 
