@@ -15,7 +15,13 @@ func (order *Order) AddComment(statusHistory types.StatusHistory) error {
 	endpoint := order.Route + orderComments
 	httpClient := order.ApiClient.HttpClient
 
-	payLoad := statusHistory
+	type PayLoad struct {
+		StatusHistory types.StatusHistory `json:"statusHistory"`
+	}
+
+	payLoad := &PayLoad{
+		StatusHistory: statusHistory,
+	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
 	if err != nil {
