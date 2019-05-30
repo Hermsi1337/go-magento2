@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/Hermsi1337/go-magento2.svg?branch=master)](https://travis-ci.com/Hermsi1337/go-magento2)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f9e75064d22478ed207f/maintainability)](https://codeclimate.com/github/Hermsi1337/go-magento2/maintainability)
+
 # go-magento2
 A Golang package for communicating with the magento2 api. (tested with >=2.3.0)
    
