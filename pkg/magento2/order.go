@@ -2,7 +2,7 @@ package magento2
 
 import (
 	"fmt"
-	"github.com/hermsi1337/go-magento2/types"
+
 )
 
 type Order struct {
@@ -11,12 +11,12 @@ type Order struct {
 	ApiClient *ApiClient
 }
 
-func (order *Order) AddComment(statusHistory types.StatusHistory) error {
+func (order *Order) AddComment(statusHistory StatusHistory) error {
 	endpoint := order.Route + orderComments
 	httpClient := order.ApiClient.HttpClient
 
 	type PayLoad struct {
-		StatusHistory types.StatusHistory `json:"statusHistory"`
+		StatusHistory StatusHistory `json:"statusHistory"`
 	}
 
 	payLoad := &PayLoad{

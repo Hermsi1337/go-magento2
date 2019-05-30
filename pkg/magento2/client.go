@@ -3,7 +3,8 @@ package magento2
 import (
 	"crypto/tls"
 	"fmt"
-	"github.com/hermsi1337/go-magento2/types"
+	"github.com/hermsi1337/go-magento2/internal/utils"
+
 	"gopkg.in/resty.v1"
 )
 
@@ -46,7 +47,7 @@ func NewGuestApiClient(storeConfig *StoreConfig) GuestClient {
 	}
 }
 
-func NewCustomerApiClient(storeConfig *StoreConfig, payload *types.AuthenticationRequestPayload) (CustomerClient, error) {
+func NewCustomerApiClient(storeConfig *StoreConfig, payload *AuthenticationRequestPayload) (CustomerClient, error) {
 	client := buildBasicHttpClient(storeConfig)
 	endpoint := integrationCustomerTokenService
 	resp, err := client.R().SetBody(payload).Post(endpoint)
@@ -54,7 +55,7 @@ func NewCustomerApiClient(storeConfig *StoreConfig, payload *types.Authenticatio
 		return nil, err
 	}
 
-	client.SetAuthToken(mayTrimSurroundingQuotes(resp.String()))
+	client.SetAuthToken(utils.MayTrimSurroundingQuotes(resp.String()))
 
 	return &ApiClient{
 		HttpClient: client,
@@ -62,7 +63,7 @@ func NewCustomerApiClient(storeConfig *StoreConfig, payload *types.Authenticatio
 	}, nil
 }
 
-func NewAdministratorApiClientFromAuthentication(storeConfig *StoreConfig, payload types.AuthenticationRequestPayload) (AdministratorClient, error) {
+func NewAdministratorApiClientFromAuthentication(storeConfig *StoreConfig, payload AuthenticationRequestPayload) (AdministratorClient, error) {
 	client := buildBasicHttpClient(storeConfig)
 	endpoint := integrationAdminTokenService
 	resp, err := client.R().SetBody(payload).Post(endpoint)
@@ -100,7 +101,7 @@ func (apiClient *ApiClient) NewGuestCart() (Cart, error) {
 	} else if resp.StatusCode() >= 400 {
 		return cart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
-	quoteID := mayTrimSurroundingQuotes(resp.String())
+	quoteID := utils.MayTrimSurroundingQuotes(resp.String())
 
 	cart.Route = guestCart + "/" + quoteID
 
@@ -125,7 +126,7 @@ func (apiClient *ApiClient) NewCustomerCart() (Cart, error) {
 	} else if resp.StatusCode() >= 400 {
 		return cart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
-	quoteID := mayTrimSurroundingQuotes(resp.String())
+	quoteID := utils.MayTrimSurroundingQuotes(resp.String())
 
 	cart.Route = customerCart
 

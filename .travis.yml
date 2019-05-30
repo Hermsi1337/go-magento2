@@ -1,0 +1,30 @@
+language: go
+
+go:
+  - '1.12'
+
+dist: xenial
+
+env:
+  - GOLANG_LINT_VERSION=v1.16.0
+
+addons:
+  apt:
+    packages:
+      - curl
+      - bash
+
+before_script:
+  - wget -O - -q https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s ${GOLANG_LINT_VERSION}
+
+script:
+  - golangci-lint run ./... || exit 1
+  - curl -sL https://git.io/goreleaser | bash -s -- --snapshot --skip-publish --rm-dist
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: curl -sL https://git.io/goreleaser | bash -s -- --rm-dist
+    on:
+      tags: true
+      condition: $TRAVIS_OS_NAME = linux

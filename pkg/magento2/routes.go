@@ -7,7 +7,6 @@ const (
 	orderComments                   = "/comments"
 	guestCart                       = "/guest-carts"
 	customerCart                    = "/carts/mine"
-	adminCart                       = "/carts"
 	cartShippingCosts               = "/estimate-shipping-methods"
 	cartShippingInformation         = "/shipping-information"
 	cartPaymentMethods              = "/payment-methods"

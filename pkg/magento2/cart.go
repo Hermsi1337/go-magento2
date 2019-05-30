@@ -2,19 +2,19 @@ package magento2
 
 import (
 	"fmt"
-	"github.com/hermsi1337/go-magento2/types"
+	"github.com/hermsi1337/go-magento2/internal/utils"
 	"strconv"
 )
 
 type Cart struct {
 	Route     string
 	QuoteID   string
-	Detailed  types.DetailedCart
+	Detailed  DetailedCart
 	ApiClient *ApiClient
 }
 
-func (cart *Cart) GetDetails() (types.DetailedCart, error) {
-	var detailedCart = &types.DetailedCart{}
+func (cart *Cart) GetDetails() (DetailedCart, error) {
+	var detailedCart = &DetailedCart{}
 	httpClient := cart.ApiClient.HttpClient
 	resp, err := httpClient.R().SetResult(detailedCart).Get(cart.Route)
 	if err != nil {
@@ -22,7 +22,7 @@ func (cart *Cart) GetDetails() (types.DetailedCart, error) {
 	} else if resp.StatusCode() >= 400 {
 		return *detailedCart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
-	detailedCart = resp.Result().(*types.DetailedCart)
+	detailedCart = resp.Result().(*DetailedCart)
 
 	return *detailedCart, err
 }
@@ -37,12 +37,12 @@ func (cart *Cart) UpdateSelf() error {
 	return nil
 }
 
-func (cart *Cart) AddItems(items []types.Item) error {
+func (cart *Cart) AddItems(items []Item) error {
 	endpoint := cart.Route + cartItems
 	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
-		CartItem types.Item `json:"cartItem"`
+		CartItem Item `json:"cartItem"`
 	}
 
 	for _, item := range items {
@@ -66,19 +66,19 @@ func (cart *Cart) AddItems(items []types.Item) error {
 	return nil
 }
 
-func (cart *Cart) EstimateShippingCarrier(addrInfo types.Address) ([]types.Carrier, error) {
+func (cart *Cart) EstimateShippingCarrier(addrInfo Address) ([]Carrier, error) {
 	endpoint := cart.Route + cartShippingCosts
 	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
-		Address types.Address `json:"address"`
+		Address Address `json:"address"`
 	}
 
 	payLoad := &PayLoad{
 		Address: addrInfo,
 	}
 
-	shippingCosts := &[]types.Carrier{}
+	shippingCosts := &[]Carrier{}
 
 	resp, err := httpClient.R().SetBody(*payLoad).SetResult(shippingCosts).Post(endpoint)
 	if err != nil {
@@ -87,7 +87,7 @@ func (cart *Cart) EstimateShippingCarrier(addrInfo types.Address) ([]types.Carri
 		return *shippingCosts, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
 
-	shippingCosts = resp.Result().(*[]types.Carrier)
+	shippingCosts = resp.Result().(*[]Carrier)
 
 	if len(*shippingCosts) == 0 {
 		return *shippingCosts, fmt.Errorf("received no suitable shipping - response: '%v'", resp)
@@ -96,12 +96,12 @@ func (cart *Cart) EstimateShippingCarrier(addrInfo types.Address) ([]types.Carri
 	return *shippingCosts, nil
 }
 
-func (cart *Cart) AddShippingInformation(addrInfo types.AddressInformation) error {
+func (cart *Cart) AddShippingInformation(addrInfo AddressInformation) error {
 	endpoint := cart.Route + cartShippingInformation
 	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
-		AddressInformation types.AddressInformation `json:"addressInformation"`
+		AddressInformation AddressInformation `json:"addressInformation"`
 	}
 
 	payLoad := &PayLoad{
@@ -123,11 +123,11 @@ func (cart *Cart) AddShippingInformation(addrInfo types.AddressInformation) erro
 	return nil
 }
 
-func (cart *Cart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
+func (cart *Cart) EstimatePaymentMethods() ([]PaymentMethod, error) {
 	endpoint := cart.Route + cartPaymentMethods
 	httpClient := cart.ApiClient.HttpClient
 
-	paymentMethods := &[]types.PaymentMethod{}
+	paymentMethods := &[]PaymentMethod{}
 
 	resp, err := httpClient.R().SetResult(paymentMethods).Get(endpoint)
 	if err != nil {
@@ -136,7 +136,7 @@ func (cart *Cart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
 		return *paymentMethods, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
 
-	paymentMethods = resp.Result().(*[]types.PaymentMethod)
+	paymentMethods = resp.Result().(*[]PaymentMethod)
 
 	if len(*paymentMethods) == 0 {
 		return *paymentMethods, fmt.Errorf("received no suitable payment method - response: '%v'", resp)
@@ -145,16 +145,16 @@ func (cart *Cart) EstimatePaymentMethods() ([]types.PaymentMethod, error) {
 	return *paymentMethods, nil
 }
 
-func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (*Order, error) {
+func (cart *Cart) CreateOrder(paymentMethod PaymentMethod) (*Order, error) {
 	endpoint := cart.Route + cartPlaceOrder
 	httpClient := cart.ApiClient.HttpClient
 
 	type PayLoad struct {
-		PaymentMethod types.PaymentMethodCode `json:"paymentMethod"`
+		PaymentMethod PaymentMethodCode `json:"paymentMethod"`
 	}
 
 	payLoad := &PayLoad{
-		PaymentMethod: types.PaymentMethodCode{
+		PaymentMethod: PaymentMethodCode{
 			Method: paymentMethod.Code,
 		},
 	}
@@ -166,7 +166,7 @@ func (cart *Cart) CreateOrder(paymentMethod types.PaymentMethod) (*Order, error)
 		return nil, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
 
-	orderIDString := mayTrimSurroundingQuotes(resp.String())
+	orderIDString := utils.MayTrimSurroundingQuotes(resp.String())
 	orderIDInt, err := strconv.Atoi(orderIDString)
 	if err != nil {
 		return nil, fmt.Errorf("unexpected error while extracting orderID: '%v'", err)
