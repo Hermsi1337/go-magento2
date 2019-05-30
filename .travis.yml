@@ -6,8 +6,9 @@ go:
 dist: xenial
 
 env:
-  - GOLANG_LINT_VERSION=v1.16.0
-  - GO111MODULE=on
+  global:
+    - GOLANG_LINT_VERSION=v1.16.0
+    - GO111MODULE=on
 
 addons:
   apt:
