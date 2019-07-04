@@ -2,7 +2,6 @@ package magento2
 
 import (
 	"crypto/tls"
-	"fmt"
 	"github.com/hermsi1337/go-magento2/internal/utils"
 
 	"gopkg.in/resty.v1"
@@ -24,6 +23,7 @@ type CustomerClient interface {
 type AdministratorClient interface {
 	NewGuestCart() (Cart, error)
 	NewCustomerCart() (Cart, error)
+	CreateOrUpdateProduct(p Product, saveOptions bool) (*MProduct, error)
 }
 
 type StoreConfig struct {
@@ -88,56 +88,6 @@ func NewAdministratorApiClientFromIntegration(storeConfig *StoreConfig, bearer s
 		HttpClient: client,
 		Kind:       administratorClientType,
 	}, nil
-}
-
-func (apiClient *ApiClient) NewGuestCart() (Cart, error) {
-	var cart Cart
-	endpoint := guestCart
-
-	httpClient := apiClient.HttpClient
-	resp, err := httpClient.R().Post(endpoint)
-	if err != nil {
-		return cart, err
-	} else if resp.StatusCode() >= 400 {
-		return cart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
-	quoteID := utils.MayTrimSurroundingQuotes(resp.String())
-
-	cart.Route = guestCart + "/" + quoteID
-
-	cart.ApiClient = apiClient
-	cart.QuoteID = quoteID
-	cart.Detailed, err = cart.GetDetails()
-	if err != nil {
-		return cart, err
-	}
-
-	return cart, err
-}
-
-func (apiClient *ApiClient) NewCustomerCart() (Cart, error) {
-	var cart Cart
-	endpoint := customerCart
-
-	httpClient := apiClient.HttpClient
-	resp, err := httpClient.R().Post(endpoint)
-	if err != nil {
-		return cart, err
-	} else if resp.StatusCode() >= 400 {
-		return cart, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
-	quoteID := utils.MayTrimSurroundingQuotes(resp.String())
-
-	cart.Route = customerCart
-
-	cart.ApiClient = apiClient
-	cart.QuoteID = quoteID
-	cart.Detailed, err = cart.GetDetails()
-	if err != nil {
-		return cart, err
-	}
-
-	return cart, err
 }
 
 func buildBasicHttpClient(storeConfig *StoreConfig) *resty.Client {

@@ -23,7 +23,7 @@ type Address struct {
 	CustomerAddressID   int                    `json:"customer_address_id,omitempty"`
 	SaveInAddressBook   int                    `json:"save_in_address_book,omitempty"`
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
-	CustomAttributes    []CustomAttributes     `json:"custom_attributes,omitempty"`
+	CustomAttributes    []map[string]interface{}     `json:"custom_attributes,omitempty"`
 }
 
 type AddressInformation struct {
@@ -32,7 +32,7 @@ type AddressInformation struct {
 	ShippingMethodCode   string                 `json:"shipping_method_code"`
 	ShippingCarrierCodes string                 `json:"shipping_carrier_code"`
 	ExtensionAttributes  map[string]interface{} `json:"extension_attributes,omitempty"`
-	CustomAttributes     []CustomAttributes     `json:"custom_attributes,omitempty"`
+	CustomAttributes     []map[string]interface{}     `json:"custom_attributes,omitempty"`
 }
 
 type AuthenticationRequestPayload struct {
@@ -100,11 +100,6 @@ type Currency struct {
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
-type CustomAttributes struct {
-	AttributeCode string `json:"attribute_code,omitempty"`
-	Value         string `json:"value,omitempty"`
-}
-
 type CustomOptions struct {
 	OptionID            string                 `json:"option_id,omitempty"`
 	OptionValue         string                 `json:"option_value,omitempty"`
@@ -134,7 +129,7 @@ type Customer struct {
 	Addresses              []Address              `json:"addresses,omitempty"`
 	DisableAutoGroupChange int                    `json:"disable_auto_group_change,omitempty"`
 	ExtensionAttributes    map[string]interface{} `json:"extension_attributes,omitempty"`
-	CustomAttributes       []CustomAttributes     `json:"custom_attributes,omitempty"`
+	CustomAttributes       []map[string]interface{}     `json:"custom_attributes,omitempty"`
 }
 
 type DetailedCart struct {
@@ -162,21 +157,6 @@ type DetailedCart struct {
 
 type DownloadableOption struct {
 	DownloadableLinks []int `json:"downloadable_links,omitempty"`
-}
-
-type ExtensionAttributes struct {
-	FileInfo                FileInfo                  `json:"file_info,omitempty"`
-	ShippingAssignments     []ShippingAssignments     `json:"shipping_assignments,omitempty"`
-	CustomOptions           []CustomOptions           `json:"custom_options,omitempty"`
-	BundleOptions           []BundleOptions           `json:"bundle_options,omitempty"`
-	DownloadableOption      DownloadableOption        `json:"downloadable_option,omitempty"`
-	GiftcardItemOption      GiftcardItemOption        `json:"giftcard_item_option,omitempty"`
-	ConfigurableItemOptions []ConfigurableItemOptions `json:"configurable_item_options,omitempty"`
-	NegotiableQuoteItem     NegotiableQuoteItem       `json:"negotiable_quote_item,omitempty"`
-	CompanyAttributes       CompanyAttributes         `json:"company_attributes,omitempty"`
-	IsSubscribed            bool                      `json:"is_subscribed,omitempty"`
-	GiftRegistryID          int                       `json:"gift_registry_id,omitempty"`
-	NegotiableQuote         NegotiableQuote           `json:"negotiable_quote,omitempty"`
 }
 
 type FileInfo struct {
@@ -271,4 +251,219 @@ type StatusHistory struct {
 	ParentID            int                    `json:"parent_id,omitempty"`
 	Status              string                 `json:"status,omitempty"`
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
+}
+
+type AddProductPayload struct {
+	Product     Product `json:"product"`
+	SaveOptions bool    `json:"saveOptions"`
+}
+
+type CategoryLinks struct {
+	Position            int                    `json:"position"`
+	CategoryID          string                 `json:"category_id"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type StockItem struct {
+	ItemID                         int                    `json:"item_id"`
+	ProductID                      int                    `json:"product_id"`
+	StockID                        int                    `json:"stock_id"`
+	Qty                            int                    `json:"qty"`
+	IsInStock                      bool                   `json:"is_in_stock"`
+	IsQtyDecimal                   bool                   `json:"is_qty_decimal"`
+	ShowDefaultNotificationMessage bool                   `json:"show_default_notification_message"`
+	UseConfigMinQty                bool                   `json:"use_config_min_qty"`
+	MinQty                         int                    `json:"min_qty"`
+	UseConfigMinSaleQty            int                    `json:"use_config_min_sale_qty"`
+	MinSaleQty                     int                    `json:"min_sale_qty"`
+	UseConfigMaxSaleQty            bool                   `json:"use_config_max_sale_qty"`
+	MaxSaleQty                     int                    `json:"max_sale_qty"`
+	UseConfigBackorders            bool                   `json:"use_config_backorders"`
+	Backorders                     int                    `json:"backorders"`
+	UseConfigNotifyStockQty        bool                   `json:"use_config_notify_stock_qty"`
+	NotifyStockQty                 int                    `json:"notify_stock_qty"`
+	UseConfigQtyIncrements         bool                   `json:"use_config_qty_increments"`
+	QtyIncrements                  int                    `json:"qty_increments"`
+	UseConfigEnableQtyInc          bool                   `json:"use_config_enable_qty_inc"`
+	EnableQtyIncrements            bool                   `json:"enable_qty_increments"`
+	UseConfigManageStock           bool                   `json:"use_config_manage_stock"`
+	ManageStock                    bool                   `json:"manage_stock"`
+	LowStockDate                   string                 `json:"low_stock_date"`
+	IsDecimalDivided               bool                   `json:"is_decimal_divided"`
+	StockStatusChangedAuto         int                    `json:"stock_status_changed_auto"`
+	ExtensionAttributes            map[string]interface{} `json:"extension_attributes"`
+}
+
+type AddProductLinks struct {
+	ID                  string                 `json:"id"`
+	Sku                 string                 `json:"sku"`
+	OptionID            int                    `json:"option_id"`
+	Qty                 int                    `json:"qty"`
+	Position            int                    `json:"position"`
+	IsDefault           bool                   `json:"is_default"`
+	Price               int                    `json:"price"`
+	PriceType           int                    `json:"price_type"`
+	CanChangeQuantity   int                    `json:"can_change_quantity"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type BundleProductOptions struct {
+	OptionID            int                    `json:"option_id"`
+	Title               string                 `json:"title"`
+	Required            bool                   `json:"required"`
+	Type                string                 `json:"type"`
+	Position            int                    `json:"position"`
+	Sku                 string                 `json:"sku"`
+	ProductLinks        []AddProductLinks      `json:"product_links"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type ConfigurableProductOptions struct {
+	ID                  int                    `json:"id"`
+	AttributeID         string                 `json:"attribute_id"`
+	Label               string                 `json:"label"`
+	Position            int                    `json:"position"`
+	IsUseDefault        bool                   `json:"is_use_default"`
+	Values              []Values               `json:"values"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	ProductID           int                    `json:"product_id"`
+}
+
+type LinkFileContent struct {
+	FileData            string                 `json:"file_data"`
+	Name                string                 `json:"name"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type SampleFileContent struct {
+	FileData            string                 `json:"file_data"`
+	Name                string                 `json:"name"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type DownloadableProductLinks struct {
+	ID                  int                    `json:"id"`
+	Title               string                 `json:"title"`
+	SortOrder           int                    `json:"sort_order"`
+	IsShareable         int                    `json:"is_shareable"`
+	Price               int                    `json:"price"`
+	NumberOfDownloads   int                    `json:"number_of_downloads"`
+	LinkType            string                 `json:"link_type"`
+	LinkFile            string                 `json:"link_file"`
+	LinkFileContent     LinkFileContent        `json:"link_file_content"`
+	LinkURL             string                 `json:"link_url"`
+	SampleType          string                 `json:"sample_type"`
+	SampleFile          string                 `json:"sample_file"`
+	SampleFileContent   SampleFileContent      `json:"sample_file_content"`
+	SampleURL           string                 `json:"sample_url"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type DownloadableProductSamples struct {
+	ID                  int                    `json:"id"`
+	Title               string                 `json:"title"`
+	SortOrder           int                    `json:"sort_order"`
+	SampleType          string                 `json:"sample_type"`
+	SampleFile          string                 `json:"sample_file"`
+	SampleFileContent   SampleFileContent      `json:"sample_file_content"`
+	SampleURL           string                 `json:"sample_url"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type GiftcardAmounts struct {
+	AttributeID         int                    `json:"attribute_id"`
+	WebsiteID           int                    `json:"website_id"`
+	Value               int                    `json:"value"`
+	WebsiteValue        int                    `json:"website_value"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type ProductLinks struct {
+	Sku                 string                 `json:"sku"`
+	LinkType            string                 `json:"link_type"`
+	LinkedProductSku    string                 `json:"linked_product_sku"`
+	LinkedProductType   string                 `json:"linked_product_type"`
+	Position            int                    `json:"position"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type Values struct {
+	Title        string `json:"title"`
+	SortOrder    int    `json:"sort_order"`
+	Price        int    `json:"price"`
+	PriceType    string `json:"price_type"`
+	Sku          string `json:"sku"`
+	OptionTypeID int    `json:"option_type_id"`
+}
+
+type Options struct {
+	ProductSku          string                 `json:"product_sku"`
+	OptionID            int                    `json:"option_id"`
+	Title               string                 `json:"title"`
+	Type                string                 `json:"type"`
+	SortOrder           int                    `json:"sort_order"`
+	IsRequire           bool                   `json:"is_require"`
+	Price               int                    `json:"price"`
+	PriceType           string                 `json:"price_type"`
+	Sku                 string                 `json:"sku"`
+	FileExtension       string                 `json:"file_extension"`
+	MaxCharacters       int                    `json:"max_characters"`
+	ImageSizeX          int                    `json:"image_size_x"`
+	ImageSizeY          int                    `json:"image_size_y"`
+	Values              []Values               `json:"values"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type Content struct {
+	Base64EncodedData string `json:"base64_encoded_data"`
+	Type              string `json:"type"`
+	Name              string `json:"name"`
+}
+
+type VideoContent struct {
+	MediaType        string `json:"media_type"`
+	VideoProvider    string `json:"video_provider"`
+	VideoURL         string `json:"video_url"`
+	VideoTitle       string `json:"video_title"`
+	VideoDescription string `json:"video_description"`
+	VideoMetadata    string `json:"video_metadata"`
+}
+
+type MediaGalleryEntries struct {
+	ID                  int                    `json:"id"`
+	MediaType           string                 `json:"media_type"`
+	Label               string                 `json:"label"`
+	Position            int                    `json:"position"`
+	Disabled            bool                   `json:"disabled"`
+	Types               []string               `json:"types"`
+	File                string                 `json:"file"`
+	Content             Content                `json:"content"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type TierPrices struct {
+	CustomerGroupID     int                    `json:"customer_group_id"`
+	Qty                 int                    `json:"qty"`
+	Value               int                    `json:"value"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+}
+
+type Product struct {
+	ID                  int                      `json:"id,omitempty"`
+	Sku                 string                   `json:"sku"`
+	Name                string                   `json:"name"`
+	AttributeSetID      int                      `json:"attribute_set_id"`
+	Price               int                      `json:"price"`
+	Status              int                      `json:"status,omitempty"`
+	Visibility          int                      `json:"visibility,omitempty"`
+	TypeID              string                   `json:"type_id,omitempty"`
+	CreatedAt           string                   `json:"created_at,omitempty"`
+	UpdatedAt           string                   `json:"updated_at,omitempty"`
+	Weight              int                      `json:"weight,omitempty"`
+	ExtensionAttributes map[string]interface{}   `json:"extension_attributes,omitempty"`
+	ProductLinks        []ProductLinks           `json:"product_links,omitempty"`
+	Options             []Options                `json:"options,omitempty"`
+	MediaGalleryEntries []MediaGalleryEntries    `json:"media_gallery_entries,omitempty"`
+	TierPrices          []TierPrices             `json:"tier_prices,omitempty"`
+	CustomAttributes    []map[string]interface{} `json:"custom_attributes,omitempty"`
 }

@@ -12,4 +12,5 @@ const (
 	cartPaymentMethods              = "/payment-methods"
 	cartItems                       = "/items"
 	cartPlaceOrder                  = "/order"
+	products						= "/products"
 )
