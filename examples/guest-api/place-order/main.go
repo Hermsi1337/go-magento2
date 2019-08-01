@@ -16,14 +16,15 @@ func main() {
 
 	// create a new apiClient
 	apiClient := api.NewGuestApiClient(storeConfig)
-	log.Printf("Obtained client: '%v'", apiClient)
+	log.Printf("Obtained client: '%+v'", apiClient)
 
 	// create empty card
 	mCart, err := cart.NewGuestCartFromApiClient(apiClient)
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("Obtained cart: '%v'", mCart)
+	log.Printf("Obtained mCart: '%+v'", mCart)
+	log.Printf("Detailed cart: '%+v'", mCart.Cart)
 
 	// initialize items array
 	var products []cart.Item
@@ -40,7 +41,8 @@ func main() {
 		panic(err)
 	}
 
-	log.Printf("Added products: '%+v' - Products in cart: '%+v'", products, mCart.Cart.Items)
+	log.Printf("Added products: '%+v'", products)
+	log.Printf("Products in cart: '%+v'", mCart.Cart.Items)
 
 	// define shipping address
 	sAddr := &cart.Address{
@@ -74,12 +76,12 @@ func main() {
 		panic(err)
 	}
 
-	log.Printf("Obtained carrier: '%v'", availableCarrier)
+	log.Printf("Obtained carrier: '%+v'", availableCarrier)
 
 	// choose your desired carrier
 	desiredCarrier := availableCarrier[0]
 
-	log.Printf("Chosen carrier: '%v'", desiredCarrier)
+	log.Printf("Chosen carrier: '%+v'", desiredCarrier)
 
 	// define addressinformation-payload for your cart
 	payLoad := &cart.AddressInformation{
@@ -101,12 +103,12 @@ func main() {
 		panic(err)
 	}
 
-	log.Printf("Obtained payment methods: '%v'", paymentMethods)
+	log.Printf("Obtained payment methods: '%+v'", paymentMethods)
 
 	// choose your desired payment method
 	desiredPaymentMethod := paymentMethods[0]
 
-	log.Printf("Chosen payment method: '%v'", desiredPaymentMethod)
+	log.Printf("Chosen payment method: '%+v'", desiredPaymentMethod)
 
 	// create the order
 	order, err := mCart.CreateOrder(desiredPaymentMethod)
@@ -115,5 +117,5 @@ func main() {
 	}
 
 	// Congrats, your order has been submitted
-	log.Printf("Your oder has been submitted. OrderID: '%v'", order.ID)
+	log.Printf("Your oder has been submitted. OrderID: '%v'", order.Order.EntityID)
 }

@@ -41,41 +41,41 @@ type CustomAttributes struct {
 }
 
 type Attribute struct {
-	ExtensionAttributes       ExtensionAttributes `json:"extension_attributes"`
-	IsWysiwygEnabled          bool                `json:"is_wysiwyg_enabled"`
-	IsHTMLAllowedOnFront      bool                `json:"is_html_allowed_on_front"`
-	UsedForSortBy             bool                `json:"used_for_sort_by"`
-	IsFilterable              bool                `json:"is_filterable"`
-	IsFilterableInSearch      bool                `json:"is_filterable_in_search"`
-	IsUsedInGrid              bool                `json:"is_used_in_grid"`
-	IsVisibleInGrid           bool                `json:"is_visible_in_grid"`
-	IsFilterableInGrid        bool                `json:"is_filterable_in_grid"`
-	Position                  int                 `json:"position"`
-	ApplyTo                   []string            `json:"apply_to"`
-	IsSearchable              string              `json:"is_searchable"`
-	IsVisibleInAdvancedSearch string              `json:"is_visible_in_advanced_search"`
-	IsComparable              string              `json:"is_comparable"`
-	IsUsedForPromoRules       string              `json:"is_used_for_promo_rules"`
-	IsVisibleOnFront          string              `json:"is_visible_on_front"`
-	UsedInProductListing      string              `json:"used_in_product_listing"`
-	IsVisible                 bool                `json:"is_visible"`
-	Scope                     string              `json:"scope"`
-	AttributeID               int                 `json:"attribute_id"`
+	ExtensionAttributes       ExtensionAttributes `json:"extension_attributes,omitempty"`
+	IsWysiwygEnabled          bool                `json:"is_wysiwyg_enabled,omitempty"`
+	IsHTMLAllowedOnFront      bool                `json:"is_html_allowed_on_front,omitempty"`
+	UsedForSortBy             bool                `json:"used_for_sort_by,omitempty"`
+	IsFilterable              bool                `json:"is_filterable,omitempty"`
+	IsFilterableInSearch      bool                `json:"is_filterable_in_search,omitempty"`
+	IsUsedInGrid              bool                `json:"is_used_in_grid,omitempty"`
+	IsVisibleInGrid           bool                `json:"is_visible_in_grid,omitempty"`
+	IsFilterableInGrid        bool                `json:"is_filterable_in_grid,omitempty"`
+	Position                  int                 `json:"position,omitempty"`
+	ApplyTo                   []string            `json:"apply_to,omitempty"`
+	IsSearchable              string              `json:"is_searchable,omitempty"`
+	IsVisibleInAdvancedSearch string              `json:"is_visible_in_advanced_search,omitempty"`
+	IsComparable              string              `json:"is_comparable,omitempty"`
+	IsUsedForPromoRules       string              `json:"is_used_for_promo_rules,omitempty"`
+	IsVisibleOnFront          string              `json:"is_visible_on_front,omitempty"`
+	UsedInProductListing      string              `json:"used_in_product_listing,omitempty"`
+	IsVisible                 bool                `json:"is_visible,omitempty"`
+	Scope                     string              `json:"scope,omitempty"`
+	AttributeID               int                 `json:"attribute_id,omitempty"`
 	AttributeCode             string              `json:"attribute_code"`
 	FrontendInput             string              `json:"frontend_input"`
-	EntityTypeID              string              `json:"entity_type_id"`
-	IsRequired                bool                `json:"is_required"`
-	Options                   []Option            `json:"options"`
-	IsUserDefined             bool                `json:"is_user_defined"`
+	EntityTypeID              string              `json:"entity_type_id,omitempty"`
+	IsRequired                bool                `json:"is_required,omitempty"`
+	Options                   []Option            `json:"options,omitempty"`
+	IsUserDefined             bool                `json:"is_user_defined,omitempty"`
 	DefaultFrontendLabel      string              `json:"default_frontend_label"`
-	FrontendLabels            []FrontendLabels    `json:"frontend_labels"`
-	Note                      string              `json:"note"`
-	BackendType               string              `json:"backend_type"`
-	BackendModel              string              `json:"backend_model"`
-	SourceModel               string              `json:"source_model"`
-	DefaultValue              string              `json:"default_value"`
-	IsUnique                  string              `json:"is_unique"`
-	FrontendClass             string              `json:"frontend_class"`
-	ValidationRules           []ValidationRules   `json:"validation_rules"`
-	CustomAttributes          []CustomAttributes  `json:"custom_attributes"`
+	FrontendLabels            []FrontendLabels    `json:"frontend_labels,omitempty"`
+	Note                      string              `json:"note,omitempty"`
+	BackendType               string              `json:"backend_type,omitempty"`
+	BackendModel              string              `json:"backend_model,omitempty"`
+	SourceModel               string              `json:"source_model,omitempty"`
+	DefaultValue              string              `json:"default_value,omitempty"`
+	IsUnique                  string              `json:"is_unique,omitempty"`
+	FrontendClass             string              `json:"frontend_class,omitempty"`
+	ValidationRules           []ValidationRules   `json:"validation_rules,omitempty"`
+	CustomAttributes          []CustomAttributes  `json:"custom_attributes,omitempty"`
 }

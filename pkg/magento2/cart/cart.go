@@ -41,53 +41,45 @@ func (cart *MCart) initializeGuestCart() error {
 
 	httpClient := apiClient.HttpClient
 	resp, err := httpClient.R().Post(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "initialize cart for guest")
 	if err != nil {
 		return err
-	} else if resp.StatusCode() >= 400 {
-		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
+
 	quoteID := utils.MayTrimSurroundingQuotes(resp.String())
 
 	cart.Route = guestCart + "/" + quoteID
-
-	cart.ApiClient = apiClient
 	cart.QuoteID = quoteID
+	cart.ApiClient = apiClient
 
-	return cart.updateCartFromRemote()
+	return cart.UpdateCartFromRemote()
 }
 
-func (cart *MCart) initializeCustomerCart() error{
+func (cart *MCart) initializeCustomerCart() error {
 	endpoint := customerCart
 	apiClient := cart.ApiClient
 
 	httpClient := apiClient.HttpClient
 	resp, err := httpClient.R().Post(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "initialize cart for customer")
 	if err != nil {
 		return err
-	} else if resp.StatusCode() >= 400 {
-		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
 	}
+
 	quoteID := utils.MayTrimSurroundingQuotes(resp.String())
 
 	cart.Route = customerCart
-
-	cart.ApiClient = apiClient
 	cart.QuoteID = quoteID
+	cart.ApiClient = apiClient
 
-	return cart.updateCartFromRemote()
+	return cart.UpdateCartFromRemote()
 }
 
-func (cart *MCart) updateCartFromRemote() error {
+func (cart *MCart) UpdateCartFromRemote() error {
 	httpClient := cart.ApiClient.HttpClient
 
 	resp, err := httpClient.R().SetResult(cart.Cart).Get(cart.Route)
-	if err != nil {
-		return fmt.Errorf("error while getting detailed cart object from magento2-api: '%v'", err)
-	} else if resp.StatusCode() >= 400 {
-		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
-
-	return nil
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "get detailed cart object from magento2-api")
 }
 
 func (cart *MCart) AddItems(items []Item) error {
@@ -105,15 +97,14 @@ func (cart *MCart) AddItems(items []Item) error {
 		}
 
 		resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
-
+		err = utils.MayReturnErrorForHTTPResponse(err, resp, fmt.Sprintf("add item '%+v' to cart", item))
 		if err != nil {
-			return fmt.Errorf("received error while adding item '%v' to cart: '%v'", item, err)
-		} else if resp.StatusCode() >= 400 {
-			return fmt.Errorf("unexpected statuscode '%v' while adding item '%v' to cart - response: '%v' - body: '%+v'", resp.StatusCode(), item, resp, resp.Request.Body)
+			return err
 		}
+		cart.Cart.Items = append(cart.Cart.Items, item)
 	}
 
-	return cart.updateCartFromRemote()
+	return nil
 }
 
 func (cart *MCart) EstimateShippingCarrier(addrInfo Address) ([]Carrier, error) {
@@ -128,22 +119,11 @@ func (cart *MCart) EstimateShippingCarrier(addrInfo Address) ([]Carrier, error) 
 		Address: addrInfo,
 	}
 
-	shippingCosts := &[]Carrier{}
+	shippingCarrier := &[]Carrier{}
 
-	resp, err := httpClient.R().SetBody(*payLoad).SetResult(shippingCosts).Post(endpoint)
-	if err != nil {
-		return *shippingCosts, fmt.Errorf("received erro while estimating shipping costs: '%v'", err)
-	} else if resp.StatusCode() >= 400 {
-		return *shippingCosts, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
+	resp, err := httpClient.R().SetBody(*payLoad).SetResult(shippingCarrier).Post(endpoint)
 
-	shippingCosts = resp.Result().(*[]Carrier)
-
-	if len(*shippingCosts) == 0 {
-		return *shippingCosts, fmt.Errorf("received no suitable shipping - response: '%v'", resp)
-	}
-
-	return *shippingCosts, nil
+	return *shippingCarrier, utils.MayReturnErrorForHTTPResponse(err, resp, "estimate shipping carrier for cart")
 }
 
 func (cart *MCart) AddShippingInformation(addrInfo AddressInformation) error {
@@ -159,13 +139,7 @@ func (cart *MCart) AddShippingInformation(addrInfo AddressInformation) error {
 	}
 
 	resp, err := httpClient.R().SetBody(*payLoad).Post(endpoint)
-	if err != nil {
-		return fmt.Errorf("received error while adding shipping information: '%v'", err)
-	} else if resp.StatusCode() >= 400 {
-		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
-
-	return cart.updateCartFromRemote()
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "add shipping information to cart")
 }
 
 func (cart *MCart) EstimatePaymentMethods() ([]PaymentMethod, error) {
@@ -175,22 +149,11 @@ func (cart *MCart) EstimatePaymentMethods() ([]PaymentMethod, error) {
 	paymentMethods := &[]PaymentMethod{}
 
 	resp, err := httpClient.R().SetResult(paymentMethods).Get(endpoint)
-	if err != nil {
-		return *paymentMethods, fmt.Errorf("received error while estimating payment methods costs: '%v'", err)
-	} else if resp.StatusCode() >= 400 {
-		return *paymentMethods, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
 
-	paymentMethods = resp.Result().(*[]PaymentMethod)
-
-	if len(*paymentMethods) == 0 {
-		return *paymentMethods, fmt.Errorf("received no suitable payment method - response: '%v'", resp)
-	}
-
-	return *paymentMethods, nil
+	return *paymentMethods, utils.MayReturnErrorForHTTPResponse(err, resp, "estimate payment methods for cart")
 }
 
-func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.Order, error) {
+func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.MOrder, error) {
 	endpoint := cart.Route + cartPlaceOrder
 	httpClient := cart.ApiClient.HttpClient
 
@@ -205,10 +168,9 @@ func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.Order, erro
 	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Put(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "create order")
 	if err != nil {
-		return nil, fmt.Errorf("received error while creating order: '%v'", err)
-	} else if resp.StatusCode() >= 400 {
-		return nil, fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
+		return nil, err
 	}
 
 	orderIDString := utils.MayTrimSurroundingQuotes(resp.String())
@@ -217,10 +179,12 @@ func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.Order, erro
 		return nil, fmt.Errorf("unexpected error while extracting orderID: '%v'", err)
 	}
 
-	return &orders.Order{
-		ID:        orderIDInt,
+	return &orders.MOrder{
+		Route:   orders.Orders + "/" + orderIDString,
+		Order: &orders.Order{
+			EntityID: orderIDInt,
+		},
 		ApiClient: cart.ApiClient,
-		Route:     orders.Orders + "/" + orderIDString,
 	}, nil
 }
 
@@ -229,17 +193,12 @@ func (cart *MCart) DeleteItem(itemID int) error {
 	httpClient := cart.ApiClient.HttpClient
 
 	resp, err := httpClient.R().Delete(endpoint)
-	if err != nil {
-		return fmt.Errorf("received error while creating order: '%v'", err)
-	} else if resp.StatusCode() >= 400 {
-		return fmt.Errorf("unexpected statuscode '%v' - response: '%v'", resp.StatusCode(), resp)
-	}
 
-	return nil
+	return utils.MayReturnErrorForHTTPResponse(err, resp, fmt.Sprintf("delete itemID '%d'", itemID))
 }
 
 func (cart *MCart) DeleteAllItems() error {
-	err := cart.updateCartFromRemote()
+	err := cart.UpdateCartFromRemote()
 	if err != nil {
 		return err
 	}
