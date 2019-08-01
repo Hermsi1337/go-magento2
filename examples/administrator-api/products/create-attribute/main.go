@@ -23,14 +23,15 @@ func main() {
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
-	// define your atrribute
+	// define your attribute
 	attr := attribute.Attribute{
 		AttributeCode: "awor",
 		FrontendInput: "select",
 		DefaultFrontendLabel: "aw",
 		IsRequired: false,
 	}
-	// create atrribute-set on remote
+
+	// create attribute on remote
 	mAttribute, err := attribute.CreateAttribute(attr, apiClient)
 	if err != nil {
 		panic(err)

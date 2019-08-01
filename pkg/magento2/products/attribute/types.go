@@ -9,7 +9,7 @@ type addOptionPayload struct {
 }
 
 type ExtensionAttributes struct {
-	IsPagebuilderEnabled bool `json:"is_pagebuilder_enabled"`
+	IsPagebuilderEnabled bool `json:"is_pagebuilder_enabled,omitempty"`
 }
 
 type StoreLabels struct {
