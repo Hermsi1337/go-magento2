@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/hermsi1337/go-magento2/pkg/magento2"
+	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
+	"github.com/hermsi1337/go-magento2/pkg/magento2/products"
 	"log"
 )
 
 func main() {
 	// initiate storeconfig
-	storeConfig := &magento2.StoreConfig{
+	storeConfig := &api.StoreConfig{
 		Scheme:    "https",
 		HostName:  "magento2.hermsi.localhost",
 		StoreCode: "default",
@@ -16,23 +17,28 @@ func main() {
 	bearerToken := "yd1o9zs1hb1qxnn8ek68eu8nwqjg5hrv"
 
 	// create a new apiClient
-	apiClient, err := magento2.NewAdministratorApiClientFromIntegration(storeConfig, bearerToken)
+	apiClient, err := api.NewAdministratorApiClientFromIntegration(storeConfig, bearerToken)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
-	product := magento2.Product{
-		Name: "Spaget-Shirt",
-		Sku: "spaget1234",
-		Price: 100,
+	// define your product
+	product := products.Product{
+		Name:           "Spaget-Shirt",
+		Sku:            "spaget1234",
+		Price:          1000,
 		AttributeSetID: 4,
-		TypeID: "simple",
+		TypeID:         "simple",
 	}
+	productSaveOptions := true
 
-	mProduct, err := apiClient.CreateOrUpdateProduct(product, false)
+	// create product on remote
+	mProduct, err := products.CreateOrReplaceProduct(product, productSaveOptions, apiClient)
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("%+v", mProduct)
+
+	// here you go
+	log.Printf("Created product: %+v", mProduct)
 }

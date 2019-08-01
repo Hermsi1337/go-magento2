@@ -1,29 +1,14 @@
-package magento2
+package api
 
 import (
 	"crypto/tls"
 	"github.com/hermsi1337/go-magento2/internal/utils"
-
 	"gopkg.in/resty.v1"
 )
 
-type ApiClient struct {
+type Client struct {
 	HttpClient *resty.Client
 	Kind       string
-}
-
-type GuestClient interface {
-	NewGuestCart() (Cart, error)
-}
-
-type CustomerClient interface {
-	NewCustomerCart() (Cart, error)
-}
-
-type AdministratorClient interface {
-	NewGuestCart() (Cart, error)
-	NewCustomerCart() (Cart, error)
-	CreateOrUpdateProduct(p Product, saveOptions bool) (*MProduct, error)
 }
 
 type StoreConfig struct {
@@ -32,22 +17,16 @@ type StoreConfig struct {
 	StoreCode string
 }
 
-const (
-	anonymousClientType     = "anonymous"
-	customerClientType      = "customer"
-	administratorClientType = "administrator"
-)
-
-func NewGuestApiClient(storeConfig *StoreConfig) GuestClient {
+func NewGuestApiClient(storeConfig *StoreConfig) *Client {
 	httpClient := buildBasicHttpClient(storeConfig)
 
-	return &ApiClient{
+	return &Client{
 		HttpClient: httpClient,
-		Kind:       anonymousClientType,
+		Kind:       AnonymousClientType,
 	}
 }
 
-func NewCustomerApiClient(storeConfig *StoreConfig, payload *AuthenticationRequestPayload) (CustomerClient, error) {
+func NewCustomerApiClient(storeConfig *StoreConfig, payload AuthenticationRequestPayload) (*Client, error) {
 	client := buildBasicHttpClient(storeConfig)
 	endpoint := integrationCustomerTokenService
 	resp, err := client.R().SetBody(payload).Post(endpoint)
@@ -57,13 +36,13 @@ func NewCustomerApiClient(storeConfig *StoreConfig, payload *AuthenticationReque
 
 	client.SetAuthToken(utils.MayTrimSurroundingQuotes(resp.String()))
 
-	return &ApiClient{
+	return &Client{
 		HttpClient: client,
-		Kind:       customerClientType,
+		Kind:       CustomerClientType,
 	}, nil
 }
 
-func NewAdministratorApiClientFromAuthentication(storeConfig *StoreConfig, payload AuthenticationRequestPayload) (AdministratorClient, error) {
+func NewAdministratorApiClientFromAuthentication(storeConfig *StoreConfig, payload AuthenticationRequestPayload) (*Client, error) {
 	client := buildBasicHttpClient(storeConfig)
 	endpoint := integrationAdminTokenService
 	resp, err := client.R().SetBody(payload).Post(endpoint)
@@ -73,20 +52,20 @@ func NewAdministratorApiClientFromAuthentication(storeConfig *StoreConfig, paylo
 
 	client.SetAuthToken(resp.String())
 
-	return &ApiClient{
+	return &Client{
 		HttpClient: client,
-		Kind:       administratorClientType,
+		Kind:       AdministratorClientType,
 	}, nil
 }
 
-func NewAdministratorApiClientFromIntegration(storeConfig *StoreConfig, bearer string) (AdministratorClient, error) {
+func NewAdministratorApiClientFromIntegration(storeConfig *StoreConfig, bearer string) (*Client, error) {
 	client := buildBasicHttpClient(storeConfig)
 
 	client.SetAuthToken(bearer)
 
-	return &ApiClient{
+	return &Client{
 		HttpClient: client,
-		Kind:       administratorClientType,
+		Kind:       AdministratorClientType,
 	}, nil
 }
 
@@ -97,7 +76,10 @@ func buildBasicHttpClient(storeConfig *StoreConfig) *resty.Client {
 	client := resty.New()
 	client.SetRESTMode()
 	client.SetHostURL(fullRestRoute)
-	client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: false})
+	client.SetHeaders(map[string]string{
+		"User-Agent": "go-magento2 (https://github.com/hermsi1337/go-magento2)",
+	})
 
 	return client
 }

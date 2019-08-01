@@ -1,26 +1,20 @@
-package magento2
+package comments
 
 import (
 	"fmt"
-
+	"github.com/hermsi1337/go-magento2/pkg/magento2/orders"
 )
 
-type Order struct {
-	ID        int
-	Route     string
-	ApiClient *ApiClient
-}
-
-func (order *Order) AddComment(statusHistory StatusHistory) error {
-	endpoint := order.Route + orderComments
+func AddCommentToOrder(comment orders.StatusHistory, order orders.Order) error {
+	endpoint := order.Route + OrderComments
 	httpClient := order.ApiClient.HttpClient
 
 	type PayLoad struct {
-		StatusHistory StatusHistory `json:"statusHistory"`
+		StatusHistory orders.StatusHistory `json:"statusHistory"`
 	}
 
 	payLoad := &PayLoad{
-		StatusHistory: statusHistory,
+		StatusHistory: comment,
 	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
