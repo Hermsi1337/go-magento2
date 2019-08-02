@@ -3,19 +3,23 @@ package attribute_set
 import (
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
+	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
 	"strconv"
 )
 
 type MAttributeSet struct {
-	Route        string
-	AttributeSet *AttributeSet
-	ApiClient    *api.Client
+	Route                  string
+	AttributeSet           *AttributeSet
+	AttributeSetGroups     []AttributeSetGroups
+	AttributeSetAttributes *[]attribute.Attribute
+	ApiClient              *api.Client
 }
 
 func CreateAttributeSet(a AttributeSet, skeletonID int, apiClient *api.Client) (*MAttributeSet, error) {
 	mAttributeSet := &MAttributeSet{
-		AttributeSet: &AttributeSet{},
-		ApiClient: apiClient,
+		AttributeSet:           &AttributeSet{},
+		AttributeSetAttributes: &[]attribute.Attribute{},
+		ApiClient:              apiClient,
 	}
 	endpoint := productsAttributeSet
 	httpClient := apiClient.HttpClient
@@ -28,7 +32,60 @@ func CreateAttributeSet(a AttributeSet, skeletonID int, apiClient *api.Client) (
 	resp, err := httpClient.R().SetBody(payLoad).SetResult(mAttributeSet.AttributeSet).Post(endpoint)
 	mAttributeSet.Route = productsAttributeSet + "/" + strconv.Itoa(mAttributeSet.AttributeSet.AttributeSetID)
 
-	return mAttributeSet, utils.MayReturnErrorForHTTPResponse(err, resp, "create attribute-set")
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "create attribute-set")
+	if err != nil {
+		return mAttributeSet, err
+	}
+
+	err = mAttributeSet.UpdateAttributeSetFromRemote()
+
+	return mAttributeSet, err
+}
+
+func (mas *MAttributeSet) UpdateAttributeSetOnRemote() error {
+	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSet).SetBody(mas.AttributeSet).Put(mas.Route)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "update remote attribute-set from local")
+}
+
+func (mas *MAttributeSet) UpdateAttributeSetFromRemote() error {
+	err := mas.updateAttributeSet()
+	if err != nil {
+		return err
+	}
+
+	err = mas.updateGroups()
+	if err != nil {
+		return err
+	}
+
+	return mas.updateAttributes()
+}
+
+func (mas *MAttributeSet) updateAttributeSet() error {
+	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSet).Get(mas.Route)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "get details for attribute-set from remote")
+}
+
+func (mas *MAttributeSet) updateAttributes() error {
+	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSetAttributes).Get(mas.Route + "/" + productsAttributeSetAttributesRelative)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "get details for attribute-set from remote")
+}
+
+func (mas *MAttributeSet) updateGroups() error {
+	searchQuery := utils.BuildSearchQuery("attribute_set_id", strconv.Itoa(mas.AttributeSet.AttributeSetID), "in")
+	endpoint := productsAttributeSetGroupsList + "?" + searchQuery
+
+	response := &searchQueryResponse{}
+
+	resp, err := mas.ApiClient.HttpClient.R().SetResult(response).Get(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get groups for attribute-set from remote")
+	if err != nil {
+		return err
+	}
+
+	mas.AttributeSetGroups = response.Groups
+
+	return nil
 }
 
 func (mas *MAttributeSet) AssignAttribute(attributeGroupID, sortOrder int, attributeCode string) error {
@@ -36,12 +93,17 @@ func (mas *MAttributeSet) AssignAttribute(attributeGroupID, sortOrder int, attri
 	httpClient := mas.ApiClient.HttpClient
 
 	payLoad := assignAttributePayload{
-		AttributeSetID: mas.AttributeSet.AttributeSetID,
+		AttributeSetID:      mas.AttributeSet.AttributeSetID,
 		AttributeSetGroupID: attributeGroupID,
-		AttributeCode: attributeCode,
-		SortOrder: sortOrder,
+		AttributeCode:       attributeCode,
+		SortOrder:           sortOrder,
 	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
-	return utils.MayReturnErrorForHTTPResponse(err, resp, "assign attribute to attribute-set")
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "assign attribute to attribute-set")
+	if err != nil {
+		return err
+	}
+
+	return mas.UpdateAttributeSetFromRemote()
 }

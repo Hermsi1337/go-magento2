@@ -29,6 +29,16 @@ func CreateAttribute(a Attribute, apiClient *api.Client) (*MAttribute, error) {
 	return mAttribute, utils.MayReturnErrorForHTTPResponse(err, resp, "create attribute")
 }
 
+func (mas *MAttribute) UpdateAttributeOnRemote() error {
+	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.Attribute).SetBody(mas.Attribute).Put(mas.Route)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "update remote attribute from local")
+}
+
+func (mas *MAttribute) UpdateAttributeFromRemote() error {
+	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.Attribute).Get(mas.Route)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "update local attribute from remote")
+}
+
 func (mas *MAttribute) AddOption(option Option) error {
 	endpoint := mas.Route + "/" + productsAttributeOptions
 	httpClient := mas.ApiClient.HttpClient
@@ -38,5 +48,9 @@ func (mas *MAttribute) AddOption(option Option) error {
 	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
-	return utils.MayReturnErrorForHTTPResponse(err, resp, "assign attribute to attribute-set")
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "assign option to attribute")
+	if err != nil {
+		return err
+	}
+	return mas.UpdateAttributeFromRemote()
 }

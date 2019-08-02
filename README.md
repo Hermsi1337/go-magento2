@@ -4,10 +4,10 @@
 # go-magento2
 A Golang package for communicating with the magento2 api. (tested with >=2.3.0)
    
-I initially built this package because I need it for a project I'm currently working on.   
+I initially built this package because I need it for a project I'm currently working on.  
 For the start, I will add further features upon my need.
 
-If you need a feature which is not implemented yet, feel free to open a pull request.   
+If you need a feature which is not implemented yet, feel free to open a pull request.  
 Let's make this package great together!  🚀
 
 ## Features
@@ -32,6 +32,11 @@ Let's make this package great together!  🚀
     - [x] all features from guest- and customer-api
   * [x] order
     - [x] add comment to order
+  * [x] products
+    - [x] create new product
+    - [x] create attributes
+    - [x] create attribute-set
+      - [x] assign attributes to attribute-set
 
 ## Examples
 See [examples-directory](examples/).

@@ -78,19 +78,19 @@ type Values struct {
 }
 
 type Options struct {
-	ProductSku          string                 `json:"product_sku"`
-	OptionID            int                    `json:"option_id"`
-	Title               string                 `json:"title"`
-	Type                string                 `json:"type"`
-	SortOrder           int                    `json:"sort_order"`
-	IsRequire           bool                   `json:"is_require"`
-	Price               int                    `json:"price"`
-	PriceType           string                 `json:"price_type"`
-	Sku                 string                 `json:"sku"`
-	FileExtension       string                 `json:"file_extension"`
-	MaxCharacters       int                    `json:"max_characters"`
-	ImageSizeX          int                    `json:"image_size_x"`
-	ImageSizeY          int                    `json:"image_size_y"`
-	Values              []Values               `json:"values"`
-	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
+	ProductSku          string                 `json:"product_sku,omitempty"`
+	OptionID            int                    `json:"option_id,omitempty"`
+	Title               string                 `json:"title,omitempty"`
+	Type                string                 `json:"type,omitempty"`
+	SortOrder           int                    `json:"sort_order,omitempty"`
+	IsRequired          bool                   `json:"is_required,omitempty"`
+	Price               int                    `json:"price,omitempty"`
+	PriceType           string                 `json:"price_type,omitempty"`
+	Sku                 string                 `json:"sku,omitempty"`
+	FileExtension       string                 `json:"file_extension,omitempty"`
+	MaxCharacters       int                    `json:"max_characters,omitempty"`
+	ImageSizeX          int                    `json:"image_size_x,omitempty"`
+	ImageSizeY          int                    `json:"image_size_y,omitempty"`
+	Values              []Values               `json:"values,omitempty"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }

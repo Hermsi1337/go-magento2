@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
+	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute_set"
 	"log"
+	"strconv"
 )
 
 func main() {
@@ -23,9 +25,27 @@ func main() {
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
+	// define your attribute
+	attr := attribute.Attribute{
+		AttributeCode:        "awors4",
+		FrontendInput:        "select",
+		DefaultFrontendLabel: "aw",
+		IsRequired:           false,
+	}
+
+	// create attribute on remote
+	mAttribute, err := attribute.CreateAttribute(attr, apiClient)
+	if err != nil {
+		panic(err)
+	}
+
+	// here you go
+	log.Printf("Created attribute: %+v", mAttribute)
+	log.Printf("Detailed attribute: %+v", mAttribute.Attribute)
+
 	// define your atrribute-set
 	attributeSet := attribute_set.AttributeSet{
-		AttributeSetName: "foo2",
+		AttributeSetName: "foos4",
 		SortOrder:        2,
 	}
 
@@ -41,5 +61,17 @@ func main() {
 	// here you go
 	log.Printf("Created attribute-set: %+v", mAttributeSet)
 	log.Printf("Detailed attribute-set: %+v", mAttributeSet.AttributeSet)
-	log.Printf("Groups of attribute-set: %+v", mAttributeSet.AttributeSetGroups)
+	log.Printf("Current attribute-set attributes: %+v", mAttributeSet.AttributeSetAttributes)
+
+	// choose in which group you want to add the attribute when assigning it to the attribute-set
+	attributeGroupID, _ := strconv.Atoi(mAttributeSet.AttributeSetGroups[0].AttributeGroupID)
+
+	// assign attribute to attribute-set
+	err = mAttributeSet.AssignAttribute(attributeGroupID, 0, mAttribute.Attribute.AttributeCode)
+	if err != nil {
+		panic(err)
+	}
+
+	// done
+	log.Printf("Updated attribute-set attributes: %+v", mAttributeSet.AttributeSetAttributes)
 }
