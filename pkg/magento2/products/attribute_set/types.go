@@ -18,7 +18,20 @@ type AttributeSetGroups struct {
 	} `json:"extension_attributes"`
 }
 
-type searchQueryResponse struct {
+type attributeSetSearchQueryResponse struct {
+	AttributeSets  []AttributeSet `json:"items"`
+	SearchCriteria struct {
+		FilterGroups []struct {
+			Filters []struct {
+				Field         string `json:"field"`
+				Value         string `json:"value"`
+				ConditionType string `json:"condition_type"`
+			} `json:"filters"`
+		} `json:"filter_groups"`
+	} `json:"search_criteria"`
+}
+
+type groupSearchQueryResponse struct {
 	Groups         []AttributeSetGroups `json:"items"`
 	SearchCriteria struct {
 		FilterGroups []struct {

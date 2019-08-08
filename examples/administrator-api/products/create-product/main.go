@@ -34,7 +34,7 @@ func main() {
 	productSaveOptions := true
 
 	// create product on remote
-	mProduct, err := products.CreateOrReplaceProduct(product, productSaveOptions, apiClient)
+	mProduct, err := products.CreateOrReplaceProduct(&product, productSaveOptions, apiClient)
 	if err != nil {
 		panic(err)
 	}

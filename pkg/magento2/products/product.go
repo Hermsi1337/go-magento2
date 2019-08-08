@@ -11,11 +11,11 @@ const (
 
 type MProduct struct {
 	Route     string
-	Product   Product
+	Product   *Product
 	ApiClient *api.Client
 }
 
-func CreateOrReplaceProduct(product Product, saveOptions bool, apiClient *api.Client) (*MProduct, error) {
+func CreateOrReplaceProduct(product *Product, saveOptions bool, apiClient *api.Client) (*MProduct, error) {
 	mp := &MProduct{
 		Product:   product,
 		ApiClient: apiClient,
@@ -43,11 +43,11 @@ func (mProduct *MProduct) createOrReplaceProduct(saveOptions bool) error {
 	httpClient := mProduct.ApiClient.HttpClient
 
 	payLoad := AddProductPayload{
-		Product:     mProduct.Product,
+		Product:     *mProduct.Product,
 		SaveOptions: saveOptions,
 	}
 
-	resp, err := httpClient.R().SetBody(payLoad).SetResult(&mp.Product).Post(endpoint)
+	resp, err := httpClient.R().SetBody(payLoad).SetResult(mp.Product).Post(endpoint)
 	productSKU := utils.MayTrimSurroundingQuotes(mp.Product.Sku)
 	mProduct.Route = products + "/" + productSKU
 

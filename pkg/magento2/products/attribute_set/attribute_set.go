@@ -42,6 +42,30 @@ func CreateAttributeSet(a AttributeSet, skeletonID int, apiClient *api.Client) (
 	return mAttributeSet, err
 }
 
+func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, error) {
+	mAttributeSet := &MAttributeSet{
+		AttributeSet:           &AttributeSet{},
+		AttributeSetAttributes: &[]attribute.Attribute{},
+		ApiClient:              apiClient,
+	}
+	searchQuery := utils.BuildSearchQuery("attribute_set_name", name, "in")
+	endpoint := productsAttributeSetList + "?" + searchQuery
+	httpClient := apiClient.HttpClient
+
+	response := &attributeSetSearchQueryResponse{}
+
+	resp, err := httpClient.R().SetResult(response).Get(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get attribute-set by name from remote")
+	if err != nil {
+		return nil, err
+	}
+
+	mAttributeSet.AttributeSet = &response.AttributeSets[0]
+	err = utils.MayReturnErrorForHTTPResponse(mAttributeSet.UpdateAttributeSetFromRemote(), resp, "get detailed attribute-set by name from remote")
+
+	return mAttributeSet, err
+}
+
 func (mas *MAttributeSet) UpdateAttributeSetOnRemote() error {
 	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSet).SetBody(mas.AttributeSet).Put(mas.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "update remote attribute-set from local")
@@ -75,7 +99,7 @@ func (mas *MAttributeSet) updateGroups() error {
 	searchQuery := utils.BuildSearchQuery("attribute_set_id", strconv.Itoa(mas.AttributeSet.AttributeSetID), "in")
 	endpoint := productsAttributeSetGroupsList + "?" + searchQuery
 
-	response := &searchQueryResponse{}
+	response := &groupSearchQueryResponse{}
 
 	resp, err := mas.ApiClient.HttpClient.R().SetResult(response).Get(endpoint)
 	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get groups for attribute-set from remote")
