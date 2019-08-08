@@ -60,6 +60,10 @@ func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, 
 		return nil, err
 	}
 
+	if len(response.AttributeSets) <= 0 {
+		return nil, ErrNotFound
+	}
+
 	mAttributeSet.AttributeSet = &response.AttributeSets[0]
 	err = utils.MayReturnErrorForHTTPResponse(mAttributeSet.UpdateAttributeSetFromRemote(), resp, "get detailed attribute-set by name from remote")
 
