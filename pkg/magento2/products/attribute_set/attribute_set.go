@@ -65,6 +65,7 @@ func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, 
 	}
 
 	mAttributeSet.AttributeSet = &response.AttributeSets[0]
+	mAttributeSet.Route = productsAttributeSet + "/" + strconv.Itoa(mAttributeSet.AttributeSet.AttributeSetID)
 	err = utils.MayReturnErrorForHTTPResponse(mAttributeSet.UpdateAttributeSetFromRemote(), resp, "get detailed attribute-set by name from remote")
 
 	return mAttributeSet, err
