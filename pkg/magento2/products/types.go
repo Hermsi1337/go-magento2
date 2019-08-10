@@ -19,8 +19,8 @@ type MediaGalleryEntries struct {
 
 type TierPrices struct {
 	CustomerGroupID     int                    `json:"customer_group_id"`
-	Qty                 int                    `json:"qty"`
-	Value               int                    `json:"value"`
+	Qty                 float64                `json:"qty"`
+	Value               float64                `json:"value"`
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
 }
 
@@ -38,7 +38,7 @@ type Product struct {
 	Sku                 string                   `json:"sku"`
 	Name                string                   `json:"name"`
 	AttributeSetID      int                      `json:"attribute_set_id"`
-	Price               int                      `json:"price"`
+	Price               float64                  `json:"price"`
 	Status              int                      `json:"status,omitempty"`
 	Visibility          int                      `json:"visibility,omitempty"`
 	TypeID              string                   `json:"type_id,omitempty"`
@@ -69,12 +69,12 @@ type VideoContent struct {
 }
 
 type Values struct {
-	Title        string `json:"title"`
-	SortOrder    int    `json:"sort_order"`
-	Price        int    `json:"price"`
-	PriceType    string `json:"price_type"`
-	Sku          string `json:"sku"`
-	OptionTypeID int    `json:"option_type_id"`
+	Title        string  `json:"title"`
+	SortOrder    int     `json:"sort_order"`
+	Price        float64 `json:"price"`
+	PriceType    string  `json:"price_type"`
+	Sku          string  `json:"sku"`
+	OptionTypeID int     `json:"option_type_id"`
 }
 
 type Options struct {
@@ -84,7 +84,7 @@ type Options struct {
 	Type                string                 `json:"type,omitempty"`
 	SortOrder           int                    `json:"sort_order,omitempty"`
 	IsRequired          bool                   `json:"is_required,omitempty"`
-	Price               int                    `json:"price,omitempty"`
+	Price               float64                `json:"price,omitempty"`
 	PriceType           string                 `json:"price_type,omitempty"`
 	Sku                 string                 `json:"sku,omitempty"`
 	FileExtension       string                 `json:"file_extension,omitempty"`
