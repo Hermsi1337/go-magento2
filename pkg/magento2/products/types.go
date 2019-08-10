@@ -44,7 +44,7 @@ type Product struct {
 	TypeID              string                   `json:"type_id,omitempty"`
 	CreatedAt           string                   `json:"created_at,omitempty"`
 	UpdatedAt           string                   `json:"updated_at,omitempty"`
-	Weight              int                      `json:"weight,omitempty"`
+	Weight              float64                  `json:"weight,omitempty"`
 	ExtensionAttributes map[string]interface{}   `json:"extension_attributes,omitempty"`
 	ProductLinks        []ProductLinks           `json:"product_links,omitempty"`
 	Options             []Options                `json:"options,omitempty"`
