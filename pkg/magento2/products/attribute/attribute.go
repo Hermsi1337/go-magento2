@@ -3,6 +3,7 @@ package attribute
 import (
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
+	"strings"
 )
 
 type MAttribute struct {
@@ -68,7 +69,7 @@ func (mas *MAttribute) UpdateAttributeFromRemote() error {
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "update local attribute from remote")
 }
 
-func (mas *MAttribute) AddOption(option Option) error {
+func (mas *MAttribute) AddOption(option Option) (string, error) {
 	endpoint := mas.Route + "/" + productsAttributeOptions
 	httpClient := mas.ApiClient.HttpClient
 
@@ -79,7 +80,11 @@ func (mas *MAttribute) AddOption(option Option) error {
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
 	err = utils.MayReturnErrorForHTTPResponse(err, resp, "assign option to attribute")
 	if err != nil {
-		return err
+		return "", err
 	}
-	return mas.UpdateAttributeFromRemote()
+
+	optionValue := utils.MayTrimSurroundingQuotes(resp.String())
+	optionValue = strings.TrimPrefix(optionValue, "id_")
+
+	return optionValue, mas.UpdateAttributeFromRemote()
 }

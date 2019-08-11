@@ -25,10 +25,10 @@ func main() {
 
 	// define your attribute
 	attr := attribute.Attribute{
-		AttributeCode: "awor",
-		FrontendInput: "select",
+		AttributeCode:        "spagetattr",
+		FrontendInput:        "select",
 		DefaultFrontendLabel: "aw",
-		IsRequired: false,
+		IsRequired:           false,
 	}
 
 	// create attribute on remote
@@ -37,7 +37,16 @@ func main() {
 		panic(err)
 	}
 
+	optionValue, err := mAttribute.AddOption(attribute.Option{
+		Label: "spaget",
+		Value: "spaget",
+	})
+	if err != nil {
+		panic(err)
+	}
+
 	// here you go
+	log.Printf("Created attribute with ID: %+v", optionValue)
 	log.Printf("Created attribute: %+v", mAttribute)
 	log.Printf("Detailed attribute: %+v", mAttribute.Attribute)
 }
