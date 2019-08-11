@@ -60,10 +60,10 @@ func (mProduct *MProduct) UpdateProductFromRemote() error {
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get detailed product from remote")
 }
 
-func (mProduct *MProduct) UpdateQuantityForStockItem(stockItem string, quantity int) error {
+func (mProduct *MProduct) UpdateQuantityForStockItem(stockItem string, quantity int, isInStock bool) error {
 	httpClient := mProduct.ApiClient.HttpClient
 
-	updateStockPayload := updateStockPayload{StockItem: StockItem{Qty: quantity}}
+	updateStockPayload := updateStockPayload{StockItem: StockItem{Qty: quantity, IsInStock: isInStock}}
 
 	resp, err := httpClient.R().SetBody(updateStockPayload).Put(mProduct.Route + "/" + stockItemsRelative + "/" + stockItem)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "update stock for product")
