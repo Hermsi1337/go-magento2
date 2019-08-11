@@ -38,7 +38,6 @@ func GetProductBySKU(sku string, apiClient *api.Client) (*MProduct, error) {
 }
 
 func (mProduct *MProduct) createOrReplaceProduct(saveOptions bool) error {
-	mp := &MProduct{}
 	endpoint := products
 	httpClient := mProduct.ApiClient.HttpClient
 
@@ -47,8 +46,8 @@ func (mProduct *MProduct) createOrReplaceProduct(saveOptions bool) error {
 		SaveOptions: saveOptions,
 	}
 
-	resp, err := httpClient.R().SetBody(payLoad).SetResult(mp.Product).Post(endpoint)
-	productSKU := utils.MayTrimSurroundingQuotes(mp.Product.Sku)
+	resp, err := httpClient.R().SetBody(payLoad).SetResult(mProduct.Product).Post(endpoint)
+	productSKU := utils.MayTrimSurroundingQuotes(mProduct.Product.Sku)
 	mProduct.Route = products + "/" + productSKU
 
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "create new product on remote")
