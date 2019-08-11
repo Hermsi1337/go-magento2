@@ -41,4 +41,9 @@ func main() {
 
 	// here you go
 	log.Printf("Created product: %+v", mProduct)
+
+	err = mProduct.UpdateQuantityForStockItem("1", 200)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -32,7 +32,7 @@ func GetProductBySKU(sku string, apiClient *api.Client) (*MProduct, error) {
 		ApiClient: apiClient,
 	}
 
-	err := mp.updateProductFromRemote()
+	err := mp.UpdateProductFromRemote()
 
 	return mp, err
 }
@@ -53,9 +53,18 @@ func (mProduct *MProduct) createOrReplaceProduct(saveOptions bool) error {
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "create new product on remote")
 }
 
-func (mProduct *MProduct) updateProductFromRemote() error {
+func (mProduct *MProduct) UpdateProductFromRemote() error {
 	httpClient := mProduct.ApiClient.HttpClient
 
 	resp, err := httpClient.R().SetResult(mProduct.Product).Get(mProduct.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get detailed product from remote")
+}
+
+func (mProduct *MProduct) UpdateQuantityForStockItem(stockItem string, quantity int) error {
+	httpClient := mProduct.ApiClient.HttpClient
+
+	updateStockPayload := updateStockPayload{StockItem: StockItem{Qty: quantity}}
+
+	resp, err := httpClient.R().SetBody(updateStockPayload).Put(mProduct.Route + "/" + stockItemsRelative + "/" + stockItem)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "update stock for product")
 }

@@ -94,3 +94,37 @@ type Options struct {
 	Values              []Values               `json:"values,omitempty"`
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
+
+type StockItem struct {
+	ItemID                         int                    `json:"item_id,omitempty"`
+	ProductID                      int                    `json:"product_id,omitempty"`
+	StockID                        int                    `json:"stock_id,omitempty"`
+	Qty                            int                    `json:"qty,omitempty"`
+	IsInStock                      bool                   `json:"is_in_stock,omitempty"`
+	IsQtyDecimal                   bool                   `json:"is_qty_decimal,omitempty"`
+	ShowDefaultNotificationMessage bool                   `json:"show_default_notification_message,omitempty"`
+	UseConfigMinQty                bool                   `json:"use_config_min_qty,omitempty"`
+	MinQty                         int                    `json:"min_qty,omitempty"`
+	UseConfigMinSaleQty            int                    `json:"use_config_min_sale_qty,omitempty"`
+	MinSaleQty                     int                    `json:"min_sale_qty,omitempty"`
+	UseConfigMaxSaleQty            bool                   `json:"use_config_max_sale_qty,omitempty"`
+	MaxSaleQty                     int                    `json:"max_sale_qty,omitempty"`
+	UseConfigBackorders            bool                   `json:"use_config_backorders,omitempty"`
+	Backorders                     int                    `json:"backorders,omitempty"`
+	UseConfigNotifyStockQty        bool                   `json:"use_config_notify_stock_qty,omitempty"`
+	NotifyStockQty                 int                    `json:"notify_stock_qty,omitempty"`
+	UseConfigQtyIncrements         bool                   `json:"use_config_qty_increments,omitempty"`
+	QtyIncrements                  int                    `json:"qty_increments,omitempty"`
+	UseConfigEnableQtyInc          bool                   `json:"use_config_enable_qty_inc,omitempty"`
+	EnableQtyIncrements            bool                   `json:"enable_qty_increments,omitempty"`
+	UseConfigManageStock           bool                   `json:"use_config_manage_stock,omitempty"`
+	ManageStock                    bool                   `json:"manage_stock,omitempty"`
+	LowStockDate                   string                 `json:"low_stock_date,omitempty"`
+	IsDecimalDivided               bool                   `json:"is_decimal_divided,omitempty"`
+	StockStatusChangedAuto         int                    `json:"stock_status_changed_auto,omitempty"`
+	ExtensionAttributes            map[string]interface{} `json:"extension_attributes,omitempty"`
+}
+
+type updateStockPayload struct {
+	StockItem StockItem `json:"stockItem"`
+}
