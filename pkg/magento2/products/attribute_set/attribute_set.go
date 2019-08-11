@@ -10,7 +10,7 @@ import (
 type MAttributeSet struct {
 	Route                  string
 	AttributeSet           *AttributeSet
-	AttributeSetGroups     []AttributeSetGroups
+	AttributeSetGroups     []AttributeSetGroup
 	AttributeSetAttributes *[]attribute.Attribute
 	ApiClient              *api.Client
 }
@@ -130,6 +130,26 @@ func (mas *MAttributeSet) AssignAttribute(attributeGroupID, sortOrder int, attri
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
 	err = utils.MayReturnErrorForHTTPResponse(err, resp, "assign attribute to attribute-set")
+	if err != nil {
+		return err
+	}
+
+	return mas.UpdateAttributeSetFromRemote()
+}
+
+func (mas *MAttributeSet) CreateGroup(groupName string) error {
+	endpoint := productsAttributeSetGroups
+	httpClient := mas.ApiClient.HttpClient
+
+	payLoad := createGroupPayload{
+		Group: AttributeSetGroup{
+			AttributeGroupName: groupName,
+			AttributeSetID:     mas.AttributeSet.AttributeSetID,
+		},
+	}
+
+	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "create group on attribute-set")
 	if err != nil {
 		return err
 	}

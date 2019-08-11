@@ -12,14 +12,14 @@ type AttributeSet struct {
 	ExtensionAttributes interface{} `json:"extension_attributes,omitempty"`
 }
 
-type AttributeSetGroups struct {
-	AttributeGroupID    string `json:"attribute_group_id"`
+type AttributeSetGroup struct {
+	AttributeGroupID    string `json:"attribute_group_id,omitempty"`
 	AttributeGroupName  string `json:"attribute_group_name"`
 	AttributeSetID      int    `json:"attribute_set_id"`
 	ExtensionAttributes struct {
-		AttributeGroupCode string `json:"attribute_group_code"`
-		SortOrder          string `json:"sort_order"`
-	} `json:"extension_attributes"`
+		AttributeGroupCode string `json:"attribute_group_code,omitempty"`
+		SortOrder          string `json:"sort_order,omitempty"`
+	} `json:"extension_attributes,omitempty"`
 }
 
 type attributeSetSearchQueryResponse struct {
@@ -36,7 +36,7 @@ type attributeSetSearchQueryResponse struct {
 }
 
 type groupSearchQueryResponse struct {
-	Groups         []AttributeSetGroups `json:"items"`
+	Groups         []AttributeSetGroup `json:"items"`
 	SearchCriteria struct {
 		FilterGroups []struct {
 			Filters []struct {
@@ -58,4 +58,8 @@ type assignAttributePayload struct {
 	AttributeSetGroupID int    `json:"attributeGroupId"`
 	AttributeCode       string `json:"attributeCode"`
 	SortOrder           int    `json:"sortOrder"`
+}
+
+type createGroupPayload struct {
+	Group AttributeSetGroup `json:"group"`
 }
