@@ -1,5 +1,7 @@
 package attribute
 
+import "errors"
+
 type createAttributePayload struct {
 	Attribute Attribute `json:"attribute"`
 }
@@ -7,6 +9,21 @@ type createAttributePayload struct {
 type addOptionPayload struct {
 	Option Option `json:"option"`
 }
+
+type attributeSetSearchQueryResponse struct {
+	AttributeSets  []Attribute `json:"items"`
+	SearchCriteria struct {
+		FilterGroups []struct {
+			Filters []struct {
+				Field         string `json:"field"`
+				Value         string `json:"value"`
+				ConditionType string `json:"condition_type"`
+			} `json:"filters"`
+		} `json:"filter_groups"`
+	} `json:"search_criteria"`
+}
+
+var ErrNotFound = errors.New("no document found")
 
 type ExtensionAttributes struct {
 	IsPagebuilderEnabled bool `json:"is_pagebuilder_enabled,omitempty"`

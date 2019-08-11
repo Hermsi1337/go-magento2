@@ -29,6 +29,35 @@ func CreateAttribute(a Attribute, apiClient *api.Client) (*MAttribute, error) {
 	return mAttribute, utils.MayReturnErrorForHTTPResponse(err, resp, "create attribute")
 }
 
+func GetAttributeByName(name string, apiClient *api.Client) (*MAttribute, error) {
+	mAttributeSet := &MAttribute{
+		Attribute: &Attribute{},
+		ApiClient: apiClient,
+	}
+
+	searchQuery := utils.BuildSearchQuery("attribute_code", name, "in")
+	endpoint := productsAttribute + "?" + searchQuery
+	httpClient := apiClient.HttpClient
+
+	response := &attributeSetSearchQueryResponse{}
+
+	resp, err := httpClient.R().SetResult(response).Get(endpoint)
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get attribute by name from remote")
+	if err != nil {
+		return nil, err
+	}
+
+	if len(response.AttributeSets) <= 0 {
+		return nil, ErrNotFound
+	}
+
+	mAttributeSet.Attribute = &response.AttributeSets[0]
+	mAttributeSet.Route = productsAttribute + "/" + mAttributeSet.Attribute.AttributeCode
+	err = utils.MayReturnErrorForHTTPResponse(mAttributeSet.UpdateAttributeFromRemote(), resp, "get detailed attribute by name from remote")
+
+	return mAttributeSet, err
+}
+
 func (mas *MAttribute) UpdateAttributeOnRemote() error {
 	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.Attribute).SetBody(mas.Attribute).Put(mas.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "update remote attribute from local")
