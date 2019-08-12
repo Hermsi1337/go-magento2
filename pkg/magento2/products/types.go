@@ -1,5 +1,7 @@
 package products
 
+import "errors"
+
 type AddProductPayload struct {
 	Product     Product `json:"product"`
 	SaveOptions bool    `json:"saveOptions"`
@@ -127,4 +129,19 @@ type StockItem struct {
 
 type updateStockPayload struct {
 	StockItem StockItem `json:"stockItem"`
+}
+
+var ErrNotFound = errors.New("no document found")
+
+type productSearchQueryResponse struct {
+	Products       []Product `json:"items"`
+	SearchCriteria struct {
+		FilterGroups []struct {
+			Filters []struct {
+				Field         string `json:"field"`
+				Value         string `json:"value"`
+				ConditionType string `json:"condition_type"`
+			} `json:"filters"`
+		} `json:"filter_groups"`
+	} `json:"search_criteria"`
 }
