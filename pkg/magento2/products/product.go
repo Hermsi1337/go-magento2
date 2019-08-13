@@ -33,24 +33,7 @@ func GetProductBySKU(sku string, apiClient *api.Client) (*MProduct, error) {
 		ApiClient: apiClient,
 	}
 
-	searchQuery := utils.BuildSearchQuery("sku", sku, "in")
-	endpoint := products + "?" + searchQuery
-	httpClient := apiClient.HttpClient
-
-	response := &productSearchQueryResponse{}
-
-	resp, err := httpClient.R().SetResult(response).Get(endpoint)
-	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get product by sku from remote")
-	if err != nil {
-		return nil, err
-	}
-
-	if len(response.Products) <= 0 {
-		return nil, ErrNotFound
-	}
-
-	mProduct.Product = &response.Products[0]
-	err = utils.MayReturnErrorForHTTPResponse(mProduct.UpdateProductFromRemote(), resp, "get detailed product by sku from remote")
+	err := mProduct.UpdateProductFromRemote()
 
 	return mProduct, err
 }

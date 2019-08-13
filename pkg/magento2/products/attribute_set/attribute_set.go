@@ -2,6 +2,7 @@ package attribute_set
 
 import (
 	"github.com/hermsi1337/go-magento2/internal/utils"
+	"github.com/hermsi1337/go-magento2/pkg/magento2"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
 	"strconv"
@@ -61,7 +62,7 @@ func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, 
 	}
 
 	if len(response.AttributeSets) <= 0 {
-		return nil, ErrNotFound
+		return nil, magento2.ErrNotFound
 	}
 
 	mAttributeSet.AttributeSet = &response.AttributeSets[0]

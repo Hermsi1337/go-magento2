@@ -1,6 +1,7 @@
 package attribute
 
 import (
+	"fmt"
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"strings"
@@ -30,31 +31,14 @@ func CreateAttribute(a Attribute, apiClient *api.Client) (*MAttribute, error) {
 	return mAttribute, utils.MayReturnErrorForHTTPResponse(err, resp, "create attribute")
 }
 
-func GetAttributeByName(name string, apiClient *api.Client) (*MAttribute, error) {
+func GetAttributeByAttributeCode(attributeCode string, apiClient *api.Client) (*MAttribute, error) {
 	mAttributeSet := &MAttribute{
+		Route:     fmt.Sprintf("%s/%s", productsAttribute, attributeCode),
 		Attribute: &Attribute{},
 		ApiClient: apiClient,
 	}
 
-	searchQuery := utils.BuildSearchQuery("attribute_code", name, "in")
-	endpoint := productsAttribute + "?" + searchQuery
-	httpClient := apiClient.HttpClient
-
-	response := &attributeSetSearchQueryResponse{}
-
-	resp, err := httpClient.R().SetResult(response).Get(endpoint)
-	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get attribute by name from remote")
-	if err != nil {
-		return nil, err
-	}
-
-	if len(response.AttributeSets) <= 0 {
-		return nil, ErrNotFound
-	}
-
-	mAttributeSet.Attribute = &response.AttributeSets[0]
-	mAttributeSet.Route = productsAttribute + "/" + mAttributeSet.Attribute.AttributeCode
-	err = utils.MayReturnErrorForHTTPResponse(mAttributeSet.UpdateAttributeFromRemote(), resp, "get detailed attribute by name from remote")
+	err := mAttributeSet.UpdateAttributeFromRemote()
 
 	return mAttributeSet, err
 }
