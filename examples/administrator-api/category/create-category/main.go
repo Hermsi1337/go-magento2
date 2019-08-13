@@ -26,8 +26,7 @@ func main() {
 
 	c := &categories.Category{
 		Name:     "spagetegory",
-		Level:    1,
-		Path:     "1",
+		Level:    2,
 		IsActive: true,
 	}
 
