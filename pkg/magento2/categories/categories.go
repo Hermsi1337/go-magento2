@@ -87,6 +87,8 @@ func (mC *MCategory) AssignProductByProductLink(pl *ProductLink) error {
 	httpClient := mC.ApiClient.HttpClient
 	endpoint := fmt.Sprintf("%s/%s", mC.Route, categoriesProductsRelative)
 
-	resp, err := httpClient.R().SetBody(pl).Put(endpoint)
+	payLoad := assignProductPayload{ProductLink: *pl}
+
+	resp, err := httpClient.R().SetBody(payLoad).Put(endpoint)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "assign product to category")
 }

@@ -33,6 +33,10 @@ type createCategoryPayload struct {
 	Category Category `json:"category"`
 }
 
+type assignProductPayload struct {
+	ProductLink ProductLink `json:"productLink"`
+}
+
 type categorySearchQueryResponse struct {
 	Categories     []Category `json:"items"`
 	SearchCriteria struct {
