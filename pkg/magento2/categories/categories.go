@@ -66,7 +66,7 @@ func (mC *MCategory) UpdateCategoryFromRemote() error {
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get category from remote")
 }
 
-func (mC *MCategory) AssignProductByProductLink(pl ProductLink) error {
+func (mC *MCategory) AssignProductByProductLink(pl *ProductLink) error {
 	if len(pl.CategoryID) <= 0 {
 		pl.CategoryID = fmt.Sprintf("%d", mC.Category.ID)
 	}
