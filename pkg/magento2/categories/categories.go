@@ -90,5 +90,11 @@ func (mC *MCategory) AssignProductByProductLink(pl *ProductLink) error {
 	payLoad := assignProductPayload{ProductLink: *pl}
 
 	resp, err := httpClient.R().SetBody(payLoad).Put(endpoint)
-	return utils.MayReturnErrorForHTTPResponse(err, resp, "assign product to category")
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "assign product to category")
+
+	if err == nil {
+		*mC.Products = append(*mC.Products, *pl)
+	}
+
+	return err
 }
