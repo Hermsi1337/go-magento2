@@ -22,6 +22,13 @@ type CustomAttributes struct {
 	Value         string `json:"value"`
 }
 
+type ProductLink struct {
+	Sku                 string                 `json:"sku"`
+	Position            int                    `json:"position"`
+	CategoryID          string                 `json:"category_id"`
+	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
+}
+
 type createCategoryPayload struct {
 	Category Category `json:"category"`
 }

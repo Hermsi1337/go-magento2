@@ -65,3 +65,15 @@ func (mC *MCategory) UpdateCategoryFromRemote() error {
 	resp, err := mC.ApiClient.HttpClient.R().SetResult(mC.Category).Get(mC.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get category from remote")
 }
+
+func (mC *MCategory) AssignProductByProductLink(pl ProductLink) error {
+	if len(pl.CategoryID) <= 0 {
+		pl.CategoryID = fmt.Sprintf("%d", mC.Category.ID)
+	}
+
+	httpClient := mC.ApiClient.HttpClient
+	endpoint := fmt.Sprintf("%s/%s", mC.Route, categoriesProductsRelative)
+
+	resp, err := httpClient.R().SetBody(pl).Put(endpoint)
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "assign product to category")
+}
