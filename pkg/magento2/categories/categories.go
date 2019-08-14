@@ -10,12 +10,14 @@ import (
 type MCategory struct {
 	Route     string
 	Category  *Category
+	Products  *[]ProductLink
 	ApiClient *api.Client
 }
 
 func CreateCategory(c *Category, apiClient *api.Client) (*MCategory, error) {
 	mC := &MCategory{
 		Category:  &Category{},
+		Products:  &[]ProductLink{},
 		ApiClient: apiClient,
 	}
 	endpoint := categories
@@ -35,6 +37,7 @@ func CreateCategory(c *Category, apiClient *api.Client) (*MCategory, error) {
 func GetCategoryByName(name string, apiClient *api.Client) (*MCategory, error) {
 	mC := &MCategory{
 		Category:  &Category{},
+		Products:  &[]ProductLink{},
 		ApiClient: apiClient,
 	}
 	searchQuery := utils.BuildSearchQuery("name", name, "in")
@@ -63,7 +66,17 @@ func GetCategoryByName(name string, apiClient *api.Client) (*MCategory, error) {
 
 func (mC *MCategory) UpdateCategoryFromRemote() error {
 	resp, err := mC.ApiClient.HttpClient.R().SetResult(mC.Category).Get(mC.Route)
-	return utils.MayReturnErrorForHTTPResponse(err, resp, "get category from remote")
+	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get category from remote")
+	if err != nil {
+		return err
+	}
+
+	return mC.UpdateCategoryProductsFromRemote()
+}
+
+func (mC *MCategory) UpdateCategoryProductsFromRemote() error {
+	resp, err := mC.ApiClient.HttpClient.R().SetResult(mC.Products).Get(fmt.Sprintf("%s/%s", mC.Route, categoriesProductsRelative))
+	return utils.MayReturnErrorForHTTPResponse(err, resp, "get category products from remote")
 }
 
 func (mC *MCategory) AssignProductByProductLink(pl *ProductLink) error {
