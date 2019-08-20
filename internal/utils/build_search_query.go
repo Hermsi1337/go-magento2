@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"net/url"
 )
 
 const (
@@ -11,5 +11,10 @@ const (
 )
 
 func BuildSearchQuery(field, value, conditionType string) string {
-	return fmt.Sprintf(searchCriteriaField + field + "&" + searchCriteriaValue + value + "&" + searchCriteriaConditionType + conditionType)
+	params := url.Values{}
+	params.Add(searchCriteriaField, field)
+	params.Add(searchCriteriaValue, value)
+	params.Add(searchCriteriaConditionType, conditionType)
+
+	return params.Encode()
 }
