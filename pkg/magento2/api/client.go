@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"gopkg.in/resty.v1"
+	"time"
 )
 
 type Client struct {
@@ -80,6 +81,13 @@ func buildBasicHttpClient(storeConfig *StoreConfig) *resty.Client {
 	client.SetHeaders(map[string]string{
 		"User-Agent": "go-magento2 (https://github.com/hermsi1337/go-magento2)",
 	})
+	client.SetRetryCount(3).
+		// You can override initial retry wait time.
+		// Default is 100 milliseconds.
+		SetRetryWaitTime(5 * time.Second).
+		// MaxWaitTime can be overridden as well.
+		// Default is 2 seconds.
+		SetRetryMaxWaitTime(20 * time.Second)
 
 	return client
 }
