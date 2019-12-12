@@ -1,10 +1,6 @@
-package magento2
+package cart
 
 const (
-	integrationAdminTokenService    = "/integration/admin/token"
-	integrationCustomerTokenService = "/integration/customer/token"
-	order                           = "/orders"
-	orderComments                   = "/comments"
 	guestCart                       = "/guest-carts"
 	customerCart                    = "/carts/mine"
 	cartShippingCosts               = "/estimate-shipping-methods"
