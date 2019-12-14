@@ -35,6 +35,8 @@ Let's make this package great together!  🚀
   * [x] products
     - [x] create new product
         - [x] configurable products
+            - [x] assign simple products
+        - [x] simple products
     - [x] create attributes
     - [x] create attribute-set
       - [x] assign attributes to attribute-set
