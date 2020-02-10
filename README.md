@@ -2,7 +2,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f9e75064d22478ed207f/maintainability)](https://codeclimate.com/github/Hermsi1337/go-magento2/maintainability)
 
 # go-magento2
-A Golang package for communicating with the magento2 api. (tested with >=2.3.0)
+A Golang package for communicating with the magento2 api. (tested with >=2.1.0)
    
 I initially built this package because I need it for a project I'm currently working on.  
 For the start, I will add further features upon my need.
@@ -34,6 +34,9 @@ Let's make this package great together!  🚀
     - [x] add comment to order
   * [x] products
     - [x] create new product
+        - [x] configurable products
+            - [x] assign simple products
+        - [x] simple products
     - [x] create attributes
     - [x] create attribute-set
       - [x] assign attributes to attribute-set
