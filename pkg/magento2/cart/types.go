@@ -1,5 +1,15 @@
 package cart
 
+import "fmt"
+
+type ItemNotFoundError struct {
+	ItemID int
+}
+
+func (a *ItemNotFoundError) Error() string {
+	return fmt.Sprintf("itemID '%d' is non-existent", a.ItemID)
+}
+
 type Cart struct {
 	ID                  int                    `json:"id"`
 	CreatedAt           string                 `json:"created_at"`
@@ -90,7 +100,6 @@ type Address struct {
 	ExtensionAttributes map[string]interface{}   `json:"extension_attributes,omitempty"`
 	CustomAttributes    []map[string]interface{} `json:"custom_attributes,omitempty"`
 }
-
 
 type Currency struct {
 	GlobalCurrencyCode  string                 `json:"global_currency_code,omitempty"`

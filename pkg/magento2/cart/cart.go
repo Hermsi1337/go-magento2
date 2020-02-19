@@ -3,6 +3,7 @@ package cart
 import (
 	"fmt"
 	"github.com/hermsi1337/go-magento2/internal/utils"
+	"github.com/hermsi1337/go-magento2/pkg/magento2"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/orders"
 	"strconv"
@@ -97,10 +98,15 @@ func (cart *MCart) AddItems(items []Item) error {
 		}
 
 		resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
+
 		err = utils.MayReturnErrorForHTTPResponse(err, resp, fmt.Sprintf("add item '%+v' to cart", item))
-		if err != nil {
+		if err != nil && err == magento2.ErrNotFound {
+			customErr := &ItemNotFoundError{ItemID: item.ItemID}
+			return customErr
+		} else if err != nil {
 			return err
 		}
+
 		cart.Cart.Items = append(cart.Cart.Items, item)
 	}
 
@@ -180,7 +186,7 @@ func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.MOrder, err
 	}
 
 	return &orders.MOrder{
-		Route:   orders.Orders + "/" + orderIDString,
+		Route: orders.Orders + "/" + orderIDString,
 		Order: &orders.Order{
 			EntityID: orderIDInt,
 		},
