@@ -1,4 +1,4 @@
-package configurable_products
+package configurableproducts
 
 type Option struct {
 	ID                  int         `json:"id,omitempty"`

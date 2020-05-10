@@ -91,7 +91,6 @@ type Address struct {
 	CustomAttributes    []map[string]interface{} `json:"custom_attributes,omitempty"`
 }
 
-
 type Currency struct {
 	GlobalCurrencyCode  string                 `json:"global_currency_code,omitempty"`
 	BaseCurrencyCode    string                 `json:"base_currency_code,omitempty"`

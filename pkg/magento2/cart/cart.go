@@ -2,34 +2,35 @@ package cart
 
 import (
 	"fmt"
+	"strconv"
+
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/orders"
-	"strconv"
 )
 
 type MCart struct {
 	Route     string
 	QuoteID   string
 	Cart      *Cart
-	ApiClient *api.Client
+	APIClient *api.Client
 }
 
-func NewGuestCartFromApiClient(apiClient *api.Client) (*MCart, error) {
+func NewGuestCartFromAPIClient(apiClient *api.Client) (*MCart, error) {
 	mCart := &MCart{
 		Cart: &Cart{},
 	}
-	mCart.ApiClient = apiClient
+	mCart.APIClient = apiClient
 
 	err := mCart.initializeGuestCart()
 	return mCart, err
 }
 
-func NewCustomerCartFromApiClient(apiClient *api.Client) (*MCart, error) {
+func NewCustomerCartFromAPIClient(apiClient *api.Client) (*MCart, error) {
 	mCart := &MCart{
 		Cart: &Cart{},
 	}
-	mCart.ApiClient = apiClient
+	mCart.APIClient = apiClient
 
 	err := mCart.initializeCustomerCart()
 	return mCart, err
@@ -37,9 +38,9 @@ func NewCustomerCartFromApiClient(apiClient *api.Client) (*MCart, error) {
 
 func (cart *MCart) initializeGuestCart() error {
 	endpoint := guestCart
-	apiClient := cart.ApiClient
+	apiClient := cart.APIClient
 
-	httpClient := apiClient.HttpClient
+	httpClient := apiClient.HTTPClient
 	resp, err := httpClient.R().Post(endpoint)
 	err = utils.MayReturnErrorForHTTPResponse(err, resp, "initialize cart for guest")
 	if err != nil {
@@ -50,16 +51,16 @@ func (cart *MCart) initializeGuestCart() error {
 
 	cart.Route = guestCart + "/" + quoteID
 	cart.QuoteID = quoteID
-	cart.ApiClient = apiClient
+	cart.APIClient = apiClient
 
-	return cart.UpdateCartFromRemote()
+	return cart.UpdateFromRemote()
 }
 
 func (cart *MCart) initializeCustomerCart() error {
 	endpoint := customerCart
-	apiClient := cart.ApiClient
+	apiClient := cart.APIClient
 
-	httpClient := apiClient.HttpClient
+	httpClient := apiClient.HTTPClient
 	resp, err := httpClient.R().Post(endpoint)
 	err = utils.MayReturnErrorForHTTPResponse(err, resp, "initialize cart for customer")
 	if err != nil {
@@ -70,13 +71,13 @@ func (cart *MCart) initializeCustomerCart() error {
 
 	cart.Route = customerCart
 	cart.QuoteID = quoteID
-	cart.ApiClient = apiClient
+	cart.APIClient = apiClient
 
-	return cart.UpdateCartFromRemote()
+	return cart.UpdateFromRemote()
 }
 
-func (cart *MCart) UpdateCartFromRemote() error {
-	httpClient := cart.ApiClient.HttpClient
+func (cart *MCart) UpdateFromRemote() error {
+	httpClient := cart.APIClient.HTTPClient
 
 	resp, err := httpClient.R().SetResult(cart.Cart).Get(cart.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get detailed cart object from magento2-api")
@@ -84,7 +85,7 @@ func (cart *MCart) UpdateCartFromRemote() error {
 
 func (cart *MCart) AddItems(items []Item) error {
 	endpoint := cart.Route + cartItems
-	httpClient := cart.ApiClient.HttpClient
+	httpClient := cart.APIClient.HTTPClient
 
 	type PayLoad struct {
 		CartItem Item `json:"cartItem"`
@@ -107,16 +108,16 @@ func (cart *MCart) AddItems(items []Item) error {
 	return nil
 }
 
-func (cart *MCart) EstimateShippingCarrier(addrInfo Address) ([]Carrier, error) {
+func (cart *MCart) EstimateShippingCarrier(addr *Address) ([]Carrier, error) {
 	endpoint := cart.Route + cartShippingCosts
-	httpClient := cart.ApiClient.HttpClient
+	httpClient := cart.APIClient.HTTPClient
 
 	type PayLoad struct {
 		Address Address `json:"address"`
 	}
 
 	payLoad := &PayLoad{
-		Address: addrInfo,
+		Address: *addr,
 	}
 
 	shippingCarrier := &[]Carrier{}
@@ -126,16 +127,16 @@ func (cart *MCart) EstimateShippingCarrier(addrInfo Address) ([]Carrier, error) 
 	return *shippingCarrier, utils.MayReturnErrorForHTTPResponse(err, resp, "estimate shipping carrier for cart")
 }
 
-func (cart *MCart) AddShippingInformation(addrInfo AddressInformation) error {
+func (cart *MCart) AddShippingInformation(addrInfo *AddressInformation) error {
 	endpoint := cart.Route + cartShippingInformation
-	httpClient := cart.ApiClient.HttpClient
+	httpClient := cart.APIClient.HTTPClient
 
 	type PayLoad struct {
 		AddressInformation AddressInformation `json:"addressInformation"`
 	}
 
 	payLoad := &PayLoad{
-		AddressInformation: addrInfo,
+		AddressInformation: *addrInfo,
 	}
 
 	resp, err := httpClient.R().SetBody(*payLoad).Post(endpoint)
@@ -144,18 +145,16 @@ func (cart *MCart) AddShippingInformation(addrInfo AddressInformation) error {
 
 func (cart *MCart) EstimatePaymentMethods() ([]PaymentMethod, error) {
 	endpoint := cart.Route + cartPaymentMethods
-	httpClient := cart.ApiClient.HttpClient
 
 	paymentMethods := &[]PaymentMethod{}
 
-	resp, err := httpClient.R().SetResult(paymentMethods).Get(endpoint)
-
-	return *paymentMethods, utils.MayReturnErrorForHTTPResponse(err, resp, "estimate payment methods for cart")
+	err := cart.APIClient.GetRouteAndDecode(endpoint, paymentMethods, "estimate payment methods for cart")
+	return *paymentMethods, err
 }
 
 func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.MOrder, error) {
 	endpoint := cart.Route + cartPlaceOrder
-	httpClient := cart.ApiClient.HttpClient
+	httpClient := cart.APIClient.HTTPClient
 
 	type PayLoad struct {
 		PaymentMethod PaymentMethodCode `json:"paymentMethod"`
@@ -176,21 +175,21 @@ func (cart *MCart) CreateOrder(paymentMethod PaymentMethod) (*orders.MOrder, err
 	orderIDString := utils.MayTrimSurroundingQuotes(resp.String())
 	orderIDInt, err := strconv.Atoi(orderIDString)
 	if err != nil {
-		return nil, fmt.Errorf("unexpected error while extracting orderID: '%v'", err)
+		return nil, fmt.Errorf("unexpected error while extracting orderID: '%w'", err)
 	}
 
 	return &orders.MOrder{
-		Route:   orders.Orders + "/" + orderIDString,
+		Route: orders.Orders + "/" + orderIDString,
 		Order: &orders.Order{
 			EntityID: orderIDInt,
 		},
-		ApiClient: cart.ApiClient,
+		APIClient: cart.APIClient,
 	}, nil
 }
 
 func (cart *MCart) DeleteItem(itemID int) error {
 	endpoint := cart.Route + cartItems + "/" + strconv.Itoa(itemID)
-	httpClient := cart.ApiClient.HttpClient
+	httpClient := cart.APIClient.HTTPClient
 
 	resp, err := httpClient.R().Delete(endpoint)
 
@@ -198,7 +197,7 @@ func (cart *MCart) DeleteItem(itemID int) error {
 }
 
 func (cart *MCart) DeleteAllItems() error {
-	err := cart.UpdateCartFromRemote()
+	err := cart.UpdateFromRemote()
 	if err != nil {
 		return err
 	}

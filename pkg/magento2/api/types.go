@@ -1,10 +1,15 @@
 package api
 
 const (
-	AnonymousClientType     = "anonymous"
-	CustomerClientType      = "customer"
-	AdministratorClientType = "administrator"
+	Customer AuthenticationType = iota
+	Administrator
 )
+
+type AuthenticationType int
+
+func (authenticationType AuthenticationType) Route() string {
+	return [...]string{integrationCustomerTokenService, integrationAdminTokenService}[authenticationType]
+}
 
 type AuthenticationRequestPayload struct {
 	Username string `json:"username"`

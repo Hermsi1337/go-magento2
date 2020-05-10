@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/hermsi1337/go-magento2/pkg/magento2/cart"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
+	"github.com/hermsi1337/go-magento2/pkg/magento2/cart"
 	"log"
 )
 
@@ -21,14 +21,15 @@ func main() {
 	}
 
 	// create a new apiClient
-	apiClient, err := api.NewCustomerApiClient(storeConfig, authenticationPaylod)
+	authenticationType := api.Customer
+	apiClient, err := api.NewAPIClientFromAuthentication(storeConfig, authenticationPaylod, authenticationType)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Obtained client: '%+v'", apiClient)
 
 	// create empty card
-	mCart, err := cart.NewCustomerCartFromApiClient(apiClient)
+	mCart, err := cart.NewCustomerCartFromAPIClient(apiClient)
 	if err != nil {
 		panic(err)
 	}
@@ -80,7 +81,7 @@ func main() {
 	}
 
 	// estimate shipping carrier for our cart
-	availableCarrier, err := mCart.EstimateShippingCarrier(*sAddr)
+	availableCarrier, err := mCart.EstimateShippingCarrier(sAddr)
 	if err != nil {
 		panic(err)
 	}
@@ -101,7 +102,7 @@ func main() {
 	}
 
 	// add shipping info to cart
-	err = mCart.AddShippingInformation(*payLoad)
+	err = mCart.AddShippingInformation(payLoad)
 	if err != nil {
 		panic(err)
 	}

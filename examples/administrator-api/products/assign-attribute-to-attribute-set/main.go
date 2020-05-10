@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
-	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute_set"
+	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attributeset"
 	"log"
 	"strconv"
 )
@@ -19,14 +19,14 @@ func main() {
 	bearerToken := "yd1o9zs1hb1qxnn8ek68eu8nwqjg5hrv"
 
 	// create a new apiClient
-	apiClient, err := api.NewAdministratorApiClientFromIntegration(storeConfig, bearerToken)
+	apiClient, err := api.NewAPIClientFromIntegration(storeConfig, bearerToken)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
 	// define your attribute
-	attr := attribute.Attribute{
+	attr := &attribute.Attribute{
 		AttributeCode:        "awors4",
 		FrontendInput:        "select",
 		DefaultFrontendLabel: "aw",
@@ -44,7 +44,7 @@ func main() {
 	log.Printf("Detailed attribute: %+v", mAttribute.Attribute)
 
 	// define your atrribute-set
-	attributeSet := attribute_set.AttributeSet{
+	set := attributeset.AttributeSet{
 		AttributeSetName: "foos4",
 		SortOrder:        2,
 	}
@@ -53,7 +53,7 @@ func main() {
 	skeletonID := 4
 
 	// create atrribute-set on remote
-	mAttributeSet, err := attribute_set.CreateAttributeSet(attributeSet, skeletonID, apiClient)
+	mAttributeSet, err := attributeset.CreateAttributeSet(set, skeletonID, apiClient)
 	if err != nil {
 		panic(err)
 	}

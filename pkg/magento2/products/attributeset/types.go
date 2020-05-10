@@ -1,4 +1,4 @@
-package attribute_set
+package attributeset
 
 import "errors"
 
@@ -12,7 +12,7 @@ type AttributeSet struct {
 	ExtensionAttributes interface{} `json:"extension_attributes,omitempty"`
 }
 
-type AttributeSetGroup struct {
+type Group struct {
 	AttributeGroupID    string `json:"attribute_group_id,omitempty"`
 	AttributeGroupName  string `json:"attribute_group_name"`
 	AttributeSetID      int    `json:"attribute_set_id"`
@@ -36,7 +36,7 @@ type attributeSetSearchQueryResponse struct {
 }
 
 type groupSearchQueryResponse struct {
-	Groups         []AttributeSetGroup `json:"items"`
+	Groups         []Group `json:"items"`
 	SearchCriteria struct {
 		FilterGroups []struct {
 			Filters []struct {
@@ -61,5 +61,5 @@ type assignAttributePayload struct {
 }
 
 type createGroupPayload struct {
-	Group AttributeSetGroup `json:"group"`
+	Group Group `json:"group"`
 }

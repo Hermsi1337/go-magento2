@@ -1,4 +1,4 @@
-package attribute_set
+package attributeset
 
 const (
 	productsAttributeSet                   = "/products/attribute-sets"

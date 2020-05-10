@@ -1,29 +1,30 @@
-package attribute_set
+package attributeset
 
 import (
+	"strconv"
+
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"github.com/hermsi1337/go-magento2/pkg/magento2"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
-	"strconv"
 )
 
 type MAttributeSet struct {
 	Route                  string
 	AttributeSet           *AttributeSet
-	AttributeSetGroups     []AttributeSetGroup
+	AttributeSetGroups     []Group
 	AttributeSetAttributes *[]attribute.Attribute
-	ApiClient              *api.Client
+	APIClient              *api.Client
 }
 
 func CreateAttributeSet(a AttributeSet, skeletonID int, apiClient *api.Client) (*MAttributeSet, error) {
 	mAttributeSet := &MAttributeSet{
 		AttributeSet:           &AttributeSet{},
 		AttributeSetAttributes: &[]attribute.Attribute{},
-		ApiClient:              apiClient,
+		APIClient:              apiClient,
 	}
 	endpoint := productsAttributeSet
-	httpClient := apiClient.HttpClient
+	httpClient := apiClient.HTTPClient
 
 	payLoad := createAttributeSetPayload{
 		AttributeSet: a,
@@ -47,11 +48,11 @@ func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, 
 	mAttributeSet := &MAttributeSet{
 		AttributeSet:           &AttributeSet{},
 		AttributeSetAttributes: &[]attribute.Attribute{},
-		ApiClient:              apiClient,
+		APIClient:              apiClient,
 	}
 	searchQuery := utils.BuildSearchQuery("attribute_set_name", name, "in")
 	endpoint := productsAttributeSetList + "?" + searchQuery
-	httpClient := apiClient.HttpClient
+	httpClient := apiClient.HTTPClient
 
 	response := &attributeSetSearchQueryResponse{}
 
@@ -61,7 +62,7 @@ func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, 
 		return nil, err
 	}
 
-	if len(response.AttributeSets) <= 0 {
+	if len(response.AttributeSets) == 0 {
 		return nil, magento2.ErrNotFound
 	}
 
@@ -73,7 +74,7 @@ func GetAttributeSetByName(name string, apiClient *api.Client) (*MAttributeSet, 
 }
 
 func (mas *MAttributeSet) UpdateAttributeSetOnRemote() error {
-	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSet).SetBody(mas.AttributeSet).Put(mas.Route)
+	resp, err := mas.APIClient.HTTPClient.R().SetResult(mas.AttributeSet).SetBody(mas.AttributeSet).Put(mas.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "update remote attribute-set from local")
 }
 
@@ -92,12 +93,12 @@ func (mas *MAttributeSet) UpdateAttributeSetFromRemote() error {
 }
 
 func (mas *MAttributeSet) updateAttributeSet() error {
-	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSet).Get(mas.Route)
+	resp, err := mas.APIClient.HTTPClient.R().SetResult(mas.AttributeSet).Get(mas.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get details for attribute-set from remote")
 }
 
 func (mas *MAttributeSet) updateAttributes() error {
-	resp, err := mas.ApiClient.HttpClient.R().SetResult(mas.AttributeSetAttributes).Get(mas.Route + "/" + productsAttributeSetAttributesRelative)
+	resp, err := mas.APIClient.HTTPClient.R().SetResult(mas.AttributeSetAttributes).Get(mas.Route + "/" + productsAttributeSetAttributesRelative)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get details for attribute-set from remote")
 }
 
@@ -107,7 +108,7 @@ func (mas *MAttributeSet) updateGroups() error {
 
 	response := &groupSearchQueryResponse{}
 
-	resp, err := mas.ApiClient.HttpClient.R().SetResult(response).Get(endpoint)
+	resp, err := mas.APIClient.HTTPClient.R().SetResult(response).Get(endpoint)
 	err = utils.MayReturnErrorForHTTPResponse(err, resp, "get groups for attribute-set from remote")
 	if err != nil {
 		return err
@@ -120,7 +121,7 @@ func (mas *MAttributeSet) updateGroups() error {
 
 func (mas *MAttributeSet) AssignAttribute(attributeGroupID, sortOrder int, attributeCode string) error {
 	endpoint := productsAttributeSetAttributes
-	httpClient := mas.ApiClient.HttpClient
+	httpClient := mas.APIClient.HTTPClient
 
 	payLoad := assignAttributePayload{
 		AttributeSetID:      mas.AttributeSet.AttributeSetID,
@@ -140,10 +141,10 @@ func (mas *MAttributeSet) AssignAttribute(attributeGroupID, sortOrder int, attri
 
 func (mas *MAttributeSet) CreateGroup(groupName string) error {
 	endpoint := productsAttributeSetGroups
-	httpClient := mas.ApiClient.HttpClient
+	httpClient := mas.APIClient.HTTPClient
 
 	payLoad := createGroupPayload{
-		Group: AttributeSetGroup{
+		Group: Group{
 			AttributeGroupName: groupName,
 			AttributeSetID:     mas.AttributeSet.AttributeSetID,
 		},

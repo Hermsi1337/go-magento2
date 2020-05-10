@@ -1,816 +1,778 @@
 package orders
 
 type Order struct {
-	AdjustmentNegative                      int    `json:"adjustment_negative"`
-	AdjustmentPositive                      int    `json:"adjustment_positive"`
-	AppliedRuleIds                          string `json:"applied_rule_ids"`
-	BaseAdjustmentNegative                  int    `json:"base_adjustment_negative"`
-	BaseAdjustmentPositive                  int    `json:"base_adjustment_positive"`
-	BaseCurrencyCode                        string `json:"base_currency_code"`
-	BaseDiscountAmount                      int    `json:"base_discount_amount"`
-	BaseDiscountCanceled                    int    `json:"base_discount_canceled"`
-	BaseDiscountInvoiced                    int    `json:"base_discount_invoiced"`
-	BaseDiscountRefunded                    int    `json:"base_discount_refunded"`
-	BaseGrandTotal                          int    `json:"base_grand_total"`
-	BaseDiscountTaxCompensationAmount       int    `json:"base_discount_tax_compensation_amount"`
-	BaseDiscountTaxCompensationInvoiced     int    `json:"base_discount_tax_compensation_invoiced"`
-	BaseDiscountTaxCompensationRefunded     int    `json:"base_discount_tax_compensation_refunded"`
-	BaseShippingAmount                      int    `json:"base_shipping_amount"`
-	BaseShippingCanceled                    int    `json:"base_shipping_canceled"`
-	BaseShippingDiscountAmount              int    `json:"base_shipping_discount_amount"`
-	BaseShippingDiscountTaxCompensationAmnt int    `json:"base_shipping_discount_tax_compensation_amnt"`
-	BaseShippingInclTax                     int    `json:"base_shipping_incl_tax"`
-	BaseShippingInvoiced                    int    `json:"base_shipping_invoiced"`
-	BaseShippingRefunded                    int    `json:"base_shipping_refunded"`
-	BaseShippingTaxAmount                   int    `json:"base_shipping_tax_amount"`
-	BaseShippingTaxRefunded                 int    `json:"base_shipping_tax_refunded"`
-	BaseSubtotal                            int    `json:"base_subtotal"`
-	BaseSubtotalCanceled                    int    `json:"base_subtotal_canceled"`
-	BaseSubtotalInclTax                     int    `json:"base_subtotal_incl_tax"`
-	BaseSubtotalInvoiced                    int    `json:"base_subtotal_invoiced"`
-	BaseSubtotalRefunded                    int    `json:"base_subtotal_refunded"`
-	BaseTaxAmount                           int    `json:"base_tax_amount"`
-	BaseTaxCanceled                         int    `json:"base_tax_canceled"`
-	BaseTaxInvoiced                         int    `json:"base_tax_invoiced"`
-	BaseTaxRefunded                         int    `json:"base_tax_refunded"`
-	BaseTotalCanceled                       int    `json:"base_total_canceled"`
-	BaseTotalDue                            int    `json:"base_total_due"`
-	BaseTotalInvoiced                       int    `json:"base_total_invoiced"`
-	BaseTotalInvoicedCost                   int    `json:"base_total_invoiced_cost"`
-	BaseTotalOfflineRefunded                int    `json:"base_total_offline_refunded"`
-	BaseTotalOnlineRefunded                 int    `json:"base_total_online_refunded"`
-	BaseTotalPaid                           int    `json:"base_total_paid"`
-	BaseTotalQtyOrdered                     int    `json:"base_total_qty_ordered"`
-	BaseTotalRefunded                       int    `json:"base_total_refunded"`
-	BaseToGlobalRate                        int    `json:"base_to_global_rate"`
-	BaseToOrderRate                         int    `json:"base_to_order_rate"`
-	BillingAddressID                        int    `json:"billing_address_id"`
-	CanShipPartially                        int    `json:"can_ship_partially"`
-	CanShipPartiallyItem                    int    `json:"can_ship_partially_item"`
-	CouponCode                              string `json:"coupon_code"`
-	CreatedAt                               string `json:"created_at"`
-	CustomerDob                             string `json:"customer_dob"`
-	CustomerEmail                           string `json:"customer_email"`
-	CustomerFirstname                       string `json:"customer_firstname"`
-	CustomerGender                          int    `json:"customer_gender"`
-	CustomerGroupID                         int    `json:"customer_group_id"`
-	CustomerID                              int    `json:"customer_id"`
-	CustomerIsGuest                         int    `json:"customer_is_guest"`
-	CustomerLastname                        string `json:"customer_lastname"`
-	CustomerMiddlename                      string `json:"customer_middlename"`
-	CustomerNote                            string `json:"customer_note"`
-	CustomerNoteNotify                      int    `json:"customer_note_notify"`
-	CustomerPrefix                          string `json:"customer_prefix"`
-	CustomerSuffix                          string `json:"customer_suffix"`
-	CustomerTaxvat                          string `json:"customer_taxvat"`
-	DiscountAmount                          int    `json:"discount_amount"`
-	DiscountCanceled                        int    `json:"discount_canceled"`
-	DiscountDescription                     string `json:"discount_description"`
-	DiscountInvoiced                        int    `json:"discount_invoiced"`
-	DiscountRefunded                        int    `json:"discount_refunded"`
-	EditIncrement                           int    `json:"edit_increment"`
-	EmailSent                               int    `json:"email_sent"`
-	EntityID                                int    `json:"entity_id"`
-	ExtCustomerID                           string `json:"ext_customer_id"`
-	ExtOrderID                              string `json:"ext_order_id"`
-	ForcedShipmentWithInvoice               int    `json:"forced_shipment_with_invoice"`
-	GlobalCurrencyCode                      string `json:"global_currency_code"`
-	GrandTotal                              int    `json:"grand_total"`
-	DiscountTaxCompensationAmount           int    `json:"discount_tax_compensation_amount"`
-	DiscountTaxCompensationInvoiced         int    `json:"discount_tax_compensation_invoiced"`
-	DiscountTaxCompensationRefunded         int    `json:"discount_tax_compensation_refunded"`
-	HoldBeforeState                         string `json:"hold_before_state"`
-	HoldBeforeStatus                        string `json:"hold_before_status"`
-	IncrementID                             string `json:"increment_id"`
-	IsVirtual                               int    `json:"is_virtual"`
-	OrderCurrencyCode                       string `json:"order_currency_code"`
-	OriginalIncrementID                     string `json:"original_increment_id"`
-	PaymentAuthorizationAmount              int    `json:"payment_authorization_amount"`
-	PaymentAuthExpiration                   int    `json:"payment_auth_expiration"`
-	ProtectCode                             string `json:"protect_code"`
-	QuoteAddressID                          int    `json:"quote_address_id"`
-	QuoteID                                 int    `json:"quote_id"`
-	RelationChildID                         string `json:"relation_child_id"`
-	RelationChildRealID                     string `json:"relation_child_real_id"`
-	RelationParentID                        string `json:"relation_parent_id"`
-	RelationParentRealID                    string `json:"relation_parent_real_id"`
-	RemoteIP                                string `json:"remote_ip"`
-	ShippingAmount                          int    `json:"shipping_amount"`
-	ShippingCanceled                        int    `json:"shipping_canceled"`
-	ShippingDescription                     string `json:"shipping_description"`
-	ShippingDiscountAmount                  int    `json:"shipping_discount_amount"`
-	ShippingDiscountTaxCompensationAmount   int    `json:"shipping_discount_tax_compensation_amount"`
-	ShippingInclTax                         int    `json:"shipping_incl_tax"`
-	ShippingInvoiced                        int    `json:"shipping_invoiced"`
-	ShippingRefunded                        int    `json:"shipping_refunded"`
-	ShippingTaxAmount                       int    `json:"shipping_tax_amount"`
-	ShippingTaxRefunded                     int    `json:"shipping_tax_refunded"`
-	State                                   string `json:"state"`
-	Status                                  string `json:"status"`
-	StoreCurrencyCode                       string `json:"store_currency_code"`
-	StoreID                                 int    `json:"store_id"`
-	StoreName                               string `json:"store_name"`
-	StoreToBaseRate                         int    `json:"store_to_base_rate"`
-	StoreToOrderRate                        int    `json:"store_to_order_rate"`
-	Subtotal                                int    `json:"subtotal"`
-	SubtotalCanceled                        int    `json:"subtotal_canceled"`
-	SubtotalInclTax                         int    `json:"subtotal_incl_tax"`
-	SubtotalInvoiced                        int    `json:"subtotal_invoiced"`
-	SubtotalRefunded                        int    `json:"subtotal_refunded"`
-	TaxAmount                               int    `json:"tax_amount"`
-	TaxCanceled                             int    `json:"tax_canceled"`
-	TaxInvoiced                             int    `json:"tax_invoiced"`
-	TaxRefunded                             int    `json:"tax_refunded"`
-	TotalCanceled                           int    `json:"total_canceled"`
-	TotalDue                                int    `json:"total_due"`
-	TotalInvoiced                           int    `json:"total_invoiced"`
-	TotalItemCount                          int    `json:"total_item_count"`
-	TotalOfflineRefunded                    int    `json:"total_offline_refunded"`
-	TotalOnlineRefunded                     int    `json:"total_online_refunded"`
-	TotalPaid                               int    `json:"total_paid"`
-	TotalQtyOrdered                         int    `json:"total_qty_ordered"`
-	TotalRefunded                           int    `json:"total_refunded"`
-	UpdatedAt                               string `json:"updated_at"`
-	Weight                                  int    `json:"weight"`
-	XForwardedFor                           string `json:"x_forwarded_for"`
-	Items                                   []struct {
-		AdditionalData                      string `json:"additional_data"`
-		AmountRefunded                      int    `json:"amount_refunded"`
-		AppliedRuleIds                      string `json:"applied_rule_ids"`
-		BaseAmountRefunded                  int    `json:"base_amount_refunded"`
-		BaseCost                            int    `json:"base_cost"`
-		BaseDiscountAmount                  int    `json:"base_discount_amount"`
-		BaseDiscountInvoiced                int    `json:"base_discount_invoiced"`
-		BaseDiscountRefunded                int    `json:"base_discount_refunded"`
-		BaseDiscountTaxCompensationAmount   int    `json:"base_discount_tax_compensation_amount"`
-		BaseDiscountTaxCompensationInvoiced int    `json:"base_discount_tax_compensation_invoiced"`
-		BaseDiscountTaxCompensationRefunded int    `json:"base_discount_tax_compensation_refunded"`
-		BaseOriginalPrice                   int    `json:"base_original_price"`
-		BasePrice                           int    `json:"base_price"`
-		BasePriceInclTax                    int    `json:"base_price_incl_tax"`
-		BaseRowInvoiced                     int    `json:"base_row_invoiced"`
-		BaseRowTotal                        int    `json:"base_row_total"`
-		BaseRowTotalInclTax                 int    `json:"base_row_total_incl_tax"`
-		BaseTaxAmount                       int    `json:"base_tax_amount"`
-		BaseTaxBeforeDiscount               int    `json:"base_tax_before_discount"`
-		BaseTaxInvoiced                     int    `json:"base_tax_invoiced"`
-		BaseTaxRefunded                     int    `json:"base_tax_refunded"`
-		BaseWeeeTaxAppliedAmount            int    `json:"base_weee_tax_applied_amount"`
-		BaseWeeeTaxAppliedRowAmnt           int    `json:"base_weee_tax_applied_row_amnt"`
-		BaseWeeeTaxDisposition              int    `json:"base_weee_tax_disposition"`
-		BaseWeeeTaxRowDisposition           int    `json:"base_weee_tax_row_disposition"`
-		CreatedAt                           string `json:"created_at"`
-		Description                         string `json:"description"`
-		DiscountAmount                      int    `json:"discount_amount"`
-		DiscountInvoiced                    int    `json:"discount_invoiced"`
-		DiscountPercent                     int    `json:"discount_percent"`
-		DiscountRefunded                    int    `json:"discount_refunded"`
-		EventID                             int    `json:"event_id"`
-		ExtOrderItemID                      string `json:"ext_order_item_id"`
-		FreeShipping                        int    `json:"free_shipping"`
-		GwBasePrice                         int    `json:"gw_base_price"`
-		GwBasePriceInvoiced                 int    `json:"gw_base_price_invoiced"`
-		GwBasePriceRefunded                 int    `json:"gw_base_price_refunded"`
-		GwBaseTaxAmount                     int    `json:"gw_base_tax_amount"`
-		GwBaseTaxAmountInvoiced             int    `json:"gw_base_tax_amount_invoiced"`
-		GwBaseTaxAmountRefunded             int    `json:"gw_base_tax_amount_refunded"`
-		GwID                                int    `json:"gw_id"`
-		GwPrice                             int    `json:"gw_price"`
-		GwPriceInvoiced                     int    `json:"gw_price_invoiced"`
-		GwPriceRefunded                     int    `json:"gw_price_refunded"`
-		GwTaxAmount                         int    `json:"gw_tax_amount"`
-		GwTaxAmountInvoiced                 int    `json:"gw_tax_amount_invoiced"`
-		GwTaxAmountRefunded                 int    `json:"gw_tax_amount_refunded"`
-		DiscountTaxCompensationAmount       int    `json:"discount_tax_compensation_amount"`
-		DiscountTaxCompensationCanceled     int    `json:"discount_tax_compensation_canceled"`
-		DiscountTaxCompensationInvoiced     int    `json:"discount_tax_compensation_invoiced"`
-		DiscountTaxCompensationRefunded     int    `json:"discount_tax_compensation_refunded"`
-		IsQtyDecimal                        int    `json:"is_qty_decimal"`
-		IsVirtual                           int    `json:"is_virtual"`
-		ItemID                              int    `json:"item_id"`
-		LockedDoInvoice                     int    `json:"locked_do_invoice"`
-		LockedDoShip                        int    `json:"locked_do_ship"`
-		Name                                string `json:"name"`
-		NoDiscount                          int    `json:"no_discount"`
-		OrderID                             int    `json:"order_id"`
-		OriginalPrice                       int    `json:"original_price"`
-		ParentItemID                        int    `json:"parent_item_id"`
-		Price                               int    `json:"price"`
-		PriceInclTax                        int    `json:"price_incl_tax"`
-		ProductID                           int    `json:"product_id"`
-		ProductType                         string `json:"product_type"`
-		QtyBackordered                      int    `json:"qty_backordered"`
-		QtyCanceled                         int    `json:"qty_canceled"`
-		QtyInvoiced                         int    `json:"qty_invoiced"`
-		QtyOrdered                          int    `json:"qty_ordered"`
-		QtyRefunded                         int    `json:"qty_refunded"`
-		QtyReturned                         int    `json:"qty_returned"`
-		QtyShipped                          int    `json:"qty_shipped"`
-		QuoteItemID                         int    `json:"quote_item_id"`
-		RowInvoiced                         int    `json:"row_invoiced"`
-		RowTotal                            int    `json:"row_total"`
-		RowTotalInclTax                     int    `json:"row_total_incl_tax"`
-		RowWeight                           int    `json:"row_weight"`
-		Sku                                 string `json:"sku"`
-		StoreID                             int    `json:"store_id"`
-		TaxAmount                           int    `json:"tax_amount"`
-		TaxBeforeDiscount                   int    `json:"tax_before_discount"`
-		TaxCanceled                         int    `json:"tax_canceled"`
-		TaxInvoiced                         int    `json:"tax_invoiced"`
-		TaxPercent                          int    `json:"tax_percent"`
-		TaxRefunded                         int    `json:"tax_refunded"`
-		UpdatedAt                           string `json:"updated_at"`
-		WeeeTaxApplied                      string `json:"weee_tax_applied"`
-		WeeeTaxAppliedAmount                int    `json:"weee_tax_applied_amount"`
-		WeeeTaxAppliedRowAmount             int    `json:"weee_tax_applied_row_amount"`
-		WeeeTaxDisposition                  int    `json:"weee_tax_disposition"`
-		WeeeTaxRowDisposition               int    `json:"weee_tax_row_disposition"`
-		Weight                              int    `json:"weight"`
-		ParentItem                          struct {
-		} `json:"parent_item"`
-		ProductOption struct {
-			ExtensionAttributes struct {
-				CustomOptions []struct {
-					OptionID            string `json:"option_id"`
-					OptionValue         string `json:"option_value"`
-					ExtensionAttributes struct {
-						FileInfo struct {
-							Base64EncodedData string `json:"base64_encoded_data"`
-							Type              string `json:"type"`
-							Name              string `json:"name"`
-						} `json:"file_info"`
-					} `json:"extension_attributes"`
-				} `json:"custom_options"`
-				BundleOptions []struct {
-					OptionID            int   `json:"option_id"`
-					OptionQty           int   `json:"option_qty"`
-					OptionSelections    []int `json:"option_selections"`
-					ExtensionAttributes struct {
-					} `json:"extension_attributes"`
-				} `json:"bundle_options"`
-				ConfigurableItemOptions []struct {
-					OptionID            string `json:"option_id"`
-					OptionValue         int    `json:"option_value"`
-					ExtensionAttributes struct {
-					} `json:"extension_attributes"`
-				} `json:"configurable_item_options"`
-				DownloadableOption struct {
-					DownloadableLinks []int `json:"downloadable_links"`
-				} `json:"downloadable_option"`
-				GiftcardItemOption struct {
-					GiftcardAmount         string `json:"giftcard_amount"`
-					CustomGiftcardAmount   int    `json:"custom_giftcard_amount"`
-					GiftcardSenderName     string `json:"giftcard_sender_name"`
-					GiftcardRecipientName  string `json:"giftcard_recipient_name"`
-					GiftcardSenderEmail    string `json:"giftcard_sender_email"`
-					GiftcardRecipientEmail string `json:"giftcard_recipient_email"`
-					GiftcardMessage        string `json:"giftcard_message"`
-					ExtensionAttributes    struct {
-					} `json:"extension_attributes"`
-				} `json:"giftcard_item_option"`
-			} `json:"extension_attributes"`
-		} `json:"product_option"`
-		ExtensionAttributes struct {
-			GiftMessage struct {
-				GiftMessageID       int    `json:"gift_message_id"`
-				CustomerID          int    `json:"customer_id"`
-				Sender              string `json:"sender"`
-				Recipient           string `json:"recipient"`
-				Message             string `json:"message"`
-				ExtensionAttributes struct {
-					EntityID                 string `json:"entity_id"`
-					EntityType               string `json:"entity_type"`
-					WrappingID               int    `json:"wrapping_id"`
-					WrappingAllowGiftReceipt bool   `json:"wrapping_allow_gift_receipt"`
-					WrappingAddPrintedCard   bool   `json:"wrapping_add_printed_card"`
-				} `json:"extension_attributes"`
-			} `json:"gift_message"`
-			GwID                    string   `json:"gw_id"`
-			GwBasePrice             string   `json:"gw_base_price"`
-			GwPrice                 string   `json:"gw_price"`
-			GwBaseTaxAmount         string   `json:"gw_base_tax_amount"`
-			GwTaxAmount             string   `json:"gw_tax_amount"`
-			GwBasePriceInvoiced     string   `json:"gw_base_price_invoiced"`
-			GwPriceInvoiced         string   `json:"gw_price_invoiced"`
-			GwBaseTaxAmountInvoiced string   `json:"gw_base_tax_amount_invoiced"`
-			GwTaxAmountInvoiced     string   `json:"gw_tax_amount_invoiced"`
-			GwBasePriceRefunded     string   `json:"gw_base_price_refunded"`
-			GwPriceRefunded         string   `json:"gw_price_refunded"`
-			GwBaseTaxAmountRefunded string   `json:"gw_base_tax_amount_refunded"`
-			GwTaxAmountRefunded     string   `json:"gw_tax_amount_refunded"`
-			VertexTaxCodes          []string `json:"vertex_tax_codes"`
-			InvoiceTextCodes        []string `json:"invoice_text_codes"`
-			TaxCodes                []string `json:"tax_codes"`
-		} `json:"extension_attributes"`
-	} `json:"items"`
-	BillingAddress struct {
-		AddressType         string   `json:"address_type"`
-		City                string   `json:"city"`
-		Company             string   `json:"company"`
-		CountryID           string   `json:"country_id"`
-		CustomerAddressID   int      `json:"customer_address_id"`
-		CustomerID          int      `json:"customer_id"`
-		Email               string   `json:"email"`
-		EntityID            int      `json:"entity_id"`
-		Fax                 string   `json:"fax"`
-		Firstname           string   `json:"firstname"`
-		Lastname            string   `json:"lastname"`
-		Middlename          string   `json:"middlename"`
-		ParentID            int      `json:"parent_id"`
-		Postcode            string   `json:"postcode"`
-		Prefix              string   `json:"prefix"`
-		Region              string   `json:"region"`
-		RegionCode          string   `json:"region_code"`
-		RegionID            int      `json:"region_id"`
-		Street              []string `json:"street"`
-		Suffix              string   `json:"suffix"`
-		Telephone           string   `json:"telephone"`
-		VatID               string   `json:"vat_id"`
-		VatIsValid          int      `json:"vat_is_valid"`
-		VatRequestDate      string   `json:"vat_request_date"`
-		VatRequestID        string   `json:"vat_request_id"`
-		VatRequestSuccess   int      `json:"vat_request_success"`
+	AdjustmentNegative                      int    `json:"adjustment_negative,omitempty"`
+	AdjustmentPositive                      int    `json:"adjustment_positive,omitempty"`
+	AppliedRuleIds                          string `json:"applied_rule_ids,omitempty"`
+	BaseAdjustmentNegative                  int    `json:"base_adjustment_negative,omitempty"`
+	BaseAdjustmentPositive                  int    `json:"base_adjustment_positive,omitempty"`
+	BaseCurrencyCode                        string `json:"base_currency_code,omitempty"`
+	BaseDiscountAmount                      int    `json:"base_discount_amount,omitempty"`
+	BaseDiscountCanceled                    int    `json:"base_discount_canceled,omitempty"`
+	BaseDiscountInvoiced                    int    `json:"base_discount_invoiced,omitempty"`
+	BaseDiscountRefunded                    int    `json:"base_discount_refunded,omitempty"`
+	BaseGrandTotal                          int    `json:"base_grand_total,omitempty"`
+	BaseDiscountTaxCompensationAmount       int    `json:"base_discount_tax_compensation_amount,omitempty"`
+	BaseDiscountTaxCompensationInvoiced     int    `json:"base_discount_tax_compensation_invoiced,omitempty"`
+	BaseDiscountTaxCompensationRefunded     int    `json:"base_discount_tax_compensation_refunded,omitempty"`
+	BaseShippingAmount                      int    `json:"base_shipping_amount,omitempty"`
+	BaseShippingCanceled                    int    `json:"base_shipping_canceled,omitempty"`
+	BaseShippingDiscountAmount              int    `json:"base_shipping_discount_amount,omitempty"`
+	BaseShippingDiscountTaxCompensationAmnt int    `json:"base_shipping_discount_tax_compensation_amnt,omitempty"`
+	BaseShippingInclTax                     int    `json:"base_shipping_incl_tax,omitempty"`
+	BaseShippingInvoiced                    int    `json:"base_shipping_invoiced,omitempty"`
+	BaseShippingRefunded                    int    `json:"base_shipping_refunded,omitempty"`
+	BaseShippingTaxAmount                   int    `json:"base_shipping_tax_amount,omitempty"`
+	BaseShippingTaxRefunded                 int    `json:"base_shipping_tax_refunded,omitempty"`
+	BaseSubtotal                            int    `json:"base_subtotal,omitempty"`
+	BaseSubtotalCanceled                    int    `json:"base_subtotal_canceled,omitempty"`
+	BaseSubtotalInclTax                     int    `json:"base_subtotal_incl_tax,omitempty"`
+	BaseSubtotalInvoiced                    int    `json:"base_subtotal_invoiced,omitempty"`
+	BaseSubtotalRefunded                    int    `json:"base_subtotal_refunded,omitempty"`
+	BaseTaxAmount                           int    `json:"base_tax_amount,omitempty"`
+	BaseTaxCanceled                         int    `json:"base_tax_canceled,omitempty"`
+	BaseTaxInvoiced                         int    `json:"base_tax_invoiced,omitempty"`
+	BaseTaxRefunded                         int    `json:"base_tax_refunded,omitempty"`
+	BaseTotalCanceled                       int    `json:"base_total_canceled,omitempty"`
+	BaseTotalDue                            int    `json:"base_total_due,omitempty"`
+	BaseTotalInvoiced                       int    `json:"base_total_invoiced,omitempty"`
+	BaseTotalInvoicedCost                   int    `json:"base_total_invoiced_cost,omitempty"`
+	BaseTotalOfflineRefunded                int    `json:"base_total_offline_refunded,omitempty"`
+	BaseTotalOnlineRefunded                 int    `json:"base_total_online_refunded,omitempty"`
+	BaseTotalPaid                           int    `json:"base_total_paid,omitempty"`
+	BaseTotalQtyOrdered                     int    `json:"base_total_qty_ordered,omitempty"`
+	BaseTotalRefunded                       int    `json:"base_total_refunded,omitempty"`
+	BaseToGlobalRate                        int    `json:"base_to_global_rate,omitempty"`
+	BaseToOrderRate                         int    `json:"base_to_order_rate,omitempty"`
+	BillingAddressID                        int    `json:"billing_address_id,omitempty"`
+	CanShipPartially                        int    `json:"can_ship_partially,omitempty"`
+	CanShipPartiallyItem                    int    `json:"can_ship_partially_item,omitempty"`
+	CouponCode                              string `json:"coupon_code,omitempty"`
+	CreatedAt                               string `json:"created_at,omitempty"`
+	CustomerDob                             string `json:"customer_dob,omitempty"`
+	CustomerEmail                           string `json:"customer_email,omitempty"`
+	CustomerFirstname                       string `json:"customer_firstname,omitempty"`
+	CustomerGender                          int    `json:"customer_gender,omitempty"`
+	CustomerGroupID                         int    `json:"customer_group_id,omitempty"`
+	CustomerID                              int    `json:"customer_id,omitempty"`
+	CustomerIsGuest                         int    `json:"customer_is_guest,omitempty"`
+	CustomerLastname                        string `json:"customer_lastname,omitempty"`
+	CustomerMiddlename                      string `json:"customer_middlename,omitempty"`
+	CustomerNote                            string `json:"customer_note,omitempty"`
+	CustomerNoteNotify                      int    `json:"customer_note_notify,omitempty"`
+	CustomerPrefix                          string `json:"customer_prefix,omitempty"`
+	CustomerSuffix                          string `json:"customer_suffix,omitempty"`
+	CustomerTaxvat                          string `json:"customer_taxvat,omitempty"`
+	DiscountAmount                          int    `json:"discount_amount,omitempty"`
+	DiscountCanceled                        int    `json:"discount_canceled,omitempty"`
+	DiscountDescription                     string `json:"discount_description,omitempty"`
+	DiscountInvoiced                        int    `json:"discount_invoiced,omitempty"`
+	DiscountRefunded                        int    `json:"discount_refunded,omitempty"`
+	EditIncrement                           int    `json:"edit_increment,omitempty"`
+	EmailSent                               int    `json:"email_sent,omitempty"`
+	EntityID                                int    `json:"entity_id,omitempty"`
+	ExtCustomerID                           string `json:"ext_customer_id,omitempty"`
+	ExtOrderID                              string `json:"ext_order_id,omitempty"`
+	ForcedShipmentWithInvoice               int    `json:"forced_shipment_with_invoice,omitempty"`
+	GlobalCurrencyCode                      string `json:"global_currency_code,omitempty"`
+	GrandTotal                              int    `json:"grand_total,omitempty"`
+	DiscountTaxCompensationAmount           int    `json:"discount_tax_compensation_amount,omitempty"`
+	DiscountTaxCompensationInvoiced         int    `json:"discount_tax_compensation_invoiced,omitempty"`
+	DiscountTaxCompensationRefunded         int    `json:"discount_tax_compensation_refunded,omitempty"`
+	HoldBeforeState                         string `json:"hold_before_state,omitempty"`
+	HoldBeforeStatus                        string `json:"hold_before_status,omitempty"`
+	IncrementID                             string `json:"increment_id,omitempty"`
+	IsVirtual                               int    `json:"is_virtual,omitempty"`
+	OrderCurrencyCode                       string `json:"order_currency_code,omitempty"`
+	OriginalIncrementID                     string `json:"original_increment_id,omitempty"`
+	PaymentAuthorizationAmount              int    `json:"payment_authorization_amount,omitempty"`
+	PaymentAuthExpiration                   int    `json:"payment_auth_expiration,omitempty"`
+	ProtectCode                             string `json:"protect_code,omitempty"`
+	QuoteAddressID                          int    `json:"quote_address_id,omitempty"`
+	QuoteID                                 int    `json:"quote_id,omitempty"`
+	RelationChildID                         string `json:"relation_child_id,omitempty"`
+	RelationChildRealID                     string `json:"relation_child_real_id,omitempty"`
+	RelationParentID                        string `json:"relation_parent_id,omitempty"`
+	RelationParentRealID                    string `json:"relation_parent_real_id,omitempty"`
+	RemoteIP                                string `json:"remote_ip,omitempty"`
+	ShippingAmount                          int    `json:"shipping_amount,omitempty"`
+	ShippingCanceled                        int    `json:"shipping_canceled,omitempty"`
+	ShippingDescription                     string `json:"shipping_description,omitempty"`
+	ShippingDiscountAmount                  int    `json:"shipping_discount_amount,omitempty"`
+	ShippingDiscountTaxCompensationAmount   int    `json:"shipping_discount_tax_compensation_amount,omitempty"`
+	ShippingInclTax                         int    `json:"shipping_incl_tax,omitempty"`
+	ShippingInvoiced                        int    `json:"shipping_invoiced,omitempty"`
+	ShippingRefunded                        int    `json:"shipping_refunded,omitempty"`
+	ShippingTaxAmount                       int    `json:"shipping_tax_amount,omitempty"`
+	ShippingTaxRefunded                     int    `json:"shipping_tax_refunded,omitempty"`
+	State                                   string `json:"state,omitempty"`
+	Status                                  string `json:"status,omitempty"`
+	StoreCurrencyCode                       string `json:"store_currency_code,omitempty"`
+	StoreID                                 int    `json:"store_id,omitempty"`
+	StoreName                               string `json:"store_name,omitempty"`
+	StoreToBaseRate                         int    `json:"store_to_base_rate,omitempty"`
+	StoreToOrderRate                        int    `json:"store_to_order_rate,omitempty"`
+	Subtotal                                int    `json:"subtotal,omitempty"`
+	SubtotalCanceled                        int    `json:"subtotal_canceled,omitempty"`
+	SubtotalInclTax                         int    `json:"subtotal_incl_tax,omitempty"`
+	SubtotalInvoiced                        int    `json:"subtotal_invoiced,omitempty"`
+	SubtotalRefunded                        int    `json:"subtotal_refunded,omitempty"`
+	TaxAmount                               int    `json:"tax_amount,omitempty"`
+	TaxCanceled                             int    `json:"tax_canceled,omitempty"`
+	TaxInvoiced                             int    `json:"tax_invoiced,omitempty"`
+	TaxRefunded                             int    `json:"tax_refunded,omitempty"`
+	TotalCanceled                           int    `json:"total_canceled,omitempty"`
+	TotalDue                                int    `json:"total_due,omitempty"`
+	TotalInvoiced                           int    `json:"total_invoiced,omitempty"`
+	TotalItemCount                          int    `json:"total_item_count,omitempty"`
+	TotalOfflineRefunded                    int    `json:"total_offline_refunded,omitempty"`
+	TotalOnlineRefunded                     int    `json:"total_online_refunded,omitempty"`
+	TotalPaid                               int    `json:"total_paid,omitempty"`
+	TotalQtyOrdered                         int    `json:"total_qty_ordered,omitempty"`
+	TotalRefunded                           int    `json:"total_refunded,omitempty"`
+	UpdatedAt                               string `json:"updated_at,omitempty"`
+	Weight                                  int    `json:"weight,omitempty"`
+	XForwardedFor                           string `json:"x_forwarded_for,omitempty"`
+	Items                                   []Item `json:"items,omitempty"`
+	BillingAddress                          struct {
+		AddressType         string   `json:"address_type,omitempty"`
+		City                string   `json:"city,omitempty"`
+		Company             string   `json:"company,omitempty"`
+		CountryID           string   `json:"country_id,omitempty"`
+		CustomerAddressID   int      `json:"customer_address_id,omitempty"`
+		CustomerID          int      `json:"customer_id,omitempty"`
+		Email               string   `json:"email,omitempty"`
+		EntityID            int      `json:"entity_id,omitempty"`
+		Fax                 string   `json:"fax,omitempty"`
+		Firstname           string   `json:"firstname,omitempty"`
+		Lastname            string   `json:"lastname,omitempty"`
+		Middlename          string   `json:"middlename,omitempty"`
+		ParentID            int      `json:"parent_id,omitempty"`
+		Postcode            string   `json:"postcode,omitempty"`
+		Prefix              string   `json:"prefix,omitempty"`
+		Region              string   `json:"region,omitempty"`
+		RegionCode          string   `json:"region_code,omitempty"`
+		RegionID            int      `json:"region_id,omitempty"`
+		Street              []string `json:"street,omitempty"`
+		Suffix              string   `json:"suffix,omitempty"`
+		Telephone           string   `json:"telephone,omitempty"`
+		VatID               string   `json:"vat_id,omitempty"`
+		VatIsValid          int      `json:"vat_is_valid,omitempty"`
+		VatRequestDate      string   `json:"vat_request_date,omitempty"`
+		VatRequestID        string   `json:"vat_request_id,omitempty"`
+		VatRequestSuccess   int      `json:"vat_request_success,omitempty"`
 		ExtensionAttributes struct {
 			CheckoutFields []struct {
-				AttributeCode string `json:"attribute_code"`
-				Value         string `json:"value"`
-			} `json:"checkout_fields"`
-		} `json:"extension_attributes"`
-	} `json:"billing_address"`
+				AttributeCode string `json:"attribute_code,omitempty"`
+				Value         string `json:"value,omitempty"`
+			} `json:"checkout_fields,omitempty"`
+		} `json:"extension_attributes,omitempty"`
+	} `json:"billing_address,omitempty"`
 	Payment struct {
-		AccountStatus             string   `json:"account_status"`
-		AdditionalData            string   `json:"additional_data"`
-		AdditionalInformation     []string `json:"additional_information"`
-		AddressStatus             string   `json:"address_status"`
-		AmountAuthorized          int      `json:"amount_authorized"`
-		AmountCanceled            int      `json:"amount_canceled"`
-		AmountOrdered             int      `json:"amount_ordered"`
-		AmountPaid                int      `json:"amount_paid"`
-		AmountRefunded            int      `json:"amount_refunded"`
-		AnetTransMethod           string   `json:"anet_trans_method"`
-		BaseAmountAuthorized      int      `json:"base_amount_authorized"`
-		BaseAmountCanceled        int      `json:"base_amount_canceled"`
-		BaseAmountOrdered         int      `json:"base_amount_ordered"`
-		BaseAmountPaid            int      `json:"base_amount_paid"`
-		BaseAmountPaidOnline      int      `json:"base_amount_paid_online"`
-		BaseAmountRefunded        int      `json:"base_amount_refunded"`
-		BaseAmountRefundedOnline  int      `json:"base_amount_refunded_online"`
-		BaseShippingAmount        int      `json:"base_shipping_amount"`
-		BaseShippingCaptured      int      `json:"base_shipping_captured"`
-		BaseShippingRefunded      int      `json:"base_shipping_refunded"`
-		CcApproval                string   `json:"cc_approval"`
-		CcAvsStatus               string   `json:"cc_avs_status"`
-		CcCidStatus               string   `json:"cc_cid_status"`
-		CcDebugRequestBody        string   `json:"cc_debug_request_body"`
-		CcDebugResponseBody       string   `json:"cc_debug_response_body"`
-		CcDebugResponseSerialized string   `json:"cc_debug_response_serialized"`
-		CcExpMonth                string   `json:"cc_exp_month"`
-		CcExpYear                 string   `json:"cc_exp_year"`
-		CcLast4                   string   `json:"cc_last4"`
-		CcNumberEnc               string   `json:"cc_number_enc"`
-		CcOwner                   string   `json:"cc_owner"`
-		CcSecureVerify            string   `json:"cc_secure_verify"`
-		CcSsIssue                 string   `json:"cc_ss_issue"`
-		CcSsStartMonth            string   `json:"cc_ss_start_month"`
-		CcSsStartYear             string   `json:"cc_ss_start_year"`
-		CcStatus                  string   `json:"cc_status"`
-		CcStatusDescription       string   `json:"cc_status_description"`
-		CcTransID                 string   `json:"cc_trans_id"`
-		CcType                    string   `json:"cc_type"`
-		EcheckAccountName         string   `json:"echeck_account_name"`
-		EcheckAccountType         string   `json:"echeck_account_type"`
-		EcheckBankName            string   `json:"echeck_bank_name"`
-		EcheckRoutingNumber       string   `json:"echeck_routing_number"`
-		EcheckType                string   `json:"echeck_type"`
-		EntityID                  int      `json:"entity_id"`
-		LastTransID               string   `json:"last_trans_id"`
-		Method                    string   `json:"method"`
-		ParentID                  int      `json:"parent_id"`
-		PoNumber                  string   `json:"po_number"`
-		ProtectionEligibility     string   `json:"protection_eligibility"`
-		QuotePaymentID            int      `json:"quote_payment_id"`
-		ShippingAmount            int      `json:"shipping_amount"`
-		ShippingCaptured          int      `json:"shipping_captured"`
-		ShippingRefunded          int      `json:"shipping_refunded"`
+		AccountStatus             string   `json:"account_status,omitempty"`
+		AdditionalData            string   `json:"additional_data,omitempty"`
+		AdditionalInformation     []string `json:"additional_information,omitempty"`
+		AddressStatus             string   `json:"address_status,omitempty"`
+		AmountAuthorized          int      `json:"amount_authorized,omitempty"`
+		AmountCanceled            int      `json:"amount_canceled,omitempty"`
+		AmountOrdered             int      `json:"amount_ordered,omitempty"`
+		AmountPaid                int      `json:"amount_paid,omitempty"`
+		AmountRefunded            int      `json:"amount_refunded,omitempty"`
+		AnetTransMethod           string   `json:"anet_trans_method,omitempty"`
+		BaseAmountAuthorized      int      `json:"base_amount_authorized,omitempty"`
+		BaseAmountCanceled        int      `json:"base_amount_canceled,omitempty"`
+		BaseAmountOrdered         int      `json:"base_amount_ordered,omitempty"`
+		BaseAmountPaid            int      `json:"base_amount_paid,omitempty"`
+		BaseAmountPaidOnline      int      `json:"base_amount_paid_online,omitempty"`
+		BaseAmountRefunded        int      `json:"base_amount_refunded,omitempty"`
+		BaseAmountRefundedOnline  int      `json:"base_amount_refunded_online,omitempty"`
+		BaseShippingAmount        int      `json:"base_shipping_amount,omitempty"`
+		BaseShippingCaptured      int      `json:"base_shipping_captured,omitempty"`
+		BaseShippingRefunded      int      `json:"base_shipping_refunded,omitempty"`
+		CcApproval                string   `json:"cc_approval,omitempty"`
+		CcAvsStatus               string   `json:"cc_avs_status,omitempty"`
+		CcCidStatus               string   `json:"cc_cid_status,omitempty"`
+		CcDebugRequestBody        string   `json:"cc_debug_request_body,omitempty"`
+		CcDebugResponseBody       string   `json:"cc_debug_response_body,omitempty"`
+		CcDebugResponseSerialized string   `json:"cc_debug_response_serialized,omitempty"`
+		CcExpMonth                string   `json:"cc_exp_month,omitempty"`
+		CcExpYear                 string   `json:"cc_exp_year,omitempty"`
+		CcLast4                   string   `json:"cc_last4,omitempty"`
+		CcNumberEnc               string   `json:"cc_number_enc,omitempty"`
+		CcOwner                   string   `json:"cc_owner,omitempty"`
+		CcSecureVerify            string   `json:"cc_secure_verify,omitempty"`
+		CcSsIssue                 string   `json:"cc_ss_issue,omitempty"`
+		CcSsStartMonth            string   `json:"cc_ss_start_month,omitempty"`
+		CcSsStartYear             string   `json:"cc_ss_start_year,omitempty"`
+		CcStatus                  string   `json:"cc_status,omitempty"`
+		CcStatusDescription       string   `json:"cc_status_description,omitempty"`
+		CcTransID                 string   `json:"cc_trans_id,omitempty"`
+		CcType                    string   `json:"cc_type,omitempty"`
+		EcheckAccountName         string   `json:"echeck_account_name,omitempty"`
+		EcheckAccountType         string   `json:"echeck_account_type,omitempty"`
+		EcheckBankName            string   `json:"echeck_bank_name,omitempty"`
+		EcheckRoutingNumber       string   `json:"echeck_routing_number,omitempty"`
+		EcheckType                string   `json:"echeck_type,omitempty"`
+		EntityID                  int      `json:"entity_id,omitempty"`
+		LastTransID               string   `json:"last_trans_id,omitempty"`
+		Method                    string   `json:"method,omitempty"`
+		ParentID                  int      `json:"parent_id,omitempty"`
+		PoNumber                  string   `json:"po_number,omitempty"`
+		ProtectionEligibility     string   `json:"protection_eligibility,omitempty"`
+		QuotePaymentID            int      `json:"quote_payment_id,omitempty"`
+		ShippingAmount            int      `json:"shipping_amount,omitempty"`
+		ShippingCaptured          int      `json:"shipping_captured,omitempty"`
+		ShippingRefunded          int      `json:"shipping_refunded,omitempty"`
 		ExtensionAttributes       struct {
 			VaultPaymentToken struct {
-				EntityID          int    `json:"entity_id"`
-				CustomerID        int    `json:"customer_id"`
-				PublicHash        string `json:"public_hash"`
-				PaymentMethodCode string `json:"payment_method_code"`
-				Type              string `json:"type"`
-				CreatedAt         string `json:"created_at"`
-				ExpiresAt         string `json:"expires_at"`
-				GatewayToken      string `json:"gateway_token"`
-				TokenDetails      string `json:"token_details"`
-				IsActive          bool   `json:"is_active"`
-				IsVisible         bool   `json:"is_visible"`
-			} `json:"vault_payment_token"`
-		} `json:"extension_attributes"`
-	} `json:"payment"`
-	StatusHistories     []StatusHistory `json:"status_histories"`
+				EntityID          int    `json:"entity_id,omitempty"`
+				CustomerID        int    `json:"customer_id,omitempty"`
+				PublicHash        string `json:"public_hash,omitempty"`
+				PaymentMethodCode string `json:"payment_method_code,omitempty"`
+				Type              string `json:"type,omitempty"`
+				CreatedAt         string `json:"created_at,omitempty"`
+				ExpiresAt         string `json:"expires_at,omitempty"`
+				GatewayToken      string `json:"gateway_token,omitempty"`
+				TokenDetails      string `json:"token_details,omitempty"`
+				IsActive          bool   `json:"is_active,omitempty"`
+				IsVisible         bool   `json:"is_visible,omitempty"`
+			} `json:"vault_payment_token,omitempty"`
+		} `json:"extension_attributes,omitempty"`
+	} `json:"payment,omitempty"`
+	StatusHistories     []StatusHistory `json:"status_histories,omitempty"`
 	ExtensionAttributes struct {
 		ShippingAssignments []struct {
 			Shipping struct {
 				Address struct {
-					AddressType         string   `json:"address_type"`
-					City                string   `json:"city"`
-					Company             string   `json:"company"`
-					CountryID           string   `json:"country_id"`
-					CustomerAddressID   int      `json:"customer_address_id"`
-					CustomerID          int      `json:"customer_id"`
-					Email               string   `json:"email"`
-					EntityID            int      `json:"entity_id"`
-					Fax                 string   `json:"fax"`
-					Firstname           string   `json:"firstname"`
-					Lastname            string   `json:"lastname"`
-					Middlename          string   `json:"middlename"`
-					ParentID            int      `json:"parent_id"`
-					Postcode            string   `json:"postcode"`
-					Prefix              string   `json:"prefix"`
-					Region              string   `json:"region"`
-					RegionCode          string   `json:"region_code"`
-					RegionID            int      `json:"region_id"`
-					Street              []string `json:"street"`
-					Suffix              string   `json:"suffix"`
-					Telephone           string   `json:"telephone"`
-					VatID               string   `json:"vat_id"`
-					VatIsValid          int      `json:"vat_is_valid"`
-					VatRequestDate      string   `json:"vat_request_date"`
-					VatRequestID        string   `json:"vat_request_id"`
-					VatRequestSuccess   int      `json:"vat_request_success"`
+					AddressType         string   `json:"address_type,omitempty"`
+					City                string   `json:"city,omitempty"`
+					Company             string   `json:"company,omitempty"`
+					CountryID           string   `json:"country_id,omitempty"`
+					CustomerAddressID   int      `json:"customer_address_id,omitempty"`
+					CustomerID          int      `json:"customer_id,omitempty"`
+					Email               string   `json:"email,omitempty"`
+					EntityID            int      `json:"entity_id,omitempty"`
+					Fax                 string   `json:"fax,omitempty"`
+					Firstname           string   `json:"firstname,omitempty"`
+					Lastname            string   `json:"lastname,omitempty"`
+					Middlename          string   `json:"middlename,omitempty"`
+					ParentID            int      `json:"parent_id,omitempty"`
+					Postcode            string   `json:"postcode,omitempty"`
+					Prefix              string   `json:"prefix,omitempty"`
+					Region              string   `json:"region,omitempty"`
+					RegionCode          string   `json:"region_code,omitempty"`
+					RegionID            int      `json:"region_id,omitempty"`
+					Street              []string `json:"street,omitempty"`
+					Suffix              string   `json:"suffix,omitempty"`
+					Telephone           string   `json:"telephone,omitempty"`
+					VatID               string   `json:"vat_id,omitempty"`
+					VatIsValid          int      `json:"vat_is_valid,omitempty"`
+					VatRequestDate      string   `json:"vat_request_date,omitempty"`
+					VatRequestID        string   `json:"vat_request_id,omitempty"`
+					VatRequestSuccess   int      `json:"vat_request_success,omitempty"`
 					ExtensionAttributes struct {
 						CheckoutFields []struct {
-							AttributeCode string `json:"attribute_code"`
-							Value         string `json:"value"`
-						} `json:"checkout_fields"`
-					} `json:"extension_attributes"`
-				} `json:"address"`
-				Method string `json:"method"`
+							AttributeCode string `json:"attribute_code,omitempty"`
+							Value         string `json:"value,omitempty"`
+						} `json:"checkout_fields,omitempty"`
+					} `json:"extension_attributes,omitempty"`
+				} `json:"address,omitempty"`
+				Method string `json:"method,omitempty"`
 				Total  struct {
-					BaseShippingAmount                      int `json:"base_shipping_amount"`
-					BaseShippingCanceled                    int `json:"base_shipping_canceled"`
-					BaseShippingDiscountAmount              int `json:"base_shipping_discount_amount"`
-					BaseShippingDiscountTaxCompensationAmnt int `json:"base_shipping_discount_tax_compensation_amnt"`
-					BaseShippingInclTax                     int `json:"base_shipping_incl_tax"`
-					BaseShippingInvoiced                    int `json:"base_shipping_invoiced"`
-					BaseShippingRefunded                    int `json:"base_shipping_refunded"`
-					BaseShippingTaxAmount                   int `json:"base_shipping_tax_amount"`
-					BaseShippingTaxRefunded                 int `json:"base_shipping_tax_refunded"`
-					ShippingAmount                          int `json:"shipping_amount"`
-					ShippingCanceled                        int `json:"shipping_canceled"`
-					ShippingDiscountAmount                  int `json:"shipping_discount_amount"`
-					ShippingDiscountTaxCompensationAmount   int `json:"shipping_discount_tax_compensation_amount"`
-					ShippingInclTax                         int `json:"shipping_incl_tax"`
-					ShippingInvoiced                        int `json:"shipping_invoiced"`
-					ShippingRefunded                        int `json:"shipping_refunded"`
-					ShippingTaxAmount                       int `json:"shipping_tax_amount"`
-					ShippingTaxRefunded                     int `json:"shipping_tax_refunded"`
+					BaseShippingAmount                      int `json:"base_shipping_amount,omitempty"`
+					BaseShippingCanceled                    int `json:"base_shipping_canceled,omitempty"`
+					BaseShippingDiscountAmount              int `json:"base_shipping_discount_amount,omitempty"`
+					BaseShippingDiscountTaxCompensationAmnt int `json:"base_shipping_discount_tax_compensation_amnt,omitempty"`
+					BaseShippingInclTax                     int `json:"base_shipping_incl_tax,omitempty"`
+					BaseShippingInvoiced                    int `json:"base_shipping_invoiced,omitempty"`
+					BaseShippingRefunded                    int `json:"base_shipping_refunded,omitempty"`
+					BaseShippingTaxAmount                   int `json:"base_shipping_tax_amount,omitempty"`
+					BaseShippingTaxRefunded                 int `json:"base_shipping_tax_refunded,omitempty"`
+					ShippingAmount                          int `json:"shipping_amount,omitempty"`
+					ShippingCanceled                        int `json:"shipping_canceled,omitempty"`
+					ShippingDiscountAmount                  int `json:"shipping_discount_amount,omitempty"`
+					ShippingDiscountTaxCompensationAmount   int `json:"shipping_discount_tax_compensation_amount,omitempty"`
+					ShippingInclTax                         int `json:"shipping_incl_tax,omitempty"`
+					ShippingInvoiced                        int `json:"shipping_invoiced,omitempty"`
+					ShippingRefunded                        int `json:"shipping_refunded,omitempty"`
+					ShippingTaxAmount                       int `json:"shipping_tax_amount,omitempty"`
+					ShippingTaxRefunded                     int `json:"shipping_tax_refunded,omitempty"`
 					ExtensionAttributes                     struct {
-					} `json:"extension_attributes"`
-				} `json:"total"`
+					} `json:"extension_attributes,omitempty"`
+				} `json:"total,omitempty"`
 				ExtensionAttributes struct {
-					ExtOrderID         string `json:"ext_order_id"`
+					ExtOrderID         string `json:"ext_order_id,omitempty"`
 					ShippingExperience struct {
-						Label string `json:"label"`
-						Code  string `json:"code"`
-						Cost  int    `json:"cost"`
-					} `json:"shipping_experience"`
+						Label string `json:"label,omitempty"`
+						Code  string `json:"code,omitempty"`
+						Cost  int    `json:"cost,omitempty"`
+					} `json:"shipping_experience,omitempty"`
 					CollectionPoint struct {
-						RecipientAddressID int      `json:"recipient_address_id"`
-						CollectionPointID  string   `json:"collection_point_id"`
-						Name               string   `json:"name"`
-						Country            string   `json:"country"`
-						Region             string   `json:"region"`
-						Postcode           string   `json:"postcode"`
-						City               string   `json:"city"`
-						Street             []string `json:"street"`
-					} `json:"collection_point"`
-				} `json:"extension_attributes"`
-			} `json:"shipping"`
+						RecipientAddressID int      `json:"recipient_address_id,omitempty"`
+						CollectionPointID  string   `json:"collection_point_id,omitempty"`
+						Name               string   `json:"name,omitempty"`
+						Country            string   `json:"country,omitempty"`
+						Region             string   `json:"region,omitempty"`
+						Postcode           string   `json:"postcode,omitempty"`
+						City               string   `json:"city,omitempty"`
+						Street             []string `json:"street,omitempty"`
+					} `json:"collection_point,omitempty"`
+				} `json:"extension_attributes,omitempty"`
+			} `json:"shipping,omitempty"`
 			Items []struct {
-				AdditionalData                      string `json:"additional_data"`
-				AmountRefunded                      int    `json:"amount_refunded"`
-				AppliedRuleIds                      string `json:"applied_rule_ids"`
-				BaseAmountRefunded                  int    `json:"base_amount_refunded"`
-				BaseCost                            int    `json:"base_cost"`
-				BaseDiscountAmount                  int    `json:"base_discount_amount"`
-				BaseDiscountInvoiced                int    `json:"base_discount_invoiced"`
-				BaseDiscountRefunded                int    `json:"base_discount_refunded"`
-				BaseDiscountTaxCompensationAmount   int    `json:"base_discount_tax_compensation_amount"`
-				BaseDiscountTaxCompensationInvoiced int    `json:"base_discount_tax_compensation_invoiced"`
-				BaseDiscountTaxCompensationRefunded int    `json:"base_discount_tax_compensation_refunded"`
-				BaseOriginalPrice                   int    `json:"base_original_price"`
-				BasePrice                           int    `json:"base_price"`
-				BasePriceInclTax                    int    `json:"base_price_incl_tax"`
-				BaseRowInvoiced                     int    `json:"base_row_invoiced"`
-				BaseRowTotal                        int    `json:"base_row_total"`
-				BaseRowTotalInclTax                 int    `json:"base_row_total_incl_tax"`
-				BaseTaxAmount                       int    `json:"base_tax_amount"`
-				BaseTaxBeforeDiscount               int    `json:"base_tax_before_discount"`
-				BaseTaxInvoiced                     int    `json:"base_tax_invoiced"`
-				BaseTaxRefunded                     int    `json:"base_tax_refunded"`
-				BaseWeeeTaxAppliedAmount            int    `json:"base_weee_tax_applied_amount"`
-				BaseWeeeTaxAppliedRowAmnt           int    `json:"base_weee_tax_applied_row_amnt"`
-				BaseWeeeTaxDisposition              int    `json:"base_weee_tax_disposition"`
-				BaseWeeeTaxRowDisposition           int    `json:"base_weee_tax_row_disposition"`
-				CreatedAt                           string `json:"created_at"`
-				Description                         string `json:"description"`
-				DiscountAmount                      int    `json:"discount_amount"`
-				DiscountInvoiced                    int    `json:"discount_invoiced"`
-				DiscountPercent                     int    `json:"discount_percent"`
-				DiscountRefunded                    int    `json:"discount_refunded"`
-				EventID                             int    `json:"event_id"`
-				ExtOrderItemID                      string `json:"ext_order_item_id"`
-				FreeShipping                        int    `json:"free_shipping"`
-				GwBasePrice                         int    `json:"gw_base_price"`
-				GwBasePriceInvoiced                 int    `json:"gw_base_price_invoiced"`
-				GwBasePriceRefunded                 int    `json:"gw_base_price_refunded"`
-				GwBaseTaxAmount                     int    `json:"gw_base_tax_amount"`
-				GwBaseTaxAmountInvoiced             int    `json:"gw_base_tax_amount_invoiced"`
-				GwBaseTaxAmountRefunded             int    `json:"gw_base_tax_amount_refunded"`
-				GwID                                int    `json:"gw_id"`
-				GwPrice                             int    `json:"gw_price"`
-				GwPriceInvoiced                     int    `json:"gw_price_invoiced"`
-				GwPriceRefunded                     int    `json:"gw_price_refunded"`
-				GwTaxAmount                         int    `json:"gw_tax_amount"`
-				GwTaxAmountInvoiced                 int    `json:"gw_tax_amount_invoiced"`
-				GwTaxAmountRefunded                 int    `json:"gw_tax_amount_refunded"`
-				DiscountTaxCompensationAmount       int    `json:"discount_tax_compensation_amount"`
-				DiscountTaxCompensationCanceled     int    `json:"discount_tax_compensation_canceled"`
-				DiscountTaxCompensationInvoiced     int    `json:"discount_tax_compensation_invoiced"`
-				DiscountTaxCompensationRefunded     int    `json:"discount_tax_compensation_refunded"`
-				IsQtyDecimal                        int    `json:"is_qty_decimal"`
-				IsVirtual                           int    `json:"is_virtual"`
-				ItemID                              int    `json:"item_id"`
-				LockedDoInvoice                     int    `json:"locked_do_invoice"`
-				LockedDoShip                        int    `json:"locked_do_ship"`
-				Name                                string `json:"name"`
-				NoDiscount                          int    `json:"no_discount"`
-				OrderID                             int    `json:"order_id"`
-				OriginalPrice                       int    `json:"original_price"`
-				ParentItemID                        int    `json:"parent_item_id"`
-				Price                               int    `json:"price"`
-				PriceInclTax                        int    `json:"price_incl_tax"`
-				ProductID                           int    `json:"product_id"`
-				ProductType                         string `json:"product_type"`
-				QtyBackordered                      int    `json:"qty_backordered"`
-				QtyCanceled                         int    `json:"qty_canceled"`
-				QtyInvoiced                         int    `json:"qty_invoiced"`
-				QtyOrdered                          int    `json:"qty_ordered"`
-				QtyRefunded                         int    `json:"qty_refunded"`
-				QtyReturned                         int    `json:"qty_returned"`
-				QtyShipped                          int    `json:"qty_shipped"`
-				QuoteItemID                         int    `json:"quote_item_id"`
-				RowInvoiced                         int    `json:"row_invoiced"`
-				RowTotal                            int    `json:"row_total"`
-				RowTotalInclTax                     int    `json:"row_total_incl_tax"`
-				RowWeight                           int    `json:"row_weight"`
-				Sku                                 string `json:"sku"`
-				StoreID                             int    `json:"store_id"`
-				TaxAmount                           int    `json:"tax_amount"`
-				TaxBeforeDiscount                   int    `json:"tax_before_discount"`
-				TaxCanceled                         int    `json:"tax_canceled"`
-				TaxInvoiced                         int    `json:"tax_invoiced"`
-				TaxPercent                          int    `json:"tax_percent"`
-				TaxRefunded                         int    `json:"tax_refunded"`
-				UpdatedAt                           string `json:"updated_at"`
-				WeeeTaxApplied                      string `json:"weee_tax_applied"`
-				WeeeTaxAppliedAmount                int    `json:"weee_tax_applied_amount"`
-				WeeeTaxAppliedRowAmount             int    `json:"weee_tax_applied_row_amount"`
-				WeeeTaxDisposition                  int    `json:"weee_tax_disposition"`
-				WeeeTaxRowDisposition               int    `json:"weee_tax_row_disposition"`
-				Weight                              int    `json:"weight"`
+				AdditionalData                      string `json:"additional_data,omitempty"`
+				AmountRefunded                      int    `json:"amount_refunded,omitempty"`
+				AppliedRuleIds                      string `json:"applied_rule_ids,omitempty"`
+				BaseAmountRefunded                  int    `json:"base_amount_refunded,omitempty"`
+				BaseCost                            int    `json:"base_cost,omitempty"`
+				BaseDiscountAmount                  int    `json:"base_discount_amount,omitempty"`
+				BaseDiscountInvoiced                int    `json:"base_discount_invoiced,omitempty"`
+				BaseDiscountRefunded                int    `json:"base_discount_refunded,omitempty"`
+				BaseDiscountTaxCompensationAmount   int    `json:"base_discount_tax_compensation_amount,omitempty"`
+				BaseDiscountTaxCompensationInvoiced int    `json:"base_discount_tax_compensation_invoiced,omitempty"`
+				BaseDiscountTaxCompensationRefunded int    `json:"base_discount_tax_compensation_refunded,omitempty"`
+				BaseOriginalPrice                   int    `json:"base_original_price,omitempty"`
+				BasePrice                           int    `json:"base_price,omitempty"`
+				BasePriceInclTax                    int    `json:"base_price_incl_tax,omitempty"`
+				BaseRowInvoiced                     int    `json:"base_row_invoiced,omitempty"`
+				BaseRowTotal                        int    `json:"base_row_total,omitempty"`
+				BaseRowTotalInclTax                 int    `json:"base_row_total_incl_tax,omitempty"`
+				BaseTaxAmount                       int    `json:"base_tax_amount,omitempty"`
+				BaseTaxBeforeDiscount               int    `json:"base_tax_before_discount,omitempty"`
+				BaseTaxInvoiced                     int    `json:"base_tax_invoiced,omitempty"`
+				BaseTaxRefunded                     int    `json:"base_tax_refunded,omitempty"`
+				BaseWeeeTaxAppliedAmount            int    `json:"base_weee_tax_applied_amount,omitempty"`
+				BaseWeeeTaxAppliedRowAmnt           int    `json:"base_weee_tax_applied_row_amnt,omitempty"`
+				BaseWeeeTaxDisposition              int    `json:"base_weee_tax_disposition,omitempty"`
+				BaseWeeeTaxRowDisposition           int    `json:"base_weee_tax_row_disposition,omitempty"`
+				CreatedAt                           string `json:"created_at,omitempty"`
+				Description                         string `json:"description,omitempty"`
+				DiscountAmount                      int    `json:"discount_amount,omitempty"`
+				DiscountInvoiced                    int    `json:"discount_invoiced,omitempty"`
+				DiscountPercent                     int    `json:"discount_percent,omitempty"`
+				DiscountRefunded                    int    `json:"discount_refunded,omitempty"`
+				EventID                             int    `json:"event_id,omitempty"`
+				ExtOrderItemID                      string `json:"ext_order_item_id,omitempty"`
+				FreeShipping                        int    `json:"free_shipping,omitempty"`
+				GwBasePrice                         int    `json:"gw_base_price,omitempty"`
+				GwBasePriceInvoiced                 int    `json:"gw_base_price_invoiced,omitempty"`
+				GwBasePriceRefunded                 int    `json:"gw_base_price_refunded,omitempty"`
+				GwBaseTaxAmount                     int    `json:"gw_base_tax_amount,omitempty"`
+				GwBaseTaxAmountInvoiced             int    `json:"gw_base_tax_amount_invoiced,omitempty"`
+				GwBaseTaxAmountRefunded             int    `json:"gw_base_tax_amount_refunded,omitempty"`
+				GwID                                int    `json:"gw_id,omitempty"`
+				GwPrice                             int    `json:"gw_price,omitempty"`
+				GwPriceInvoiced                     int    `json:"gw_price_invoiced,omitempty"`
+				GwPriceRefunded                     int    `json:"gw_price_refunded,omitempty"`
+				GwTaxAmount                         int    `json:"gw_tax_amount,omitempty"`
+				GwTaxAmountInvoiced                 int    `json:"gw_tax_amount_invoiced,omitempty"`
+				GwTaxAmountRefunded                 int    `json:"gw_tax_amount_refunded,omitempty"`
+				DiscountTaxCompensationAmount       int    `json:"discount_tax_compensation_amount,omitempty"`
+				DiscountTaxCompensationCanceled     int    `json:"discount_tax_compensation_canceled,omitempty"`
+				DiscountTaxCompensationInvoiced     int    `json:"discount_tax_compensation_invoiced,omitempty"`
+				DiscountTaxCompensationRefunded     int    `json:"discount_tax_compensation_refunded,omitempty"`
+				IsQtyDecimal                        int    `json:"is_qty_decimal,omitempty"`
+				IsVirtual                           int    `json:"is_virtual,omitempty"`
+				ItemID                              int    `json:"item_id,omitempty"`
+				LockedDoInvoice                     int    `json:"locked_do_invoice,omitempty"`
+				LockedDoShip                        int    `json:"locked_do_ship,omitempty"`
+				Name                                string `json:"name,omitempty"`
+				NoDiscount                          int    `json:"no_discount,omitempty"`
+				OrderID                             int    `json:"order_id,omitempty"`
+				OriginalPrice                       int    `json:"original_price,omitempty"`
+				ParentItemID                        int    `json:"parent_item_id,omitempty"`
+				Price                               int    `json:"price,omitempty"`
+				PriceInclTax                        int    `json:"price_incl_tax,omitempty"`
+				ProductID                           int    `json:"product_id,omitempty"`
+				ProductType                         string `json:"product_type,omitempty"`
+				QtyBackordered                      int    `json:"qty_backordered,omitempty"`
+				QtyCanceled                         int    `json:"qty_canceled,omitempty"`
+				QtyInvoiced                         int    `json:"qty_invoiced,omitempty"`
+				QtyOrdered                          int    `json:"qty_ordered,omitempty"`
+				QtyRefunded                         int    `json:"qty_refunded,omitempty"`
+				QtyReturned                         int    `json:"qty_returned,omitempty"`
+				QtyShipped                          int    `json:"qty_shipped,omitempty"`
+				QuoteItemID                         int    `json:"quote_item_id,omitempty"`
+				RowInvoiced                         int    `json:"row_invoiced,omitempty"`
+				RowTotal                            int    `json:"row_total,omitempty"`
+				RowTotalInclTax                     int    `json:"row_total_incl_tax,omitempty"`
+				RowWeight                           int    `json:"row_weight,omitempty"`
+				Sku                                 string `json:"sku,omitempty"`
+				StoreID                             int    `json:"store_id,omitempty"`
+				TaxAmount                           int    `json:"tax_amount,omitempty"`
+				TaxBeforeDiscount                   int    `json:"tax_before_discount,omitempty"`
+				TaxCanceled                         int    `json:"tax_canceled,omitempty"`
+				TaxInvoiced                         int    `json:"tax_invoiced,omitempty"`
+				TaxPercent                          int    `json:"tax_percent,omitempty"`
+				TaxRefunded                         int    `json:"tax_refunded,omitempty"`
+				UpdatedAt                           string `json:"updated_at,omitempty"`
+				WeeeTaxApplied                      string `json:"weee_tax_applied,omitempty"`
+				WeeeTaxAppliedAmount                int    `json:"weee_tax_applied_amount,omitempty"`
+				WeeeTaxAppliedRowAmount             int    `json:"weee_tax_applied_row_amount,omitempty"`
+				WeeeTaxDisposition                  int    `json:"weee_tax_disposition,omitempty"`
+				WeeeTaxRowDisposition               int    `json:"weee_tax_row_disposition,omitempty"`
+				Weight                              int    `json:"weight,omitempty"`
 				ParentItem                          struct {
-				} `json:"parent_item"`
-				ProductOption struct {
-					ExtensionAttributes struct {
-						CustomOptions []struct {
-							OptionID            string `json:"option_id"`
-							OptionValue         string `json:"option_value"`
-							ExtensionAttributes struct {
-								FileInfo struct {
-									Base64EncodedData string `json:"base64_encoded_data"`
-									Type              string `json:"type"`
-									Name              string `json:"name"`
-								} `json:"file_info"`
-							} `json:"extension_attributes"`
-						} `json:"custom_options"`
-						BundleOptions []struct {
-							OptionID            int   `json:"option_id"`
-							OptionQty           int   `json:"option_qty"`
-							OptionSelections    []int `json:"option_selections"`
-							ExtensionAttributes struct {
-							} `json:"extension_attributes"`
-						} `json:"bundle_options"`
-						ConfigurableItemOptions []struct {
-							OptionID            string `json:"option_id"`
-							OptionValue         int    `json:"option_value"`
-							ExtensionAttributes struct {
-							} `json:"extension_attributes"`
-						} `json:"configurable_item_options"`
-						DownloadableOption struct {
-							DownloadableLinks []int `json:"downloadable_links"`
-						} `json:"downloadable_option"`
-						GiftcardItemOption struct {
-							GiftcardAmount         string `json:"giftcard_amount"`
-							CustomGiftcardAmount   int    `json:"custom_giftcard_amount"`
-							GiftcardSenderName     string `json:"giftcard_sender_name"`
-							GiftcardRecipientName  string `json:"giftcard_recipient_name"`
-							GiftcardSenderEmail    string `json:"giftcard_sender_email"`
-							GiftcardRecipientEmail string `json:"giftcard_recipient_email"`
-							GiftcardMessage        string `json:"giftcard_message"`
-							ExtensionAttributes    struct {
-							} `json:"extension_attributes"`
-						} `json:"giftcard_item_option"`
-					} `json:"extension_attributes"`
-				} `json:"product_option"`
+				} `json:"parent_item,omitempty"`
+				ProductOption       ProductOption `json:"product_option,omitempty"`
 				ExtensionAttributes struct {
 					GiftMessage struct {
-						GiftMessageID       int    `json:"gift_message_id"`
-						CustomerID          int    `json:"customer_id"`
-						Sender              string `json:"sender"`
-						Recipient           string `json:"recipient"`
-						Message             string `json:"message"`
+						GiftMessageID       int    `json:"gift_message_id,omitempty"`
+						CustomerID          int    `json:"customer_id,omitempty"`
+						Sender              string `json:"sender,omitempty"`
+						Recipient           string `json:"recipient,omitempty"`
+						Message             string `json:"message,omitempty"`
 						ExtensionAttributes struct {
-							EntityID                 string `json:"entity_id"`
-							EntityType               string `json:"entity_type"`
-							WrappingID               int    `json:"wrapping_id"`
-							WrappingAllowGiftReceipt bool   `json:"wrapping_allow_gift_receipt"`
-							WrappingAddPrintedCard   bool   `json:"wrapping_add_printed_card"`
-						} `json:"extension_attributes"`
-					} `json:"gift_message"`
-					GwID                    string   `json:"gw_id"`
-					GwBasePrice             string   `json:"gw_base_price"`
-					GwPrice                 string   `json:"gw_price"`
-					GwBaseTaxAmount         string   `json:"gw_base_tax_amount"`
-					GwTaxAmount             string   `json:"gw_tax_amount"`
-					GwBasePriceInvoiced     string   `json:"gw_base_price_invoiced"`
-					GwPriceInvoiced         string   `json:"gw_price_invoiced"`
-					GwBaseTaxAmountInvoiced string   `json:"gw_base_tax_amount_invoiced"`
-					GwTaxAmountInvoiced     string   `json:"gw_tax_amount_invoiced"`
-					GwBasePriceRefunded     string   `json:"gw_base_price_refunded"`
-					GwPriceRefunded         string   `json:"gw_price_refunded"`
-					GwBaseTaxAmountRefunded string   `json:"gw_base_tax_amount_refunded"`
-					GwTaxAmountRefunded     string   `json:"gw_tax_amount_refunded"`
-					VertexTaxCodes          []string `json:"vertex_tax_codes"`
-					InvoiceTextCodes        []string `json:"invoice_text_codes"`
-					TaxCodes                []string `json:"tax_codes"`
-				} `json:"extension_attributes"`
-			} `json:"items"`
-			StockID             int `json:"stock_id"`
+							EntityID                 string `json:"entity_id,omitempty"`
+							EntityType               string `json:"entity_type,omitempty"`
+							WrappingID               int    `json:"wrapping_id,omitempty"`
+							WrappingAllowGiftReceipt bool   `json:"wrapping_allow_gift_receipt,omitempty"`
+							WrappingAddPrintedCard   bool   `json:"wrapping_add_printed_card,omitempty"`
+						} `json:"extension_attributes,omitempty"`
+					} `json:"gift_message,omitempty"`
+					GwID                    string   `json:"gw_id,omitempty"`
+					GwBasePrice             string   `json:"gw_base_price,omitempty"`
+					GwPrice                 string   `json:"gw_price,omitempty"`
+					GwBaseTaxAmount         string   `json:"gw_base_tax_amount,omitempty"`
+					GwTaxAmount             string   `json:"gw_tax_amount,omitempty"`
+					GwBasePriceInvoiced     string   `json:"gw_base_price_invoiced,omitempty"`
+					GwPriceInvoiced         string   `json:"gw_price_invoiced,omitempty"`
+					GwBaseTaxAmountInvoiced string   `json:"gw_base_tax_amount_invoiced,omitempty"`
+					GwTaxAmountInvoiced     string   `json:"gw_tax_amount_invoiced,omitempty"`
+					GwBasePriceRefunded     string   `json:"gw_base_price_refunded,omitempty"`
+					GwPriceRefunded         string   `json:"gw_price_refunded,omitempty"`
+					GwBaseTaxAmountRefunded string   `json:"gw_base_tax_amount_refunded,omitempty"`
+					GwTaxAmountRefunded     string   `json:"gw_tax_amount_refunded,omitempty"`
+					VertexTaxCodes          []string `json:"vertex_tax_codes,omitempty"`
+					InvoiceTextCodes        []string `json:"invoice_text_codes,omitempty"`
+					TaxCodes                []string `json:"tax_codes,omitempty"`
+				} `json:"extension_attributes,omitempty"`
+			} `json:"items,omitempty"`
+			StockID             int `json:"stock_id,omitempty"`
 			ExtensionAttributes struct {
-			} `json:"extension_attributes"`
-		} `json:"shipping_assignments"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"shipping_assignments,omitempty"`
 		PaymentAdditionalInfo []struct {
-			Key   string `json:"key"`
-			Value string `json:"value"`
-		} `json:"payment_additional_info"`
+			Key   string `json:"key,omitempty"`
+			Value string `json:"value,omitempty"`
+		} `json:"payment_additional_info,omitempty"`
 		CompanyOrderAttributes struct {
-			OrderID             int    `json:"order_id"`
-			CompanyID           int    `json:"company_id"`
-			CompanyName         string `json:"company_name"`
+			OrderID             int    `json:"order_id,omitempty"`
+			CompanyID           int    `json:"company_id,omitempty"`
+			CompanyName         string `json:"company_name,omitempty"`
 			ExtensionAttributes struct {
-			} `json:"extension_attributes"`
-		} `json:"company_order_attributes"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"company_order_attributes,omitempty"`
 		AppliedTaxes []struct {
-			Code                string `json:"code"`
-			Title               string `json:"title"`
-			Percent             int    `json:"percent"`
-			Amount              int    `json:"amount"`
-			BaseAmount          int    `json:"base_amount"`
+			Code                string `json:"code,omitempty"`
+			Title               string `json:"title,omitempty"`
+			Percent             int    `json:"percent,omitempty"`
+			Amount              int    `json:"amount,omitempty"`
+			BaseAmount          int    `json:"base_amount,omitempty"`
 			ExtensionAttributes struct {
 				Rates []struct {
-					Code                string `json:"code"`
-					Title               string `json:"title"`
-					Percent             int    `json:"percent"`
+					Code                string `json:"code,omitempty"`
+					Title               string `json:"title,omitempty"`
+					Percent             int    `json:"percent,omitempty"`
 					ExtensionAttributes struct {
-					} `json:"extension_attributes"`
-				} `json:"rates"`
-			} `json:"extension_attributes"`
-		} `json:"applied_taxes"`
+					} `json:"extension_attributes,omitempty"`
+				} `json:"rates,omitempty"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"applied_taxes,omitempty"`
 		ItemAppliedTaxes []struct {
-			Type             string `json:"type"`
-			ItemID           int    `json:"item_id"`
-			AssociatedItemID int    `json:"associated_item_id"`
+			Type             string `json:"type,omitempty"`
+			ItemID           int    `json:"item_id,omitempty"`
+			AssociatedItemID int    `json:"associated_item_id,omitempty"`
 			AppliedTaxes     []struct {
-				Code                string `json:"code"`
-				Title               string `json:"title"`
-				Percent             int    `json:"percent"`
-				Amount              int    `json:"amount"`
-				BaseAmount          int    `json:"base_amount"`
+				Code                string `json:"code,omitempty"`
+				Title               string `json:"title,omitempty"`
+				Percent             int    `json:"percent,omitempty"`
+				Amount              int    `json:"amount,omitempty"`
+				BaseAmount          int    `json:"base_amount,omitempty"`
 				ExtensionAttributes struct {
 					Rates []struct {
-						Code                string `json:"code"`
-						Title               string `json:"title"`
-						Percent             int    `json:"percent"`
+						Code                string `json:"code,omitempty"`
+						Title               string `json:"title,omitempty"`
+						Percent             int    `json:"percent,omitempty"`
 						ExtensionAttributes struct {
-						} `json:"extension_attributes"`
-					} `json:"rates"`
-				} `json:"extension_attributes"`
-			} `json:"applied_taxes"`
+						} `json:"extension_attributes,omitempty"`
+					} `json:"rates,omitempty"`
+				} `json:"extension_attributes,omitempty"`
+			} `json:"applied_taxes,omitempty"`
 			ExtensionAttributes struct {
-			} `json:"extension_attributes"`
-		} `json:"item_applied_taxes"`
-		ConvertingFromQuote              bool `json:"converting_from_quote"`
-		BaseCustomerBalanceAmount        int  `json:"base_customer_balance_amount"`
-		CustomerBalanceAmount            int  `json:"customer_balance_amount"`
-		BaseCustomerBalanceInvoiced      int  `json:"base_customer_balance_invoiced"`
-		CustomerBalanceInvoiced          int  `json:"customer_balance_invoiced"`
-		BaseCustomerBalanceRefunded      int  `json:"base_customer_balance_refunded"`
-		CustomerBalanceRefunded          int  `json:"customer_balance_refunded"`
-		BaseCustomerBalanceTotalRefunded int  `json:"base_customer_balance_total_refunded"`
-		CustomerBalanceTotalRefunded     int  `json:"customer_balance_total_refunded"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"item_applied_taxes,omitempty"`
+		ConvertingFromQuote              bool `json:"converting_from_quote,omitempty"`
+		BaseCustomerBalanceAmount        int  `json:"base_customer_balance_amount,omitempty"`
+		CustomerBalanceAmount            int  `json:"customer_balance_amount,omitempty"`
+		BaseCustomerBalanceInvoiced      int  `json:"base_customer_balance_invoiced,omitempty"`
+		CustomerBalanceInvoiced          int  `json:"customer_balance_invoiced,omitempty"`
+		BaseCustomerBalanceRefunded      int  `json:"base_customer_balance_refunded,omitempty"`
+		CustomerBalanceRefunded          int  `json:"customer_balance_refunded,omitempty"`
+		BaseCustomerBalanceTotalRefunded int  `json:"base_customer_balance_total_refunded,omitempty"`
+		CustomerBalanceTotalRefunded     int  `json:"customer_balance_total_refunded,omitempty"`
 		GiftCards                        []struct {
-			ID         int    `json:"id"`
-			Code       string `json:"code"`
-			Amount     int    `json:"amount"`
-			BaseAmount int    `json:"base_amount"`
-		} `json:"gift_cards"`
-		BaseGiftCardsAmount   int `json:"base_gift_cards_amount"`
-		GiftCardsAmount       int `json:"gift_cards_amount"`
-		BaseGiftCardsInvoiced int `json:"base_gift_cards_invoiced"`
-		GiftCardsInvoiced     int `json:"gift_cards_invoiced"`
-		BaseGiftCardsRefunded int `json:"base_gift_cards_refunded"`
-		GiftCardsRefunded     int `json:"gift_cards_refunded"`
+			ID         int    `json:"id,omitempty"`
+			Code       string `json:"code,omitempty"`
+			Amount     int    `json:"amount,omitempty"`
+			BaseAmount int    `json:"base_amount,omitempty"`
+		} `json:"gift_cards,omitempty"`
+		BaseGiftCardsAmount   int `json:"base_gift_cards_amount,omitempty"`
+		GiftCardsAmount       int `json:"gift_cards_amount,omitempty"`
+		BaseGiftCardsInvoiced int `json:"base_gift_cards_invoiced,omitempty"`
+		GiftCardsInvoiced     int `json:"gift_cards_invoiced,omitempty"`
+		BaseGiftCardsRefunded int `json:"base_gift_cards_refunded,omitempty"`
+		GiftCardsRefunded     int `json:"gift_cards_refunded,omitempty"`
 		GiftMessage           struct {
-			GiftMessageID       int    `json:"gift_message_id"`
-			CustomerID          int    `json:"customer_id"`
-			Sender              string `json:"sender"`
-			Recipient           string `json:"recipient"`
-			Message             string `json:"message"`
+			GiftMessageID       int    `json:"gift_message_id,omitempty"`
+			CustomerID          int    `json:"customer_id,omitempty"`
+			Sender              string `json:"sender,omitempty"`
+			Recipient           string `json:"recipient,omitempty"`
+			Message             string `json:"message,omitempty"`
 			ExtensionAttributes struct {
-				EntityID                 string `json:"entity_id"`
-				EntityType               string `json:"entity_type"`
-				WrappingID               int    `json:"wrapping_id"`
-				WrappingAllowGiftReceipt bool   `json:"wrapping_allow_gift_receipt"`
-				WrappingAddPrintedCard   bool   `json:"wrapping_add_printed_card"`
-			} `json:"extension_attributes"`
-		} `json:"gift_message"`
-		GwID                     string `json:"gw_id"`
-		GwAllowGiftReceipt       string `json:"gw_allow_gift_receipt"`
-		GwAddCard                string `json:"gw_add_card"`
-		GwBasePrice              string `json:"gw_base_price"`
-		GwPrice                  string `json:"gw_price"`
-		GwItemsBasePrice         string `json:"gw_items_base_price"`
-		GwItemsPrice             string `json:"gw_items_price"`
-		GwCardBasePrice          string `json:"gw_card_base_price"`
-		GwCardPrice              string `json:"gw_card_price"`
-		GwBaseTaxAmount          string `json:"gw_base_tax_amount"`
-		GwTaxAmount              string `json:"gw_tax_amount"`
-		GwItemsBaseTaxAmount     string `json:"gw_items_base_tax_amount"`
-		GwItemsTaxAmount         string `json:"gw_items_tax_amount"`
-		GwCardBaseTaxAmount      string `json:"gw_card_base_tax_amount"`
-		GwCardTaxAmount          string `json:"gw_card_tax_amount"`
-		GwBasePriceInclTax       string `json:"gw_base_price_incl_tax"`
-		GwPriceInclTax           string `json:"gw_price_incl_tax"`
-		GwItemsBasePriceInclTax  string `json:"gw_items_base_price_incl_tax"`
-		GwItemsPriceInclTax      string `json:"gw_items_price_incl_tax"`
-		GwCardBasePriceInclTax   string `json:"gw_card_base_price_incl_tax"`
-		GwCardPriceInclTax       string `json:"gw_card_price_incl_tax"`
-		GwBasePriceInvoiced      string `json:"gw_base_price_invoiced"`
-		GwPriceInvoiced          string `json:"gw_price_invoiced"`
-		GwItemsBasePriceInvoiced string `json:"gw_items_base_price_invoiced"`
-		GwItemsPriceInvoiced     string `json:"gw_items_price_invoiced"`
-		GwCardBasePriceInvoiced  string `json:"gw_card_base_price_invoiced"`
-		GwCardPriceInvoiced      string `json:"gw_card_price_invoiced"`
-		GwBaseTaxAmountInvoiced  string `json:"gw_base_tax_amount_invoiced"`
-		GwTaxAmountInvoiced      string `json:"gw_tax_amount_invoiced"`
-		GwItemsBaseTaxInvoiced   string `json:"gw_items_base_tax_invoiced"`
-		GwItemsTaxInvoiced       string `json:"gw_items_tax_invoiced"`
-		GwCardBaseTaxInvoiced    string `json:"gw_card_base_tax_invoiced"`
-		GwCardTaxInvoiced        string `json:"gw_card_tax_invoiced"`
-		GwBasePriceRefunded      string `json:"gw_base_price_refunded"`
-		GwPriceRefunded          string `json:"gw_price_refunded"`
-		GwItemsBasePriceRefunded string `json:"gw_items_base_price_refunded"`
-		GwItemsPriceRefunded     string `json:"gw_items_price_refunded"`
-		GwCardBasePriceRefunded  string `json:"gw_card_base_price_refunded"`
-		GwCardPriceRefunded      string `json:"gw_card_price_refunded"`
-		GwBaseTaxAmountRefunded  string `json:"gw_base_tax_amount_refunded"`
-		GwTaxAmountRefunded      string `json:"gw_tax_amount_refunded"`
-		GwItemsBaseTaxRefunded   string `json:"gw_items_base_tax_refunded"`
-		GwItemsTaxRefunded       string `json:"gw_items_tax_refunded"`
-		GwCardBaseTaxRefunded    string `json:"gw_card_base_tax_refunded"`
-		GwCardTaxRefunded        string `json:"gw_card_tax_refunded"`
-		RewardPointsBalance      int    `json:"reward_points_balance"`
-		RewardCurrencyAmount     int    `json:"reward_currency_amount"`
-		BaseRewardCurrencyAmount int    `json:"base_reward_currency_amount"`
+				EntityID                 string `json:"entity_id,omitempty"`
+				EntityType               string `json:"entity_type,omitempty"`
+				WrappingID               int    `json:"wrapping_id,omitempty"`
+				WrappingAllowGiftReceipt bool   `json:"wrapping_allow_gift_receipt,omitempty"`
+				WrappingAddPrintedCard   bool   `json:"wrapping_add_printed_card,omitempty"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"gift_message,omitempty"`
+		GwID                     string `json:"gw_id,omitempty"`
+		GwAllowGiftReceipt       string `json:"gw_allow_gift_receipt,omitempty"`
+		GwAddCard                string `json:"gw_add_card,omitempty"`
+		GwBasePrice              string `json:"gw_base_price,omitempty"`
+		GwPrice                  string `json:"gw_price,omitempty"`
+		GwItemsBasePrice         string `json:"gw_items_base_price,omitempty"`
+		GwItemsPrice             string `json:"gw_items_price,omitempty"`
+		GwCardBasePrice          string `json:"gw_card_base_price,omitempty"`
+		GwCardPrice              string `json:"gw_card_price,omitempty"`
+		GwBaseTaxAmount          string `json:"gw_base_tax_amount,omitempty"`
+		GwTaxAmount              string `json:"gw_tax_amount,omitempty"`
+		GwItemsBaseTaxAmount     string `json:"gw_items_base_tax_amount,omitempty"`
+		GwItemsTaxAmount         string `json:"gw_items_tax_amount,omitempty"`
+		GwCardBaseTaxAmount      string `json:"gw_card_base_tax_amount,omitempty"`
+		GwCardTaxAmount          string `json:"gw_card_tax_amount,omitempty"`
+		GwBasePriceInclTax       string `json:"gw_base_price_incl_tax,omitempty"`
+		GwPriceInclTax           string `json:"gw_price_incl_tax,omitempty"`
+		GwItemsBasePriceInclTax  string `json:"gw_items_base_price_incl_tax,omitempty"`
+		GwItemsPriceInclTax      string `json:"gw_items_price_incl_tax,omitempty"`
+		GwCardBasePriceInclTax   string `json:"gw_card_base_price_incl_tax,omitempty"`
+		GwCardPriceInclTax       string `json:"gw_card_price_incl_tax,omitempty"`
+		GwBasePriceInvoiced      string `json:"gw_base_price_invoiced,omitempty"`
+		GwPriceInvoiced          string `json:"gw_price_invoiced,omitempty"`
+		GwItemsBasePriceInvoiced string `json:"gw_items_base_price_invoiced,omitempty"`
+		GwItemsPriceInvoiced     string `json:"gw_items_price_invoiced,omitempty"`
+		GwCardBasePriceInvoiced  string `json:"gw_card_base_price_invoiced,omitempty"`
+		GwCardPriceInvoiced      string `json:"gw_card_price_invoiced,omitempty"`
+		GwBaseTaxAmountInvoiced  string `json:"gw_base_tax_amount_invoiced,omitempty"`
+		GwTaxAmountInvoiced      string `json:"gw_tax_amount_invoiced,omitempty"`
+		GwItemsBaseTaxInvoiced   string `json:"gw_items_base_tax_invoiced,omitempty"`
+		GwItemsTaxInvoiced       string `json:"gw_items_tax_invoiced,omitempty"`
+		GwCardBaseTaxInvoiced    string `json:"gw_card_base_tax_invoiced,omitempty"`
+		GwCardTaxInvoiced        string `json:"gw_card_tax_invoiced,omitempty"`
+		GwBasePriceRefunded      string `json:"gw_base_price_refunded,omitempty"`
+		GwPriceRefunded          string `json:"gw_price_refunded,omitempty"`
+		GwItemsBasePriceRefunded string `json:"gw_items_base_price_refunded,omitempty"`
+		GwItemsPriceRefunded     string `json:"gw_items_price_refunded,omitempty"`
+		GwCardBasePriceRefunded  string `json:"gw_card_base_price_refunded,omitempty"`
+		GwCardPriceRefunded      string `json:"gw_card_price_refunded,omitempty"`
+		GwBaseTaxAmountRefunded  string `json:"gw_base_tax_amount_refunded,omitempty"`
+		GwTaxAmountRefunded      string `json:"gw_tax_amount_refunded,omitempty"`
+		GwItemsBaseTaxRefunded   string `json:"gw_items_base_tax_refunded,omitempty"`
+		GwItemsTaxRefunded       string `json:"gw_items_tax_refunded,omitempty"`
+		GwCardBaseTaxRefunded    string `json:"gw_card_base_tax_refunded,omitempty"`
+		GwCardTaxRefunded        string `json:"gw_card_tax_refunded,omitempty"`
+		RewardPointsBalance      int    `json:"reward_points_balance,omitempty"`
+		RewardCurrencyAmount     int    `json:"reward_currency_amount,omitempty"`
+		BaseRewardCurrencyAmount int    `json:"base_reward_currency_amount,omitempty"`
 		AmazonOrderReferenceID   struct {
-			AmazonOrderReferenceID string `json:"amazon_order_reference_id"`
-			OrderID                int    `json:"order_id"`
-		} `json:"amazon_order_reference_id"`
-	} `json:"extension_attributes"`
+			AmazonOrderReferenceID string `json:"amazon_order_reference_id,omitempty"`
+			OrderID                int    `json:"order_id,omitempty"`
+		} `json:"amazon_order_reference_id,omitempty"`
+	} `json:"extension_attributes,omitempty"`
+}
+
+type Item struct {
+	AdditionalData                      string        `json:"additional_data,omitempty"`
+	AmountRefunded                      int           `json:"amount_refunded,omitempty"`
+	AppliedRuleIds                      string        `json:"applied_rule_ids,omitempty"`
+	BaseAmountRefunded                  int           `json:"base_amount_refunded,omitempty"`
+	BaseCost                            int           `json:"base_cost,omitempty"`
+	BaseDiscountAmount                  int           `json:"base_discount_amount,omitempty"`
+	BaseDiscountInvoiced                int           `json:"base_discount_invoiced,omitempty"`
+	BaseDiscountRefunded                int           `json:"base_discount_refunded,omitempty"`
+	BaseDiscountTaxCompensationAmount   int           `json:"base_discount_tax_compensation_amount,omitempty"`
+	BaseDiscountTaxCompensationInvoiced int           `json:"base_discount_tax_compensation_invoiced,omitempty"`
+	BaseDiscountTaxCompensationRefunded int           `json:"base_discount_tax_compensation_refunded,omitempty"`
+	BaseOriginalPrice                   int           `json:"base_original_price,omitempty"`
+	BasePrice                           int           `json:"base_price,omitempty"`
+	BasePriceInclTax                    int           `json:"base_price_incl_tax,omitempty"`
+	BaseRowInvoiced                     int           `json:"base_row_invoiced,omitempty"`
+	BaseRowTotal                        int           `json:"base_row_total,omitempty"`
+	BaseRowTotalInclTax                 int           `json:"base_row_total_incl_tax,omitempty"`
+	BaseTaxAmount                       int           `json:"base_tax_amount,omitempty"`
+	BaseTaxBeforeDiscount               int           `json:"base_tax_before_discount,omitempty"`
+	BaseTaxInvoiced                     int           `json:"base_tax_invoiced,omitempty"`
+	BaseTaxRefunded                     int           `json:"base_tax_refunded,omitempty"`
+	BaseWeeeTaxAppliedAmount            int           `json:"base_weee_tax_applied_amount,omitempty"`
+	BaseWeeeTaxAppliedRowAmnt           int           `json:"base_weee_tax_applied_row_amnt,omitempty"`
+	BaseWeeeTaxDisposition              int           `json:"base_weee_tax_disposition,omitempty"`
+	BaseWeeeTaxRowDisposition           int           `json:"base_weee_tax_row_disposition,omitempty"`
+	CreatedAt                           string        `json:"created_at,omitempty"`
+	Description                         string        `json:"description,omitempty"`
+	DiscountAmount                      int           `json:"discount_amount,omitempty"`
+	DiscountInvoiced                    int           `json:"discount_invoiced,omitempty"`
+	DiscountPercent                     int           `json:"discount_percent,omitempty"`
+	DiscountRefunded                    int           `json:"discount_refunded,omitempty"`
+	EventID                             int           `json:"event_id,omitempty"`
+	ExtOrderItemID                      string        `json:"ext_order_item_id,omitempty"`
+	FreeShipping                        int           `json:"free_shipping,omitempty"`
+	GwBasePrice                         int           `json:"gw_base_price,omitempty"`
+	GwBasePriceInvoiced                 int           `json:"gw_base_price_invoiced,omitempty"`
+	GwBasePriceRefunded                 int           `json:"gw_base_price_refunded,omitempty"`
+	GwBaseTaxAmount                     int           `json:"gw_base_tax_amount,omitempty"`
+	GwBaseTaxAmountInvoiced             int           `json:"gw_base_tax_amount_invoiced,omitempty"`
+	GwBaseTaxAmountRefunded             int           `json:"gw_base_tax_amount_refunded,omitempty"`
+	GwID                                int           `json:"gw_id,omitempty"`
+	GwPrice                             int           `json:"gw_price,omitempty"`
+	GwPriceInvoiced                     int           `json:"gw_price_invoiced,omitempty"`
+	GwPriceRefunded                     int           `json:"gw_price_refunded,omitempty"`
+	GwTaxAmount                         int           `json:"gw_tax_amount,omitempty"`
+	GwTaxAmountInvoiced                 int           `json:"gw_tax_amount_invoiced,omitempty"`
+	GwTaxAmountRefunded                 int           `json:"gw_tax_amount_refunded,omitempty"`
+	DiscountTaxCompensationAmount       int           `json:"discount_tax_compensation_amount,omitempty"`
+	DiscountTaxCompensationCanceled     int           `json:"discount_tax_compensation_canceled,omitempty"`
+	DiscountTaxCompensationInvoiced     int           `json:"discount_tax_compensation_invoiced,omitempty"`
+	DiscountTaxCompensationRefunded     int           `json:"discount_tax_compensation_refunded,omitempty"`
+	IsQtyDecimal                        int           `json:"is_qty_decimal,omitempty"`
+	IsVirtual                           int           `json:"is_virtual,omitempty"`
+	ItemID                              int           `json:"item_id,omitempty"`
+	LockedDoInvoice                     int           `json:"locked_do_invoice,omitempty"`
+	LockedDoShip                        int           `json:"locked_do_ship,omitempty"`
+	Name                                string        `json:"name,omitempty"`
+	NoDiscount                          int           `json:"no_discount,omitempty"`
+	OrderID                             int           `json:"order_id,omitempty"`
+	OriginalPrice                       int           `json:"original_price,omitempty"`
+	ParentItemID                        int           `json:"parent_item_id,omitempty"`
+	Price                               int           `json:"price,omitempty"`
+	PriceInclTax                        int           `json:"price_incl_tax,omitempty"`
+	ProductID                           int           `json:"product_id,omitempty"`
+	ProductType                         string        `json:"product_type,omitempty"`
+	QtyBackordered                      int           `json:"qty_backordered,omitempty"`
+	QtyCanceled                         int           `json:"qty_canceled,omitempty"`
+	QtyInvoiced                         int           `json:"qty_invoiced,omitempty"`
+	QtyOrdered                          int           `json:"qty_ordered,omitempty"`
+	QtyRefunded                         int           `json:"qty_refunded,omitempty"`
+	QtyReturned                         int           `json:"qty_returned,omitempty"`
+	QtyShipped                          int           `json:"qty_shipped,omitempty"`
+	QuoteItemID                         int           `json:"quote_item_id,omitempty"`
+	RowInvoiced                         int           `json:"row_invoiced,omitempty"`
+	RowTotal                            int           `json:"row_total,omitempty"`
+	RowTotalInclTax                     int           `json:"row_total_incl_tax,omitempty"`
+	RowWeight                           int           `json:"row_weight,omitempty"`
+	Sku                                 string        `json:"sku,omitempty"`
+	StoreID                             int           `json:"store_id,omitempty"`
+	TaxAmount                           int           `json:"tax_amount,omitempty"`
+	TaxBeforeDiscount                   int           `json:"tax_before_discount,omitempty"`
+	TaxCanceled                         int           `json:"tax_canceled,omitempty"`
+	TaxInvoiced                         int           `json:"tax_invoiced,omitempty"`
+	TaxPercent                          int           `json:"tax_percent,omitempty"`
+	TaxRefunded                         int           `json:"tax_refunded,omitempty"`
+	UpdatedAt                           string        `json:"updated_at,omitempty"`
+	WeeeTaxApplied                      string        `json:"weee_tax_applied,omitempty"`
+	WeeeTaxAppliedAmount                int           `json:"weee_tax_applied_amount,omitempty"`
+	WeeeTaxAppliedRowAmount             int           `json:"weee_tax_applied_row_amount,omitempty"`
+	WeeeTaxDisposition                  int           `json:"weee_tax_disposition,omitempty"`
+	WeeeTaxRowDisposition               int           `json:"weee_tax_row_disposition,omitempty"`
+	Weight                              int           `json:"weight,omitempty"`
+	ParentItem                          interface{}   `json:"parent_item,omitempty"`
+	ProductOption                       ProductOption `json:"product_option,omitempty"`
+	ExtensionAttributes                 struct {
+		GiftMessage struct {
+			GiftMessageID       int    `json:"gift_message_id,omitempty"`
+			CustomerID          int    `json:"customer_id,omitempty"`
+			Sender              string `json:"sender,omitempty"`
+			Recipient           string `json:"recipient,omitempty"`
+			Message             string `json:"message,omitempty"`
+			ExtensionAttributes struct {
+				EntityID                 string `json:"entity_id,omitempty"`
+				EntityType               string `json:"entity_type,omitempty"`
+				WrappingID               int    `json:"wrapping_id,omitempty"`
+				WrappingAllowGiftReceipt bool   `json:"wrapping_allow_gift_receipt,omitempty"`
+				WrappingAddPrintedCard   bool   `json:"wrapping_add_printed_card,omitempty"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"gift_message,omitempty"`
+		GwID                    string   `json:"gw_id,omitempty"`
+		GwBasePrice             string   `json:"gw_base_price,omitempty"`
+		GwPrice                 string   `json:"gw_price,omitempty"`
+		GwBaseTaxAmount         string   `json:"gw_base_tax_amount,omitempty"`
+		GwTaxAmount             string   `json:"gw_tax_amount,omitempty"`
+		GwBasePriceInvoiced     string   `json:"gw_base_price_invoiced,omitempty"`
+		GwPriceInvoiced         string   `json:"gw_price_invoiced,omitempty"`
+		GwBaseTaxAmountInvoiced string   `json:"gw_base_tax_amount_invoiced,omitempty"`
+		GwTaxAmountInvoiced     string   `json:"gw_tax_amount_invoiced,omitempty"`
+		GwBasePriceRefunded     string   `json:"gw_base_price_refunded,omitempty"`
+		GwPriceRefunded         string   `json:"gw_price_refunded,omitempty"`
+		GwBaseTaxAmountRefunded string   `json:"gw_base_tax_amount_refunded,omitempty"`
+		GwTaxAmountRefunded     string   `json:"gw_tax_amount_refunded,omitempty"`
+		VertexTaxCodes          []string `json:"vertex_tax_codes,omitempty"`
+		InvoiceTextCodes        []string `json:"invoice_text_codes,omitempty"`
+		TaxCodes                []string `json:"tax_codes,omitempty"`
+	} `json:"extension_attributes,omitempty"`
+}
+
+type ProductOption struct {
+	ExtensionAttributes struct {
+		CustomOptions []struct {
+			OptionID            string `json:"option_id,omitempty"`
+			OptionValue         string `json:"option_value,omitempty"`
+			ExtensionAttributes struct {
+				FileInfo struct {
+					Base64EncodedData string `json:"base64_encoded_data,omitempty"`
+					Type              string `json:"type,omitempty"`
+					Name              string `json:"name,omitempty"`
+				} `json:"file_info,omitempty"`
+			} `json:"extension_attributes,omitempty"`
+		} `json:"custom_options,omitempty"`
+		BundleOptions []struct {
+			OptionID            int   `json:"option_id,omitempty"`
+			OptionQty           int   `json:"option_qty,omitempty"`
+			OptionSelections    []int `json:"option_selections,omitempty"`
+			ExtensionAttributes struct {
+			} `json:"extension_attributes,omitempty"`
+		} `json:"bundle_options,omitempty"`
+		ConfigurableItemOptions []struct {
+			OptionID            string `json:"option_id,omitempty"`
+			OptionValue         int    `json:"option_value,omitempty"`
+			ExtensionAttributes struct {
+			} `json:"extension_attributes,omitempty"`
+		} `json:"configurable_item_options,omitempty"`
+		DownloadableOption struct {
+			DownloadableLinks []int `json:"downloadable_links,omitempty"`
+		} `json:"downloadable_option,omitempty"`
+		GiftcardItemOption struct {
+			GiftcardAmount         string `json:"giftcard_amount,omitempty"`
+			CustomGiftcardAmount   int    `json:"custom_giftcard_amount,omitempty"`
+			GiftcardSenderName     string `json:"giftcard_sender_name,omitempty"`
+			GiftcardRecipientName  string `json:"giftcard_recipient_name,omitempty"`
+			GiftcardSenderEmail    string `json:"giftcard_sender_email,omitempty"`
+			GiftcardRecipientEmail string `json:"giftcard_recipient_email,omitempty"`
+			GiftcardMessage        string `json:"giftcard_message,omitempty"`
+			ExtensionAttributes    struct {
+			} `json:"extension_attributes,omitempty"`
+		} `json:"giftcard_item_option,omitempty"`
+	} `json:"extension_attributes,omitempty"`
 }
 
 type StatusHistory struct {
-	Comment             string `json:"comment"`
-	CreatedAt           string `json:"created_at"`
-	EntityID            int    `json:"entity_id"`
-	EntityName          string `json:"entity_name"`
-	IsCustomerNotified  int    `json:"is_customer_notified"`
-	IsVisibleOnFront    int    `json:"is_visible_on_front"`
-	ParentID            int    `json:"parent_id"`
-	Status              string `json:"status"`
+	Comment             string `json:"comment,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	EntityID            int    `json:"entity_id,omitempty"`
+	EntityName          string `json:"entity_name,omitempty"`
+	IsCustomerNotified  int    `json:"is_customer_notified,omitempty"`
+	IsVisibleOnFront    int    `json:"is_visible_on_front,omitempty"`
+	ParentID            int    `json:"parent_id,omitempty"`
+	Status              string `json:"status,omitempty"`
 	ExtensionAttributes struct {
-	} `json:"extension_attributes"`
+	} `json:"extension_attributes,omitempty"`
 }

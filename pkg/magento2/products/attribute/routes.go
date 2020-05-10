@@ -1,6 +1,6 @@
 package attribute
 
 const (
-	productsAttribute = "/products/attributes"
+	productsAttribute        = "/products/attributes"
 	productsAttributeOptions = "options"
 )
