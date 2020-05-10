@@ -88,6 +88,8 @@ func (mo *MOrder) UpdateEntity(order *Order) error {
 		Entity Order `json:"entity"`
 	}
 
+	order.EntityID = mo.Order.EntityID
+
 	payLoad := updateOrderEntityPayload{
 		Entity: *order,
 	}
