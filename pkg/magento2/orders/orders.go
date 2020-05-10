@@ -84,7 +84,13 @@ func GetOrderByIncrementID(id string, apiClient *api.Client) (*MOrder, error) {
 }
 
 func (mo *MOrder) UpdateOnRemote() error {
-	return mo.APIClient.PostRouteAndDecode(Orders, mo.Order, mo.Order, "update order entity on remote")
+	type updateOrderEntityPayload struct {
+		Entity Order `json:"entity"`
+	}
+
+	payLoad := updateOrderEntityPayload{Entity: *mo.Order}
+
+	return mo.APIClient.PostRouteAndDecode(Orders, payLoad, mo.Order, "update order entity on remote")
 }
 
 func (mo *MOrder) UpdateFromRemote() error {

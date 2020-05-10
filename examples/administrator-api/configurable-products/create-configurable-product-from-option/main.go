@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"strconv"
+
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/configurableproducts"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
-	"log"
-	"strconv"
 )
 
 // TODO: FINISH EXAMPLE

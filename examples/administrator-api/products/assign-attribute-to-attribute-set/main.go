@@ -1,11 +1,12 @@
 package main
 
 import (
+	"log"
+	"strconv"
+
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attributeset"
-	"log"
-	"strconv"
 )
 
 func main() {
