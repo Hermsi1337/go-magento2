@@ -15,11 +15,11 @@ func main() {
 	}
 
 	// create a new apiClient
-	apiClient := api.NewGuestApiClient(storeConfig)
+	apiClient := api.NewAPIClientWithoutAuthentication(storeConfig)
 	log.Printf("Obtained client: '%+v'", apiClient)
 
 	// create empty card
-	mCart, err := cart.NewGuestCartFromApiClient(apiClient)
+	mCart, err := cart.NewGuestCartFromAPIClient(apiClient)
 	if err != nil {
 		panic(err)
 	}
@@ -31,7 +31,7 @@ func main() {
 
 	// add items to your items array
 	products = append(products, cart.Item{
-		Sku: "161368",
+		Sku: "24-MB01",
 		Qty: 1,
 	})
 
@@ -71,7 +71,7 @@ func main() {
 	}
 
 	// estimate shipping carrier for our cart
-	availableCarrier, err := mCart.EstimateShippingCarrier(*sAddr)
+	availableCarrier, err := mCart.EstimateShippingCarrier(sAddr)
 	if err != nil {
 		panic(err)
 	}
@@ -92,7 +92,7 @@ func main() {
 	}
 
 	// add shipping info to cart
-	err = mCart.AddShippingInformation(*payLoad)
+	err = mCart.AddShippingInformation(payLoad)
 	if err != nil {
 		panic(err)
 	}

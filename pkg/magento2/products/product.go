@@ -12,13 +12,13 @@ const (
 type MProduct struct {
 	Route     string
 	Product   *Product
-	ApiClient *api.Client
+	APIClient *api.Client
 }
 
 func CreateOrReplaceProduct(product *Product, saveOptions bool, apiClient *api.Client) (*MProduct, error) {
 	mp := &MProduct{
 		Product:   product,
-		ApiClient: apiClient,
+		APIClient: apiClient,
 	}
 
 	err := mp.createOrReplaceProduct(saveOptions)
@@ -30,7 +30,7 @@ func GetProductBySKU(sku string, apiClient *api.Client) (*MProduct, error) {
 	mProduct := &MProduct{
 		Route:     products + "/" + sku,
 		Product:   &Product{},
-		ApiClient: apiClient,
+		APIClient: apiClient,
 	}
 
 	err := mProduct.UpdateProductFromRemote()
@@ -40,7 +40,7 @@ func GetProductBySKU(sku string, apiClient *api.Client) (*MProduct, error) {
 
 func (mProduct *MProduct) createOrReplaceProduct(saveOptions bool) error {
 	endpoint := products
-	httpClient := mProduct.ApiClient.HttpClient
+	httpClient := mProduct.APIClient.HTTPClient
 
 	payLoad := AddProductPayload{
 		Product:     *mProduct.Product,
@@ -55,14 +55,14 @@ func (mProduct *MProduct) createOrReplaceProduct(saveOptions bool) error {
 }
 
 func (mProduct *MProduct) UpdateProductFromRemote() error {
-	httpClient := mProduct.ApiClient.HttpClient
+	httpClient := mProduct.APIClient.HTTPClient
 
 	resp, err := httpClient.R().SetResult(mProduct.Product).Get(mProduct.Route)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get detailed product from remote")
 }
 
 func (mProduct *MProduct) UpdateQuantityForStockItem(stockItem string, quantity int, isInStock bool) error {
-	httpClient := mProduct.ApiClient.HttpClient
+	httpClient := mProduct.APIClient.HTTPClient
 
 	updateStockPayload := updateStockPayload{StockItem: StockItem{Qty: quantity, IsInStock: isInStock}}
 

@@ -1,4 +1,4 @@
-package configurable_products
+package configurableproducts
 
 const (
 	configurableProducts                   = "/configurable-products"

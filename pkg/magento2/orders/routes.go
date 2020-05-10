@@ -1,6 +1,6 @@
 package orders
 
 const (
-	Orders                           = "/orders"
-	OrderComments                   = "comments"
+	Orders        = "/orders"
+	OrderComments = "comments"
 )

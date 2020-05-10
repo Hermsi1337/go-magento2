@@ -2,34 +2,108 @@ package orders
 
 import (
 	"github.com/hermsi1337/go-magento2/internal/utils"
+	"github.com/hermsi1337/go-magento2/pkg/magento2"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 )
 
 type MOrder struct {
 	Route     string
 	Order     *Order
-	ApiClient *api.Client
+	APIClient *api.Client
 }
 
-func (mo *MOrder) UpdateOrderFromRemote() error {
-	httpClient := mo.ApiClient.HttpClient
+func GetOrderByIncrementID(id string, apiClient *api.Client) (*MOrder, error) {
+	mOrder := &MOrder{
+		Route:     "",
+		Order:     &Order{},
+		APIClient: apiClient,
+	}
 
-	resp, err := httpClient.R().SetResult(mo.Order).Get(mo.Route)
-	return utils.MayReturnErrorForHTTPResponse(err, resp, "get detailed order object from magento2-api")
+	// ?searchCriteria[filter_groups][2][filters][0][field]=increment_id
+	// &searchCriteria[filter_groups][2][filters][0][value]=INCREMENT_ID_HERE
+	// &searchCriteria[filter_groups][2][filters][0][condition_type]=eq
+	// &fields=items[entity_id]
+	searchCriteria := []utils.SearchQueryCriteria{
+		{
+			Fields: []utils.FilterFields{
+				{
+					Field: utils.Filter{
+						FilterGroups: 2,
+						Filters:      0,
+						FilterFor:    "increment_id",
+					},
+					Value: utils.Filter{
+						FilterGroups: 2,
+						Filters:      0,
+						FilterFor:    id,
+					},
+					ConditionType: utils.Filter{
+						FilterGroups: 2,
+						Filters:      0,
+						FilterFor:    "eq",
+					},
+				},
+			},
+		},
+	}
+
+	additionalQuery := utils.Fields{
+		Key:   "fields",
+		Value: "items[entity_id]",
+	}
+
+	searchQuery := utils.BuildFlexibleSearchQuery(searchCriteria, additionalQuery)
+
+	type searchResponse struct {
+		Items []struct {
+			EntityID int `json:"entity_id"`
+		}
+	}
+
+	response := &searchResponse{
+		Items: []struct {
+			EntityID int `json:"entity_id"`
+		}{},
+	}
+
+	endpoint := Orders + "?" + searchQuery
+
+	err := apiClient.GetRouteAndDecode(endpoint, response, "get order by increment_id from remote")
+	if err != nil {
+		return nil, err
+	}
+
+	if len(response.Items) == 0 {
+		return nil, magento2.ErrNotFound
+	}
+
+	mOrder.Order.EntityID = response.Items[0].EntityID
+	err = mOrder.UpdateFromRemote()
+
+	return mOrder, err
 }
 
-func (mo *MOrder) AddComment(comment StatusHistory) error {
+func (mo *MOrder) UpdateOnRemote() error {
+	return mo.APIClient.PostRouteAndDecode(Orders, mo.Order, mo.Order, "update order entity on remote")
+}
+
+func (mo *MOrder) UpdateFromRemote() error {
+	return mo.APIClient.GetRouteAndDecode(mo.Route, mo.Order, "get detailed order object from magento2-api")
+}
+
+func (mo *MOrder) AddComment(comment *StatusHistory) (StatusHistory, error) {
 	endpoint := mo.Route + "/" + OrderComments
-	httpClient := mo.ApiClient.HttpClient
 
 	type PayLoad struct {
 		StatusHistory StatusHistory `json:"statusHistory"`
 	}
 
 	payLoad := &PayLoad{
-		StatusHistory: comment,
+		StatusHistory: *comment,
 	}
 
-	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
-	return utils.MayReturnErrorForHTTPResponse(err, resp, "add comment to order")
+	response := StatusHistory{}
+
+	err := mo.APIClient.PostRouteAndDecode(endpoint, payLoad, &response, "add comment to order")
+	return response, err
 }

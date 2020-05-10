@@ -1,7 +1,8 @@
-package configurable_products
+package configurableproducts
 
 import (
 	"fmt"
+
 	"github.com/hermsi1337/go-magento2/internal/utils"
 	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
 )
@@ -9,20 +10,20 @@ import (
 type MConfigurableProduct struct {
 	Route     string
 	Options   *[]Option
-	ApiClient *api.Client
+	APIClient *api.Client
 }
 
-func SetOptionForExistingConfigurableProduct(sku string, o Option, apiClient *api.Client) (*MConfigurableProduct, error) {
+func SetOptionForExistingConfigurableProduct(sku string, o *Option, apiClient *api.Client) (*MConfigurableProduct, error) {
 	mConfigurableProduct := &MConfigurableProduct{
 		Route:     configurableProducts + "/" + sku,
 		Options:   &[]Option{},
-		ApiClient: apiClient,
+		APIClient: apiClient,
 	}
 	endpoint := mConfigurableProduct.Route + "/" + configurableProductsOptionsRelative
-	httpClient := apiClient.HttpClient
+	httpClient := apiClient.HTTPClient
 
 	payLoad := createConfigurableProductByOptionPayload{
-		Option: o,
+		Option: *o,
 	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Post(endpoint)
@@ -38,14 +39,14 @@ func SetOptionForExistingConfigurableProduct(sku string, o Option, apiClient *ap
 }
 
 func (mConfigurableProduct *MConfigurableProduct) UpdateOptionsFromRemote() error {
-	httpClient := mConfigurableProduct.ApiClient.HttpClient
+	httpClient := mConfigurableProduct.APIClient.HTTPClient
 
 	resp, err := httpClient.R().SetResult(mConfigurableProduct.Options).Get(mConfigurableProduct.Route + "/" + configurableProductsOptionsAllRelative)
 	return utils.MayReturnErrorForHTTPResponse(err, resp, "get options for configurable product from remote")
 }
 
 func (mConfigurableProduct *MConfigurableProduct) AddChildBySKU(sku string) error {
-	httpClient := mConfigurableProduct.ApiClient.HttpClient
+	httpClient := mConfigurableProduct.APIClient.HTTPClient
 	payLoad := addChildSKUPayload{
 		Sku: sku,
 	}
@@ -60,18 +61,18 @@ func GetConfigurableProductBySKU(sku string, apiClient *api.Client) (*MConfigura
 	mConfigurableProduct := &MConfigurableProduct{
 		Route:     configurableProducts + "/" + sku,
 		Options:   &[]Option{},
-		ApiClient: apiClient,
+		APIClient: apiClient,
 	}
 	err := mConfigurableProduct.UpdateOptionsFromRemote()
 	return mConfigurableProduct, err
 }
 
-func (mConfigurableProduct *MConfigurableProduct) UpdateOptionByID(o Option) error {
-	httpClient := mConfigurableProduct.ApiClient.HttpClient
+func (mConfigurableProduct *MConfigurableProduct) UpdateOptionByID(o *Option) error {
+	httpClient := mConfigurableProduct.APIClient.HTTPClient
 	endpoint := fmt.Sprintf("%s/%s/%d", mConfigurableProduct.Route, configurableProductsOptionsRelative, o.ID)
 
 	payLoad := createConfigurableProductByOptionPayload{
-		Option: o,
+		Option: *o,
 	}
 
 	resp, err := httpClient.R().SetBody(payLoad).Put(endpoint)

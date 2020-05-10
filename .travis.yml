@@ -1,14 +1,9 @@
 language: go
 
 go:
-  - '1.12'
+  - '1.14'
 
-dist: xenial
-
-env:
-  global:
-    - GOLANG_LINT_VERSION=v1.17.1
-    - GO111MODULE=on
+dist: bionic
 
 addons:
   apt:
@@ -18,7 +13,7 @@ addons:
       - wget
 
 before_script:
-  - wget -O - -q https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANG_LINT_VERSION}
+  - wget -O - -q https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin
 
 script:
   - golangci-lint run ./... || exit 1

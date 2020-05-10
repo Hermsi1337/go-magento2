@@ -17,14 +17,14 @@ func main() {
 	bearerToken := "yd1o9zs1hb1qxnn8ek68eu8nwqjg5hrv"
 
 	// create a new apiClient
-	apiClient, err := api.NewAdministratorApiClientFromIntegration(storeConfig, bearerToken)
+	apiClient, err := api.NewAPIClientFromIntegration(storeConfig, bearerToken)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
 	// define your attribute
-	attr := attribute.Attribute{
+	attr := &attribute.Attribute{
 		AttributeCode:        "spagetattr",
 		FrontendInput:        "select",
 		DefaultFrontendLabel: "aw",
