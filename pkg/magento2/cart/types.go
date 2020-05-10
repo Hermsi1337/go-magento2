@@ -1,5 +1,15 @@
 package cart
 
+import "fmt"
+
+type ItemNotFoundError struct {
+	ItemID int
+}
+
+func (a *ItemNotFoundError) Error() string {
+	return fmt.Sprintf("itemID '%d' is non-existent", a.ItemID)
+}
+
 type Cart struct {
 	ID                  int                    `json:"id"`
 	CreatedAt           string                 `json:"created_at"`
