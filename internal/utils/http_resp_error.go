@@ -10,8 +10,6 @@ import (
 )
 
 var ErrBadRequest = fmt.Errorf("%s", "bad request")
-var ErrInternalServer = fmt.Errorf("%s", "internal server error")
-var ErrExecution = fmt.Errorf("%s", "failed while calling endpoint")
 
 func wrapError(err error, triedTo string, response ...map[string]interface{}) error {
 	if len(response) == 0 {
@@ -25,8 +23,6 @@ func MayReturnErrorForHTTPResponse(err error, resp *resty.Response, triedTo stri
 		err = wrapError(err, triedTo)
 	} else if resp.StatusCode() == http.StatusNotFound {
 		err = magento2.ErrNotFound
-	} else if resp.StatusCode() >= http.StatusInternalServerError {
-		err = wrapError(ErrInternalServer, triedTo)
 	} else if resp.StatusCode() >= http.StatusBadRequest {
 		additional := map[string]interface{}{
 			"statusCode": resp.StatusCode(),
