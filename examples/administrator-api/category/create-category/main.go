@@ -2,15 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/hermsi1337/go-magento2"
 	"log"
-
-	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
-	"github.com/hermsi1337/go-magento2/pkg/magento2/categories"
 )
 
 func main() {
 	// initiate storeconfig
-	storeConfig := &api.StoreConfig{
+	storeConfig := &magento2.StoreConfig{
 		Scheme:    "https",
 		HostName:  "magento2.hermsi.localhost",
 		StoreCode: "default",
@@ -19,19 +17,19 @@ func main() {
 	bearerToken := "yd1o9zs1hb1qxnn8ek68eu8nwqjg5hrv"
 
 	// create a new apiClient
-	apiClient, err := api.NewAPIClientFromIntegration(storeConfig, bearerToken)
+	apiClient, err := magento2.NewAPIClientFromIntegration(storeConfig, bearerToken)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
-	c := &categories.Category{
+	c := &magento2.Category{
 		Name:     "spagetegory",
 		Level:    2,
 		IsActive: true,
 	}
 
-	mC, err := categories.CreateCategory(c, apiClient)
+	mC, err := magento2.CreateCategory(c, apiClient)
 	if err != nil {
 		panic(err)
 	}
