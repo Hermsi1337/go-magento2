@@ -1,7 +1,5 @@
 package magento2
 
-import "errors"
-
 type AddProductPayload struct {
 	Product     Product `json:"product"`
 	SaveOptions bool    `json:"saveOptions"`
@@ -130,5 +128,3 @@ type StockItem struct {
 type updateStockPayload struct {
 	StockItem StockItem `json:"stockItem"`
 }
-
-var ErrNotFound = errors.New("no document found")

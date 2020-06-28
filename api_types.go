@@ -1,7 +1,7 @@
 package magento2
 
 const (
-	Customer AuthenticationType = iota
+	CustomerAuth AuthenticationType = iota
 	Administrator
 )
 

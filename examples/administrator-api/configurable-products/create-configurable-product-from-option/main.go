@@ -53,7 +53,7 @@ func main() {
 		panic(err)
 	}
 
-	option := &magento2.Option{
+	option := &magento2.ConfigurableProductOption{
 		AttributeID:  fmt.Sprintf("%d", mAttribute.Attribute.AttributeID),
 		Label:        mAttribute.Attribute.DefaultFrontendLabel,
 		Position:     0,

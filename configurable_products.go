@@ -10,7 +10,7 @@ type MConfigurableProduct struct {
 	APIClient *Client
 }
 
-func SetOptionForExistingConfigurableProduct(sku string, o *Option, apiClient *Client) (*MConfigurableProduct, error) {
+func SetOptionForExistingConfigurableProduct(sku string, o *ConfigurableProductOption, apiClient *Client) (*MConfigurableProduct, error) {
 	mConfigurableProduct := &MConfigurableProduct{
 		Route:     configurableProducts + "/" + sku,
 		Options:   &[]Option{},
@@ -64,7 +64,7 @@ func GetConfigurableProductBySKU(sku string, apiClient *Client) (*MConfigurableP
 	return mConfigurableProduct, err
 }
 
-func (mConfigurableProduct *MConfigurableProduct) UpdateOptionByID(o *Option) error {
+func (mConfigurableProduct *MConfigurableProduct) UpdateOptionByID(o *ConfigurableProductOption) error {
 	httpClient := mConfigurableProduct.APIClient.HTTPClient
 	endpoint := fmt.Sprintf("%s/%s/%d", mConfigurableProduct.Route, configurableProductsOptionsRelative, o.ID)
 

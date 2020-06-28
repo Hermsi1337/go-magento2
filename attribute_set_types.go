@@ -1,9 +1,5 @@
 package magento2
 
-import "errors"
-
-var ErrNotFound = errors.New("no document found")
-
 type AttributeSet struct {
 	AttributeSetID      int         `json:"attribute_set_id,omitempty"`
 	AttributeSetName    string      `json:"attribute_set_name"`

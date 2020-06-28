@@ -20,7 +20,7 @@ func main() {
 	}
 
 	// create a new apiClient
-	authenticationType := magento2.Customer
+	authenticationType := magento2.CustomerAuth
 	apiClient, err := magento2.NewAPIClientFromAuthentication(storeConfig, authenticationPaylod, authenticationType)
 	if err != nil {
 		panic(err)
@@ -36,10 +36,10 @@ func main() {
 	log.Printf("Detailed cart: '%+v'", mCart.Cart)
 
 	// initialize items array
-	var products []magento2.Item
+	var products []magento2.CartItem
 
 	// add items to your items array
-	products = append(products, magento2.Item{
+	products = append(products, magento2.CartItem{
 		Sku: "123456",
 		Qty: 1,
 	})

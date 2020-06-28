@@ -1,6 +1,6 @@
 package magento2
 
-type Option struct {
+type ConfigurableProductOption struct {
 	ID                  int         `json:"id,omitempty"`
 	AttributeID         string      `json:"attribute_id"`
 	Label               string      `json:"label"`
@@ -17,7 +17,7 @@ type Value struct {
 }
 
 type createConfigurableProductByOptionPayload struct {
-	Option Option `json:"option"`
+	Option ConfigurableProductOption `json:"option"`
 }
 
 type addChildSKUPayload struct {

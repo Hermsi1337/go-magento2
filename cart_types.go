@@ -17,7 +17,7 @@ type Cart struct {
 	ConvertedAt         string                 `json:"converted_at"`
 	IsActive            bool                   `json:"is_active"`
 	IsVirtual           bool                   `json:"is_virtual"`
-	Items               []Item                 `json:"items"`
+	Items               []CartItem             `json:"items"`
 	ItemsCount          int                    `json:"items_count"`
 	ItemsQty            int                    `json:"items_qty"`
 	Customer            Customer               `json:"customer"`
@@ -33,7 +33,7 @@ type Cart struct {
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes"`
 }
 
-type Item struct {
+type CartItem struct {
 	ItemID              int                    `json:"item_id,omitempty"`
 	Sku                 string                 `json:"sku"`
 	Qty                 float64                `json:"qty"`
@@ -41,11 +41,11 @@ type Item struct {
 	Price               float64                `json:"price,omitempty"`
 	ProductType         string                 `json:"product_type,omitempty"`
 	QuoteID             string                 `json:"quote_id"`
-	ProductOption       ProductOption          `json:"product_option,omitempty"`
+	ProductOption       CartProductOption      `json:"product_option,omitempty"`
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 
-type ProductOption struct {
+type CartProductOption struct {
 	ExtensionAttributes map[string]interface{} `json:"extension_attributes,omitempty"`
 }
 

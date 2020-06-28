@@ -35,11 +35,6 @@ type ValidationRules struct {
 	Value string `json:"value"`
 }
 
-type CustomAttributes struct {
-	AttributeCode string `json:"attribute_code"`
-	Value         string `json:"value"`
-}
-
 type Attribute struct {
 	ExtensionAttributes       ExtensionAttributes `json:"extension_attributes,omitempty"`
 	IsWysiwygEnabled          bool                `json:"is_wysiwyg_enabled,omitempty"`

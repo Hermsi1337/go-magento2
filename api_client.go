@@ -2,7 +2,6 @@ package magento2
 
 import (
 	"crypto/tls"
-	"fmt"
 	"net/http"
 	"reflect"
 	"time"
@@ -13,7 +12,7 @@ import (
 )
 
 const (
-	RetryAttemps        = 3
+	RetryAttempts       = 3
 	RetryWaitSeconds    = 5
 	RetryMaxWaitSeconds = 20
 )
@@ -27,8 +26,6 @@ type StoreConfig struct {
 	HostName  string
 	StoreCode string
 }
-
-var ErrNoPointer = fmt.Errorf("target interface must be a pointer")
 
 func (c *Client) GetRouteAndDecode(route string, target interface{}, tryTo string) error {
 	if reflect.TypeOf(target).Kind() != reflect.Ptr {
@@ -95,7 +92,7 @@ func buildBasicHTTPClient(storeConfig *StoreConfig) *resty.Client {
 
 	retryWait := time.Duration(RetryWaitSeconds)
 	retryMaxWait := time.Duration(RetryMaxWaitSeconds)
-	client.SetRetryCount(RetryAttemps).
+	client.SetRetryCount(RetryAttempts).
 		SetRetryWaitTime(retryWait * time.Second).
 		SetRetryMaxWaitTime(retryMaxWait * time.Second).
 		AddRetryCondition(

@@ -17,11 +17,6 @@ type Category struct {
 	CustomAttributes    []CustomAttributes `json:"custom_attributes,omitempty"`
 }
 
-type CustomAttributes struct {
-	AttributeCode string `json:"attribute_code"`
-	Value         string `json:"value"`
-}
-
 type ProductLink struct {
 	Sku                 string                 `json:"sku"`
 	Position            int                    `json:"position"`

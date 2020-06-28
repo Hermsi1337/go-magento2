@@ -80,12 +80,12 @@ func (cart *MCart) UpdateFromRemote() error {
 	return mayReturnErrorForHTTPResponse(err, resp, "get detailed cart object from magento2-api")
 }
 
-func (cart *MCart) AddItems(items []Item) error {
+func (cart *MCart) AddItems(items []CartItem) error {
 	endpoint := cart.Route + cartItems
 	httpClient := cart.APIClient.HTTPClient
 
 	type PayLoad struct {
-		CartItem Item `json:"cartItem"`
+		CartItem CartItem `json:"cartItem"`
 	}
 
 	for _, item := range items {

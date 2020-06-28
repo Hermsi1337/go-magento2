@@ -414,7 +414,7 @@ type Order struct {
 				Weight                              float64 `json:"weight,omitempty"`
 				ParentItem                          *struct {
 				} `json:"parent_item,omitempty"`
-				ProductOption       ProductOption `json:"product_option,omitempty"`
+				ProductOption       OrdersProductOption `json:"product_option,omitempty"`
 				ExtensionAttributes *struct {
 					GiftMessage *struct {
 						GiftMessageID       float64 `json:"gift_message_id,omitempty"`
@@ -687,7 +687,7 @@ type Item struct {
 	Weight                              float64 `json:"weight,omitempty"`
 	ParentItem                          *struct {
 	} `json:"parent_item,omitempty"`
-	ProductOption       ProductOption `json:"product_option,omitempty"`
+	ProductOption       OrdersProductOption `json:"product_option,omitempty"`
 	ExtensionAttributes *struct {
 		GiftMessage *struct {
 			GiftMessageID       float64 `json:"gift_message_id,omitempty"`
@@ -722,7 +722,7 @@ type Item struct {
 	} `json:"extension_attributes,omitempty"`
 }
 
-type ProductOption struct {
+type OrdersProductOption struct {
 	ExtensionAttributes *struct {
 		CustomOptions []struct {
 			OptionID            string `json:"option_id,omitempty"`

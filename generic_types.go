@@ -1,5 +1,6 @@
 package magento2
 
-import "errors"
-
-var ErrNotFound = errors.New("no document found")
+type CustomAttributes struct {
+	AttributeCode string `json:"attribute_code"`
+	Value         string `json:"value"`
+}

@@ -26,10 +26,10 @@ func main() {
 	log.Printf("Detailed cart: '%+v'", mCart.Cart)
 
 	// initialize items array
-	var products []magento2.Item
+	var products []magento2.CartItem
 
 	// add items to your items array
-	products = append(products, magento2.Item{
+	products = append(products, magento2.CartItem{
 		Sku: "24-MB01",
 		Qty: 1,
 	})
