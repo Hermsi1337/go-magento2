@@ -1,7 +1,6 @@
 package magento2
 
 import (
-	"crypto/tls"
 	"net/http"
 	"reflect"
 	"time"
@@ -85,7 +84,6 @@ func buildBasicHTTPClient(storeConfig *StoreConfig) *resty.Client {
 	client := resty.New()
 	client.SetRESTMode()
 	client.SetHostURL(fullRestRoute)
-	client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: false})
 	client.SetHeaders(map[string]string{
 		"User-Agent": "go-magento2 (https://github.com/hermsi1337/go-magento2)",
 	})
