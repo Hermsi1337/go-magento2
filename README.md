@@ -1,5 +1,5 @@
-![Lint](https://github.com/Hermsi1337/go-magento2/workflows/Lint/badge.svg?branch=master)
-![Compile & Test](https://github.com/Hermsi1337/go-magento2/workflows/Compile%20&%20Test/badge.svg?branch=master)
+[![Lint](https://github.com/Hermsi1337/go-magento2/workflows/Lint/badge.svg?branch=master)](https://github.com/Hermsi1337/go-magento2)
+[![Compile & Test](https://github.com/Hermsi1337/go-magento2/workflows/Compile%20&%20Test/badge.svg?branch=master)](https://github.com/Hermsi1337/go-magento2)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f9e75064d22478ed207f/maintainability)](https://codeclimate.com/github/Hermsi1337/go-magento2/maintainability)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T85UYT37P3YNJ&source=url)
 
