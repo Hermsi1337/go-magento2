@@ -26,6 +26,10 @@ type Address struct {
 	CustomAttributes    []map[string]interface{} `json:"custom_attributes,omitempty"`
 }
 
+type BillingAddress struct {
+	Address
+}
+
 type ShippingAddress struct {
 	Address
 	AddressType       string  `json:"address_type,omitempty"`

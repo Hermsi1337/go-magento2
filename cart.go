@@ -110,12 +110,12 @@ func (cart *MCart) AddItems(items []CartItem) error {
 	return nil
 }
 
-func (cart *MCart) EstimateShippingCarrier(addr *Address) ([]Carrier, error) {
+func (cart *MCart) EstimateShippingCarrier(addr *ShippingAddress) ([]Carrier, error) {
 	endpoint := cart.Route + cartShippingCosts
 	httpClient := cart.APIClient.HTTPClient
 
 	type PayLoad struct {
-		Address Address `json:"address"`
+		Address ShippingAddress `json:"address"`
 	}
 
 	payLoad := &PayLoad{

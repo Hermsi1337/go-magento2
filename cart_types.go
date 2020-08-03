@@ -21,7 +21,7 @@ type Cart struct {
 	ItemsCount          int                    `json:"items_count"`
 	ItemsQty            int                    `json:"items_qty"`
 	Customer            Customer               `json:"customer"`
-	BillingAddress      Address                `json:"billing_address"`
+	BillingAddress      *BillingAddress        `json:"billing_address"`
 	ReservedOrderID     int                    `json:"reserved_order_id"`
 	OrigOrderID         int                    `json:"orig_order_id"`
 	Currency            Currency               `json:"currency"`
@@ -88,8 +88,8 @@ type Currency struct {
 }
 
 type AddressInformation struct {
-	ShippingAddress      Address                  `json:"shipping_address"`
-	BillingAddress       Address                  `json:"billing_address"`
+	ShippingAddress      *ShippingAddress         `json:"shipping_address"`
+	BillingAddress       *BillingAddress          `json:"billing_address"`
 	ShippingMethodCode   string                   `json:"shipping_method_code"`
 	ShippingCarrierCodes string                   `json:"shipping_carrier_code"`
 	ExtensionAttributes  map[string]interface{}   `json:"extension_attributes,omitempty"`
