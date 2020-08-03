@@ -54,29 +54,33 @@ func main() {
 	log.Printf("Products in cart: '%+v'", mCart.Cart.Items)
 
 	// define shipping address
-	sAddr := &magento2.Address{
-		City:      "FooCity",
-		Company:   "FooCompany",
-		Email:     "foo@bar.de",
-		Firstname: "Foo",
-		Lastname:  "Bar",
-		Postcode:  "1337",
-		CountryID: "DE",
-		Telephone: "1337 1337 1337",
-		Street:    []string{"foo", "street"},
+	sAddr := &magento2.ShippingAddress{
+		Address: magento2.Address{
+			City:      "FooCity",
+			Company:   "FooCompany",
+			Email:     "foo@bar.de",
+			Firstname: "Foo",
+			Lastname:  "Bar",
+			Postcode:  "1337",
+			CountryID: "DE",
+			Telephone: "1337 1337 1337",
+			Street:    []string{"foo", "street"},
+		},
 	}
 
 	// define billing address
-	bAddr := &magento2.Address{
-		City:      "FooCity",
-		Company:   "FooCompany",
-		Email:     "foo@bar.de",
-		Firstname: "Foo",
-		Lastname:  "Bar",
-		Postcode:  "1337",
-		CountryID: "DE",
-		Telephone: "1337 1337 1337",
-		Street:    []string{"foo", "street"},
+	bAddr := &magento2.BillingAddress{
+		Address: magento2.Address{
+			City:      "FooCity",
+			Company:   "FooCompany",
+			Email:     "foo@bar.de",
+			Firstname: "Foo",
+			Lastname:  "Bar",
+			Postcode:  "1337",
+			CountryID: "DE",
+			Telephone: "1337 1337 1337",
+			Street:    []string{"foo", "street"},
+		},
 	}
 
 	// estimate shipping carrier for our cart
@@ -94,8 +98,8 @@ func main() {
 
 	// define addressinformation-payload for your cart
 	payLoad := &magento2.AddressInformation{
-		ShippingAddress:      *sAddr,
-		BillingAddress:       *bAddr,
+		ShippingAddress:      sAddr,
+		BillingAddress:       bAddr,
 		ShippingMethodCode:   desiredCarrier.MethodCode,
 		ShippingCarrierCodes: desiredCarrier.CarrierCode,
 	}
