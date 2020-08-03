@@ -12,14 +12,11 @@ If you need a feature which is not implemented yet, feel free to open a pull req
 
 ---
 
-:warning: :warning:
+:warning: :warning: **COMPATIBILITY NOTICE** :warning: :warning:
 
-**COMPATIBILITY NOTICE**
-
-This package is still in development-state.
+This package is still in development-state.  
 While I'm trying to ensure 100% backwards-compatibility, there might be breaking changes in minor- or patch-level updates.
 
-:warning: :warning:
 ---
 
 ## Features
