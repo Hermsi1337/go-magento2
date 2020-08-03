@@ -10,6 +10,15 @@ For the start, I will add further features upon my need.
 
 If you need a feature which is not implemented yet, feel free to open a pull request.  
 
+---
+
+:warning: :warning: **COMPATIBILITY NOTICE** :warning: :warning:
+
+This package is still in development-state.  
+While I'm trying to ensure 100% backwards-compatibility, there might be breaking changes in minor- or patch-level updates.
+
+---
+
 ## Features
 * [x] Guest api
   * [x] guest-carts

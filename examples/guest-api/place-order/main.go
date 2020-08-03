@@ -1,26 +1,24 @@
 package main
 
 import (
+	"github.com/hermsi1337/go-magento2"
 	"log"
-
-	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
-	"github.com/hermsi1337/go-magento2/pkg/magento2/cart"
 )
 
 func main() {
 	// initiate storeconfig
-	storeConfig := &api.StoreConfig{
+	storeConfig := &magento2.StoreConfig{
 		Scheme:    "https",
 		HostName:  "magento2.hermsi.localhost",
 		StoreCode: "default",
 	}
 
 	// create a new apiClient
-	apiClient := api.NewAPIClientWithoutAuthentication(storeConfig)
+	apiClient := magento2.NewAPIClientWithoutAuthentication(storeConfig)
 	log.Printf("Obtained client: '%+v'", apiClient)
 
 	// create empty card
-	mCart, err := cart.NewGuestCartFromAPIClient(apiClient)
+	mCart, err := magento2.NewGuestCartFromAPIClient(apiClient)
 	if err != nil {
 		panic(err)
 	}
@@ -28,10 +26,10 @@ func main() {
 	log.Printf("Detailed cart: '%+v'", mCart.Cart)
 
 	// initialize items array
-	var products []cart.Item
+	var products []magento2.CartItem
 
 	// add items to your items array
-	products = append(products, cart.Item{
+	products = append(products, magento2.CartItem{
 		Sku: "24-MB01",
 		Qty: 1,
 	})
@@ -46,29 +44,33 @@ func main() {
 	log.Printf("Products in cart: '%+v'", mCart.Cart.Items)
 
 	// define shipping address
-	sAddr := &cart.Address{
-		City:      "FooCity",
-		Company:   "FooCompany",
-		Email:     "foo@bar.de",
-		Firstname: "Foo",
-		Lastname:  "Bar",
-		Postcode:  "1337",
-		CountryID: "DE",
-		Telephone: "1337 1337 1337",
-		Street:    []string{"foo", "street"},
+	sAddr := &magento2.ShippingAddress{
+		Address: magento2.Address{
+			City:      "FooCity",
+			Company:   "FooCompany",
+			Email:     "foo@bar.de",
+			Firstname: "Foo",
+			Lastname:  "Bar",
+			Postcode:  "1337",
+			CountryID: "DE",
+			Telephone: "1337 1337 1337",
+			Street:    []string{"foo", "street"},
+		},
 	}
 
 	// define billing address
-	bAddr := &cart.Address{
-		City:      "FooCity",
-		Company:   "FooCompany",
-		Email:     "foo@bar.de",
-		Firstname: "Foo",
-		Lastname:  "Bar",
-		Postcode:  "1337",
-		CountryID: "DE",
-		Telephone: "1337 1337 1337",
-		Street:    []string{"foo", "street"},
+	bAddr := &magento2.BillingAddress{
+		Address: magento2.Address{
+			City:      "FooCity",
+			Company:   "FooCompany",
+			Email:     "foo@bar.de",
+			Firstname: "Foo",
+			Lastname:  "Bar",
+			Postcode:  "1337",
+			CountryID: "DE",
+			Telephone: "1337 1337 1337",
+			Street:    []string{"foo", "street"},
+		},
 	}
 
 	// estimate shipping carrier for our cart
@@ -85,9 +87,9 @@ func main() {
 	log.Printf("Chosen carrier: '%+v'", desiredCarrier)
 
 	// define addressinformation-payload for your cart
-	payLoad := &cart.AddressInformation{
-		ShippingAddress:      *sAddr,
-		BillingAddress:       *bAddr,
+	payLoad := &magento2.AddressInformation{
+		ShippingAddress:      sAddr,
+		BillingAddress:       bAddr,
 		ShippingMethodCode:   desiredCarrier.MethodCode,
 		ShippingCarrierCodes: desiredCarrier.CarrierCode,
 	}

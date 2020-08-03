@@ -2,19 +2,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/hermsi1337/go-magento2"
 	"log"
 	"strconv"
-
-	"github.com/hermsi1337/go-magento2/pkg/magento2/api"
-	"github.com/hermsi1337/go-magento2/pkg/magento2/configurableproducts"
-	"github.com/hermsi1337/go-magento2/pkg/magento2/products/attribute"
 )
 
 // TODO: FINISH EXAMPLE
 
 func main() {
 	// initiate storeconfig
-	storeConfig := &api.StoreConfig{
+	storeConfig := &magento2.StoreConfig{
 		Scheme:    "https",
 		HostName:  "magento2.hermsi.localhost",
 		StoreCode: "default",
@@ -23,14 +20,14 @@ func main() {
 	bearerToken := "yd1o9zs1hb1qxnn8ek68eu8nwqjg5hrv"
 
 	// create a new apiClient
-	apiClient, err := api.NewAPIClientFromIntegration(storeConfig, bearerToken)
+	apiClient, err := magento2.NewAPIClientFromIntegration(storeConfig, bearerToken)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Obtained client: '%v'", apiClient)
 
 	// define your attribute
-	attr := &attribute.Attribute{
+	attr := &magento2.Attribute{
 		AttributeCode:        "myselectattribute",
 		FrontendInput:        "select",
 		DefaultFrontendLabel: "aw",
@@ -38,12 +35,12 @@ func main() {
 	}
 
 	// create attribute on remote
-	mAttribute, err := attribute.CreateAttribute(attr, apiClient)
+	mAttribute, err := magento2.CreateAttribute(attr, apiClient)
 	if err != nil {
 		panic(err)
 	}
 
-	optionValue, err := mAttribute.AddOption(attribute.Option{
+	optionValue, err := mAttribute.AddOption(magento2.Option{
 		Label: "spaget",
 		Value: "spaget",
 	})
@@ -56,19 +53,19 @@ func main() {
 		panic(err)
 	}
 
-	option := &configurableproducts.Option{
+	option := &magento2.ConfigurableProductOption{
 		AttributeID:  fmt.Sprintf("%d", mAttribute.Attribute.AttributeID),
 		Label:        mAttribute.Attribute.DefaultFrontendLabel,
 		Position:     0,
 		IsUseDefault: false,
-		Values: []configurableproducts.Value{
+		Values: []magento2.Value{
 			{
 				ValueIndex: optionValueInt,
 			},
 		},
 	}
 
-	mOption, err := configurableproducts.SetOptionForExistingConfigurableProduct("configurableSpaget", option, apiClient)
+	mOption, err := magento2.SetOptionForExistingConfigurableProduct("configurableSpaget", option, apiClient)
 	if err != nil {
 		panic(err)
 	}
