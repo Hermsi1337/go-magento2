@@ -1,102 +1,194 @@
-linters-settings:
-  dupl:
-    threshold: 100
-  funlen:
-    lines: 100
-    statements: 50
-  goconst:
-    min-len: 2
-    min-occurrences: 2
-  gocritic:
-    enabled-tags:
-      - diagnostic
-      - experimental
-      - opinionated
-      - performance
-      - style
-    disabled-checks:
-      - dupImport # https://github.com/go-critic/go-critic/issues/845
-      - ifElseChain
-      - octalLiteral
-      - wrapperFunc
-  gocyclo:
-    min-complexity: 15
-  golint:
-    min-confidence: 0
-  gomnd:
-    settings:
-      mnd:
-        # don't include the "operation" and "assign"
-        checks: argument,case,condition,return
-  govet:
-    check-shadowing: true
-  lll:
-    line-length: 160
-  maligned:
-    suggest-new: true
-  misspell:
-    locale: US
-  nolintlint:
-    allow-leading-space: true # don't require machine-readable nolint directives (i.e. with no leading space)
-    allow-unused: false # report any unused nolint directives
-    require-explanation: false # don't require an explanation for nolint directives
-    require-specific: false # don't require nolint directives to be specific about which linter is being skipped
-
+version: "2"
+run:
+  build-tags:
+    - codeanalysis
+  tests: false
+  relative-path-mode: gomod
 linters:
-  disable-all: true
+  default: none
   enable:
+    - asasalint
+    - asciicheck
+    - bidichk
     - bodyclose
-    - deadcode
-    - depguard
+    - canonicalheader
+    - containedctx
+    - contextcheck
+    - copyloopvar
     - dogsled
     - dupl
+    - dupword
+    - durationcheck
     - errcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - exptostd
+    - forcetypeassert
     - funlen
-    - gochecknoinits
+    - gocheckcompilerdirectives
+    - gochecksumtype
+    - gocognit
     - goconst
     - gocritic
     - gocyclo
-    - gofmt
-    - goimports
-    - golint
-    - gomnd
+    - gomoddirectives
     - goprintffuncname
     - gosec
-    - gosimple
     - govet
+    - inamedparam
     - ineffassign
-    - interfacer
+    - interfacebloat
+    - intrange
+    - iotamixing
     - lll
+    - makezero
+    - mirror
     - misspell
-    - nakedret
+    - musttag
+    - nestif
+    - nilerr
+    - nilnesserr
+    - nilnil
+    - noctx
     - nolintlint
+    - nosprintfhostport
+    - prealloc
+    - predeclared
+    - promlinter
+    - reassign
+    - recvcheck
+    - revive
     - rowserrcheck
-    - scopelint
+    - sloglint
+    - spancheck
+    - sqlclosecheck
     - staticcheck
-    - structcheck
-    - stylecheck
-    - typecheck
+    - tagliatelle
+    - testableexamples
+    - testifylint
+    - thelper
+    - tparallel
     - unconvert
-    - unparam
     - unused
-    - varcheck
+    - usestdlibvars
+    - usetesting
+    - wastedassign
+  disable:
+    - arangolint
+    - cyclop
+    - decorder
+    - depguard
+    - embeddedstructfieldcheck
+    - err113
+    - exhaustive
+    - exhaustruct
+    - forbidigo
+    - funcorder
+    - ginkgolinter
+    - gochecknoglobals
+    - gochecknoinits
+    - godoclint
+    - godot
+    - godox
+    - goheader
+    - gomodguard
+    - gosmopolitan
+    - grouper
+    - importas
+    - ireturn
+    - loggercheck
+    - maintidx
+    - mnd
+    - nlreturn
+    - noinlineerr
+    - nonamedreturns
+    - paralleltest
+    - protogetter
+    - tagalign
+    - testpackage
+    - unparam
+    - unqueryvet
+    - varnamelen
     - whitespace
-    - goerr113
-
+    - wrapcheck
+    - wsl
+    - wsl_v5
+    - zerologlint
+  settings:
+    dupl:
+      threshold: 100
+    errorlint:
+      errorf: false
+    funlen:
+      lines: 100
+      statements: 60
+    goconst:
+      min-len: 3
+      min-occurrences: 3
+    gocritic:
+      disabled-checks:
+        - ifElseChain
+        - commentFormatting
+    gocyclo:
+      min-complexity: 20
+    govet:
+      enable:
+        - shadow
+    lll:
+      line-length: 180
+    misspell:
+      locale: US
+    revive:
+      confidence: 0
+      severity: error
+    staticcheck:
+      checks:
+        - "all"
+        - # Omit embedded fields from selector expression.
+        - "-QF1008"
+    testifylint:
+      disable:
+        - equal-values
+        - len
+    nolintlint:
+      allow-unused: false
+    spancheck:
+      extra-start-span-signatures:
+        - "tracing.StartSpanFromContext:opentelemetry"
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - lll
+        source: '^//go:generate '
+      - linters:
+          - staticcheck
+        text: 'SA1019: package github.com/golang/protobuf/proto is deprecated:'
+    paths:
+      - .*_?generated\.go
+      - tests?/
+      - pkg/pb/
+      - third_party$
+      - builtin$
+      - examples$
 issues:
-  # Excluding configuration per-path, per-linter, per-text and per-source
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - gomnd
-
-run:
-  skip-dirs:
-    - examples/
-  skip-files:
-    - .*_test\.go
-
-# golangci.com configuration
-# https://github.com/golangci/golangci/wiki/Configuration
-service:
-  golangci-lint-version: 1.27.x # use the fixed version to not introduce new linters unexpectedly
+  max-same-issues: 100
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - .*_?generated\.go
+      - tests?/
+      - pkg/pb/
+      - third_party$
+      - builtin$
+      - examples$
