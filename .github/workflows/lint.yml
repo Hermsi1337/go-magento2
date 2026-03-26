@@ -7,9 +7,10 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v1
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          version: v1.27
-          args: --config=build/ci/.golangci.yml
+          go-version: '1.26'
+      - name: golangci-lint
+        run: make lint
