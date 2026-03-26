@@ -6,14 +6,14 @@ import (
 
 type MConfigurableProduct struct {
 	Route     string
-	Options   *[]Option
+	Options   *[]ConfigurableProductOption
 	APIClient *Client
 }
 
 func SetOptionForExistingConfigurableProduct(sku string, o *ConfigurableProductOption, apiClient *Client) (*MConfigurableProduct, error) {
 	mConfigurableProduct := &MConfigurableProduct{
 		Route:     configurableProducts + "/" + sku,
-		Options:   &[]Option{},
+		Options:   &[]ConfigurableProductOption{},
 		APIClient: apiClient,
 	}
 	endpoint := mConfigurableProduct.Route + "/" + configurableProductsOptionsRelative
@@ -57,7 +57,7 @@ func (mConfigurableProduct *MConfigurableProduct) AddChildBySKU(sku string) erro
 func GetConfigurableProductBySKU(sku string, apiClient *Client) (*MConfigurableProduct, error) {
 	mConfigurableProduct := &MConfigurableProduct{
 		Route:     configurableProducts + "/" + sku,
-		Options:   &[]Option{},
+		Options:   &[]ConfigurableProductOption{},
 		APIClient: apiClient,
 	}
 	err := mConfigurableProduct.UpdateOptionsFromRemote()
